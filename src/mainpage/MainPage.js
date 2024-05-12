@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import logo from "../img/logo/logo1.jpeg";
 import { Link } from "react-router-dom";
-import sidebarimg from "../img/sidebar/sidebarimg.png";
 import { useState, useEffect } from "react";
 import beer from "../img/background/beer.jpg";
 import traditional from "../img/background/traditional.jpg";
@@ -20,18 +19,17 @@ const BackgroundImg = styled.div`
   width: 100vw;
   height: 100vh;
   border: none;
-  box-sizing: border-box;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  position: fixed;
 `;
 //Header StyledComponent
 const Header = styled.header`
   width: 100vw;
   height: 15vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
 `;
 //logoImg wrapping StyledComponent
@@ -39,7 +37,6 @@ const DivLogo = styled.div`
   width: 17vw;
   height: 15vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +47,6 @@ const Logo = styled.div`
   height: 15vh;
   background-image: ${({ logourl }) => `url(${logourl})`};
   border: none;
-  box-sizing: border-box;
   border-radius: 20%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -62,7 +58,6 @@ const DivHeader = styled.div`
   width: 83vw;
   height: 15vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   align-items: center;
 `;
@@ -72,7 +67,6 @@ const Nav = styled.nav`
   height: 13vh;
   margin-left: 25vw;
   border: none;
-  box-sizing: border-box;
   display: flex;
 `;
 //Header 안에 Item StyledComponent
@@ -80,7 +74,6 @@ const Item = styled.div`
   width: 9vw;
   height: 13vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +89,6 @@ const SideWrapping = styled.div`
   width: 13vw;
   height: 13vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   align-items: center;
 `;
@@ -111,23 +103,32 @@ const SignUpBtn = styled.div`
   align-items: center;
   margin-left: 1vw;
   border: none;
-  box-sizing: border-box;
 `;
 //사이드바 버튼 StyledComponent
-const SideBarBtn = styled.img`
-  width: 2.3vw;
-  height: 5vh;
+const SideBarBtn = styled.div`
+  width: 35px;
+  height: 35px;
   border: none;
-  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.8);
   margin-left: 1vw;
   background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  & > div {
+    width: 27px;
+    height: 3px;
+    border: 1px solid black;
+    border-radius: 20%;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
 `;
 //ImgChangeBtnsDiv StyledComponent;
 const ImgChangeBtnsDiv = styled.div`
   width: 100vw;
   height: 5vh;
   border: none;
-  box-sizing: border-box;
   position: absolute;
   bottom: 0;
   display: flex;
@@ -142,7 +143,6 @@ const Footer = styled.footer`
   height: 20vh;
   background-color: rgba(0, 0, 0, 0.8);
   border: none;
-  box-sizing: border-box;
   position: absolute;
   display: flex;
   bottom: 0;
@@ -151,21 +151,18 @@ const Footer = styled.footer`
     width: 75vw;
     height: 20vh;
     border: none;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     & > .footeritem:nth-child(1) {
       width: 75vw;
       height: 6vh;
       border: none;
-      box-sizing: border-box;
       display: flex;
     }
     & > .footeritem:nth-child(2) {
       width: 74vw;
       height: 14vh;
       border: none;
-      box-sizing: border-box;
       font-size: 0.85vw;
       line-height: 0.5vw;
       margin-left: 1vw;
@@ -176,20 +173,17 @@ const Footer = styled.footer`
     width: 25vw;
     height: 20vh;
     border: none;
-    box-sizing: border-box;
     & > .icon {
       width: 23vw;
       height: 9vh;
       border: none;
       margin-left: 2vw;
-      box-sizing: border-box;
       display: flex;
     }
     & > .tel {
       width: 25vw;
       height: 11vh;
       border: none;
-      box-sizing: border-box;
       display: flex;
       & > .telicon {
         width: 8vw;
@@ -198,13 +192,11 @@ const Footer = styled.footer`
         justify-content: right;
         align-items: center;
         border: none;
-        box-sizing: border-box;
       }
       & > .telimf {
         width: 17wv;
         height: 11vh;
         border: none;
-        box-sizing: border-box;
         & > .teltext {
           width: 17vw;
           height: 6vh;
@@ -214,7 +206,6 @@ const Footer = styled.footer`
           align-items: center;
           color: white;
           border: none;
-          box-sizing: border-box;
         }
         & > .telnumber {
           width: 17vw;
@@ -226,7 +217,6 @@ const Footer = styled.footer`
           font-weight: bolder;
           color: white;
           border: none;
-          box-sizing: border-box;
         }
       }
     }
@@ -237,7 +227,6 @@ const FooterDiv = styled.div`
   width: 8vw;
   height: 6vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -252,7 +241,6 @@ const FooterLastDiv = styled.div`
   height: 6vh;
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -266,7 +254,6 @@ const IconImgDiv = styled.div`
   width: 4vw;
   height: 9vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -292,7 +279,6 @@ const ImgBtnDiv = styled.div`
   width: 3vw;
   height: 5vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -311,7 +297,6 @@ const PageSlide = styled.div`
   width: 100vw;
   height: 80vh;
   border: none;
-  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -331,7 +316,7 @@ const PageSlide = styled.div`
     }
   }
 `;
-const MainPage = ({ imageurl }) => {
+const MainPage = () => {
   const [background, setBackground] = useState(beer);
   const onClick = (url) => {
     setBackground(url);
@@ -377,7 +362,13 @@ const MainPage = ({ imageurl }) => {
                   <ItemFont>SignUp</ItemFont>
                 </SignUpBtn>
               </Link>
-              <SideBarBtn src={sidebarimg} role="button" />
+              <Link to="/SideBar" style={{ textDecoration: "none" }}>
+                <SideBarBtn>
+                  <div />
+                  <div />
+                  <div />
+                </SideBarBtn>
+              </Link>
             </SideWrapping>
           </Nav>
         </DivHeader>

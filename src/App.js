@@ -1,8 +1,13 @@
 import "./App.css";
 import DionysusBody from "./DionysusBody";
-
+import GlobalStyles from "./GlobalStyles";
 function App() {
-  return <DionysusBody />;
+  return (
+    <>
+      <GlobalStyles />
+      <DionysusBody />
+    </>
+  );
 }
 
 export default App;
