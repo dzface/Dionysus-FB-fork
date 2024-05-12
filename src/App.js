@@ -1,8 +1,8 @@
 import "./App.css";
-import Background from "./main_page/Background";
+import DionysusBody from "./DionysusBody";
 
 function App() {
-  return <Background />;
+  return <DionysusBody />;
 }
 
 export default App;
