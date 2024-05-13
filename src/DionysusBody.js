@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./mainpage/MainPage";
-import SideBar from "./mainpage/SideBar";
+import MainPage from "./pages/mainpage/MainPage";
+import SideBar from "./pages/mainpage/SideBar";
 const DionysusBody = () => {
   return (
     <Router>

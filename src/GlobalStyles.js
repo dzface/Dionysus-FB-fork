@@ -1,5 +1,5 @@
-import styled, { createGlobalStyle } from "styled-components";
-const GlobalStyles = createGlobalStyle`
+import { createGlobalStyle } from "styled-components";
+export const GlobalStyles = createGlobalStyle`
   *{
     box-sizing: border-box;
   }
