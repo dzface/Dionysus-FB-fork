@@ -1,12 +1,28 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import beer from "../../img/mainpageimg/background/beer.jpg";
 import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import wine from "../../img/mainpageimg/background/wine.jpg";
 import wiskey from "../../img/mainpageimg/background/wiskey.jpg";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { UserContext } from "../../global/UserStore";
 
-//BackgrroundImg StyledComponent
+// FlipOutY animation
+const flipOutY = keyframes`
+  from {
+    transform: perspective(400px) rotate3d(0, 1, 0, 0);
+    opacity: 1;
+  }
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+  to {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+`;
+
+// BackgroundImg StyledComponent
 const BackgroundImg = styled.div`
   width: 100vw;
   height: 100vh;
@@ -16,9 +32,11 @@ const BackgroundImg = styled.div`
   background-size: cover;
   background-position: center;
   position: fixed;
+  opacity: 1;
+  animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.75s forwards;
 `;
 
-//ImgChangeBtnsDiv StyledComponent;
+// ImgChangeBtnsDiv StyledComponent
 const ImgChangeBtnsDiv = styled.div`
   width: 100vw;
   height: 5vh;
@@ -28,11 +46,10 @@ const ImgChangeBtnsDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* display: none; */
   z-index: 5;
 `;
 
-//배경바꾸는 버튼 styledComponent
+// 배경바꾸는 버튼 styledComponent
 const ImgBtnDiv = styled.div`
   width: 3vw;
   height: 5vh;
@@ -53,44 +70,42 @@ const ImgBtnDiv = styled.div`
 `;
 
 const Background = ({ children }) => {
-  // 만들었던 context 컴포넌트를 훅으로 사용하기 위해 변수에 저장
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
 
+  const [isFading, setIsFading] = useState(false);
+  const [nextBgImgUrl, setNextBgImgUrl] = useState(bgimgurl);
+
   const onClick = (url) => {
-    setBgimgurl(url);
+    setNextBgImgUrl(url);
+    setIsFading(true);
   };
+
+  useEffect(() => {
+    if (isFading) {
+      const timer = setTimeout(() => {
+        setBgimgurl(nextBgImgUrl);
+        setIsFading(false);
+      }, 750); // Match this duration with the CSS animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [isFading, nextBgImgUrl, setBgimgurl]);
+
   return (
-    <BackgroundImg imageurl={bgimgurl}>
+    <BackgroundImg imageurl={bgimgurl} isFading={isFading}>
       {children}
       <ImgChangeBtnsDiv>
         <ImgBtnDiv>
-          <button
-            onClick={() => {
-              onClick(beer);
-            }}
-          />
+          <button onClick={() => onClick(beer)} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button
-            onClick={() => {
-              onClick(traditional);
-            }}
-          />
+          <button onClick={() => onClick(traditional)} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button
-            onClick={() => {
-              onClick(wine);
-            }}
-          />
+          <button onClick={() => onClick(wine)} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button
-            onClick={() => {
-              onClick(wiskey);
-            }}
-          />
+          <button onClick={() => onClick(wiskey)} />
         </ImgBtnDiv>
       </ImgChangeBtnsDiv>
     </BackgroundImg>
