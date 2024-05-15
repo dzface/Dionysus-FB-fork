@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import logo from "../../img/logo/logo1.jpeg";
+import logo from "../../img/mainpageimg/logo/logo1.jpeg";
 //Header StyledComponent
 const HeaderContainer = styled.header`
   width: 100vw;
@@ -141,13 +141,12 @@ const Header = () => {
                 <ItemFont>SignUp</ItemFont>
               </SignUpBtn>
             </Link>
-            <Link to="/SideBar" style={{ textDecoration: "none" }}>
+            
               <SideBarBtn>
                 <div />
                 <div />
                 <div />
               </SideBarBtn>
-            </Link>
           </SideWrapping>
         </Nav>
       </DivHeader>

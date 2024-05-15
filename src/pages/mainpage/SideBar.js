@@ -1,7 +1,8 @@
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 import Background from "./Background";
 import Header from "./Header";
+import { useState } from "react";
 const SideBarBody = styled.div`
   width: 300px;
   height: 600px;
@@ -77,6 +78,10 @@ const SideMenuDiv = styled.div`
   }
 `;
 const SideBar = () => {
+  // 사이드바 메뉴 열기/ 닫기
+  const [isMenuOpenm, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <Background>
       <Header />

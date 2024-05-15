@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import beer from "../../img/background/beer.jpg";
-import traditional from "../../img/background/traditional.jpg";
-import wine from "../../img/background/wine.jpg";
-import wiskey from "../../img/background/wiskey.jpg";
-import prevslider from "../../img/details/btn-slider-prev_moblie.png";
-import nextslider from "../../img/details/btn_slider_next.png";
+import { useState, useContext } from "react";
+import beer from "../../img/mainpageimg/background/beer.jpg";
+import traditional from "../../img/mainpageimg/background/traditional.jpg";
+import wine from "../../img/mainpageimg/background/wine.jpg";
+import wiskey from "../../img/mainpageimg/background/wiskey.jpg";
 import styled from "styled-components";
+import { UserContext } from "../../global/UserStore";
 
 //BackgrroundImg StyledComponent
 const BackgroundImg = styled.div`
@@ -52,47 +51,18 @@ const ImgBtnDiv = styled.div`
     }
   }
 `;
-const PageSlide = styled.div`
-  width: 100vw;
-  height: 80vh;
-  border: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  display: none;
-  & > div {
-    width: 4vw;
-    height: 13vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    & > img {
-      width: 3vw;
-      height: 13vh;
-    }
-    &:hover {
-      color: red;
-      transition: 0.7s;
-    }
-  }
-`;
 
 const Background = ({ children }) => {
-  const [background, setBackground] = useState(beer);
+  // 만들었던 context 컴포넌트를 훅으로 사용하기 위해 변수에 저장
+  const context = useContext(UserContext);
+  const { bgimgurl, setBgimgurl } = context;
+
   const onClick = (url) => {
-    setBackground(url);
+    setBgimgurl(url);
   };
   return (
-    <BackgroundImg imageurl={background}>
+    <BackgroundImg imageurl={bgimgurl}>
       {children}
-      <PageSlide>
-        <div role="button">
-          <img src={prevslider} alt="prevslider" />
-        </div>
-        <div role="button">
-          <img src={nextslider} alt="nextslider" />
-        </div>
-      </PageSlide>
       <ImgChangeBtnsDiv>
         <ImgBtnDiv>
           <button

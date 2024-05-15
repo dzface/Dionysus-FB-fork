@@ -1,7 +1,7 @@
 import Footer from "./Footer";
 import Header from "./Header";
 import Background from "./Background";
-import GlobalStyles from "../../GlobalStyles";
+import GlobalStyles from "../../global/GlobalStyles";
 const MainPage = () => {
   return (
     <>

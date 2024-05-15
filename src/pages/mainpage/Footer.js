@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import naverblog from "../../img/details/naverblog-icon.png";
-import instargram from "../../img/details/instargram-icon.png";
-import facebook from "../../img/details/facebook-icon.png";
-import youtube from "../../img/details/youtube-icon.png";
-import telicon from "../../img/details/tel-icon.png";
+import naverblog from "../../img/mainpageimg/details/naverblog-icon.png";
+import instargram from "../../img/mainpageimg/details/instargram-icon.png";
+import facebook from "../../img/mainpageimg/details/facebook-icon.png";
+import youtube from "../../img/mainpageimg/details/youtube-icon.png";
+import telicon from "../../img/mainpageimg/details/tel-icon.png";
 //Footer StyledComponent
 const FooterBody = styled.footer`
   width: 100vw;
