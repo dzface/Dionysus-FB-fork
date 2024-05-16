@@ -1,7 +1,30 @@
 import "../../style/mypagestyle/MypageStyle.scss";
 import { Link } from "react-router-dom";
-
+// import { UseContext, useState } from "react";
+// import { UserContext } from "../../global/UserStore";
+// import { storage } from "../../firebase/profileupload/ProfileImgUpload";
 const Mypage = () => {
+  // const context = UseContext(UseContext);
+  // const { profileimg, setProfileimg } = context;
+  // const [file, setFile] = useState(null); // 선택된 파일에 대한 상태관리
+  // const [url, setUrl] = useState(""); // 사진 경로 (파이어베이스의 업로드된 경로)
+  // const handleUploadClick = async () => {
+  //   if (!file) {
+  //     alert("파일을 선택해 주세요.");
+  //     return;
+  //   }
+  //   try {
+  //     const storageRef = storage.ref();
+  //     const fileRef = storageRef.child(file.name);
+  //     await fileRef.put(file); // 파이어베이스에 생성한 스토리지에 파일 업로드
+  //     // 업로드 후 이미지 URL 가져오기
+  //     const uploadedUrl = await fileRef.getDownloadURL();
+  //     console.log(uploadedUrl);
+  //     setUrl(uploadedUrl);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <body>
       <div className="container">

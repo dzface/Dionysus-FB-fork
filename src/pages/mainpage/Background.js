@@ -91,6 +91,10 @@ const Background = ({ children }) => {
       return () => clearTimeout(timer);
     }
   }, [isFading, nextBgImgUrl, setBgimgurl]);
+  useEffect(() => {
+    // 초기 배경 이미지 설정
+    setBgimgurl(wine);
+  }, []); // []를 넘겨 useEffect가 한 번만 실행되도록 합니다.
 
   return (
     <BackgroundImg imageurl={bgimgurl} isFading={isFading}>
