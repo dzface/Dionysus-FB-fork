@@ -14,6 +14,9 @@ import Beer from "./pages/beerpage/Beer";
 import Traditional from "./pages/traditionalpage/Traditional";
 import Wine from "./pages/winepage/Wine";
 import Wiskey from "./pages/wiskeypage/Wiskey";
+import MemInfo from "./pages/mypage/MemInfo";
+import Mypage from "./pages/mypage/Mypage";
+import SignOut from "./pages/mypage/SignOut";
 function App() {
   return (
     <>
@@ -30,6 +33,9 @@ function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/findid" element={<FindIDPage />} />
               <Route path="/findpw" element={<FindPWPage />} />
+              <Route path="/mypage" element={<Mypage />} />
+              <Route path="/meminfo" element={<MemInfo />} />
+              <Route path="/signout" element={<SignOut />} />
             </Route>
             {/* Footer가 필요한 페이지 중첩라우팅 */}
             <Route element={<IncludeFooter />}>

@@ -90,6 +90,10 @@ const Input = styled.input`
   border: 1px solid #ccc; // 테두리 스타일을 설정합니다.
   border-radius: 4px; // 테두리의 둥근 정도를 설정합니다.
   font-size: 16px; // 글꼴 크기를 설정합니다.
+  @media (max-width: 700px) {
+    width: 300px;
+    height: 30px;
+  }
 `;
 
 // List 스타일 컴포넌트를 생성합니다.

@@ -14,33 +14,80 @@ const FooterBody = styled.footer`
   position: absolute;
   display: flex;
   bottom: 0;
+  @media (max-width: 700px) {
+    height: 35vh;
+    flex-direction: column;
+  }
   /* display: none; */
   .partition1 {
-    width: 75vw;
+    width: calc(75vw-200px);
     height: 20vh;
     border: none;
     display: flex;
     flex-direction: column;
+    @media (max-width: 494px) {
+      height: 13vh;
+    }
     & > .footeritem:nth-child(1) {
       width: 75vw;
       height: 6vh;
       border: none;
       display: flex;
+      @media (max-width: 900px) {
+        display: none;
+      }
     }
     & > .footeritem:nth-child(2) {
       width: 74vw;
       height: 14vh;
       border: none;
-      font-size: 0.85vw;
-      line-height: 0.5vw;
+      font-size: 13px;
+      line-height: 11px;
       margin-left: 1vw;
+      padding-top: 10px;
+      @media (max-width: 494px) {
+        width: 100vw;
+      }
+      & > .textdetail {
+        height: 40px;
+        @media (max-width: 981px) {
+          height: 20px;
+        }
+      }
+      & > .textdetail2 {
+        height: 20px;
+        @media (max-width: 981px) {
+          height: 50px;
+        }
+        & > .textdetail3 {
+          height: 50px;
+          @media (max-width: 915px) {
+            height: 20px;
+          }
+          @media (max-width: 981px) {
+            height: 40px;
+          }
+        }
+      }
+      & > div {
+        height: 14px;
+        display: flex;
+        font-size: 13px;
+        line-height: 11px;
+        @media (max-width: 981px) {
+          height: 20px;
+          display: flex;
+          flex-direction: column;
+        }
+      }
       color: rgba(255, 255, 255, 0.8);
     }
   }
   .partition2 {
-    width: 25vw;
+    width: 360px;
     height: 20vh;
     border: none;
+    margin-right: 10px;
     & > .icon {
       width: 23vw;
       height: 9vh;
@@ -49,34 +96,31 @@ const FooterBody = styled.footer`
       display: flex;
     }
     & > .tel {
-      width: 25vw;
+      width: 360px;
       height: 11vh;
       border: none;
       display: flex;
       & > .telicon {
-        width: 8vw;
+        width: 50px;
         height: 11vh;
-        display: flex;
-        justify-content: right;
-        align-items: center;
+        margin: 10px;
+        margin-left: 20px;
         border: none;
       }
       & > .telimf {
-        width: 17wv;
+        width: 245px;
         height: 11vh;
         border: none;
         & > .teltext {
-          width: 17vw;
-          height: 6vh;
+          width: 245px;
+          height: 4vh;
           font-size: 12px;
-          display: flex;
           margin-left: 2vw;
-          align-items: center;
           color: white;
           border: none;
         }
         & > .telnumber {
-          width: 17vw;
+          width: 245px;
           height: 1vh;
           font-size: 20px;
           display: flex;
@@ -104,6 +148,9 @@ const FooterDiv = styled.div`
   & > .footertext {
     font-size: 0.5;
   }
+  @media (max-width: 1500px) {
+    width: 135px;
+  }
 `;
 const FooterLastDiv = styled.div`
   width: 10vw;
@@ -118,30 +165,34 @@ const FooterLastDiv = styled.div`
   & > .footertext {
     font-size: 0.5;
   }
+  @media (max-width: 1500px) {
+    width: 145px;
+  }
 `;
 //IconImg styledComponent
 const IconImgDiv = styled.div`
-  width: 4vw;
+  width: 58px;
   height: 9vh;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   img {
-    width: 3.2vw;
+    width: 46px;
     height: 73%;
     opacity: 0.85;
     border-radius: 20%;
   }
   .instargram {
-    width: 4.5vw;
+    width: 65px;
     height: 100%;
     opacity: 0.85;
   }
   .youtube {
-    width: 3.2vw;
-    height: 6.4vh;
+    width: 46px;
+    height: 4.9vh;
     opacity: 0.85;
+    margin-left: 9px;
   }
 `;
 
@@ -167,13 +218,25 @@ const Footer = () => {
           </FooterLastDiv>
         </div>
         <div className="footeritem">
-          <p>(주)디오니소스 대표이사: 이경섭 사업자등록번호:106-81-98868 </p>
-          <p>
-            주소: 서울시 용산구 한강대로 366, A동176호 개인정보관리 책임자:
-            박성진 청소년보호책임자: 김세호 발행,편집인: 강인구
-          </p>
-          <br />
-          <p>CopyrightⓒDIONYSUS.COM.All rights reserved since 2024</p>
+          <div className="textdetail">
+            <span>
+              (주)디오니소스 대표이사: 이경섭 사업자등록번호:106-81-98868
+            </span>
+          </div>
+          <div className="textdetail2">
+            <div className="textdetail3">
+              <span>주소: 서울시 용산구 한강대로 366, A동176호</span>
+            </div>
+            <div className="textdetail3">
+              <span>개인정보관리 책임자: 박성진 청소년보호책임자: 김세호</span>
+            </div>
+            <div className="textdetail3">
+              <span> 발행,편집인: 강인구</span>
+            </div>
+          </div>
+          <div>
+            <p>CopyrightⓒDIONYSUS.COM.All rights reserved since 2024</p>
+          </div>
         </div>
       </div>
       <div className="partition2">

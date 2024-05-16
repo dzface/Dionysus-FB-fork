@@ -33,7 +33,7 @@ const BackgroundImg = styled.div`
   background-position: center;
   position: fixed;
   opacity: 1;
-  animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.75s forwards;
+  animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.55s forwards;
 `;
 
 // ImgChangeBtnsDiv StyledComponent
@@ -78,6 +78,7 @@ const Background = ({ children }) => {
 
   const onClick = (url) => {
     setNextBgImgUrl(url);
+
     setIsFading(true);
   };
 
@@ -96,16 +97,16 @@ const Background = ({ children }) => {
       {children}
       <ImgChangeBtnsDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(beer)} />
+          <button onClick={() => onClick(beer, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(traditional)} />
+          <button onClick={() => onClick(traditional, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(wine)} />
+          <button onClick={() => onClick(wine, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(wiskey)} />
+          <button onClick={() => onClick(wiskey, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
       </ImgChangeBtnsDiv>
     </BackgroundImg>

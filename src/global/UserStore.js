@@ -3,8 +3,7 @@ export const UserContext = createContext(null);
 
 const UserStore = (props) => {
   const [bgimgurl, setBgimgurl] = useState(
-    localStorage.getItem("bgimg") ||
-      "../../img/mainpageimg/background/wiskey.jpg"
+    localStorage.getItem("bgimg") || "../img/mainpageimg/background/wine.jpg"
   );
   const [name, setName] = useState(
     localStorage.getItem("name") || "로그인 해주세요"

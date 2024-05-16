@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import logo from "../../img/mainpageimg/logo/logo1.jpeg";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
 import { useState, useContext, useEffect } from "react";
@@ -12,6 +12,7 @@ import { CiBeerMugFull } from "react-icons/ci"; // 맥주 icon
 import { PiWineFill } from "react-icons/pi"; //와인 icon
 import { IoMdWine } from "react-icons/io"; // 위스키 icon
 import { FaWineBottle } from "react-icons/fa"; //전통주 icon
+import { VscAccount } from "react-icons/vsc"; // 계정 이미지 icon
 //사이드바 높이 조절을 위한 상수 선언
 const topbarHeight = "30px";
 
@@ -22,13 +23,6 @@ const HeaderContainer = styled.header`
   border: none;
   display: flex;
   justify-content: center;
-  align-items: center;
-`;
-//logoImg wrapping StyledComponent
-const DivLogo = styled.div`
-  height: 15vh;
-  border: none;
-  display: flex;
   align-items: center;
 `;
 //logoImg StyledComponent
@@ -55,25 +49,25 @@ const DivHeader = styled.div`
   border: none;
   display: flex;
   align-items: center;
+  @media (max-width: 700px) {
+    justify-content: center;
+  }
 `;
 //Nav StyledComponent
 const Nav = styled.nav`
-  width: 78vw;
+  width: 85vw;
   height: 13vh;
-  margin-left: 25vw;
+  margin-left: 16vw;
   border: none;
   display: flex;
+  justify-content: space-evenly;
 
   @media (max-width: 1200px) {
     margin-left: 15vw;
   }
-
-  @media (max-width: 900px) {
-    margin-left: 10vw;
-  }
-
   @media (max-width: 700px) {
-    padding-left: 35vw;
+    width: 0px;
+    margin-left: 0px;
   }
 `;
 //Header 안에 Item StyledComponent
@@ -91,9 +85,22 @@ const Item = styled.div`
   @media (max-width: 900px) {
     width: 10vw;
   }
-
+  @media (max-width: 822px) {
+    width: 12vw;
+  }
   @media (max-width: 700px) {
     display: none;
+  }
+`;
+// fadeInDown 애니메이션 정의
+const fadeInDown = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 //ItemFont StyledComponent
@@ -101,6 +108,8 @@ const ItemFont = styled.p`
   font-size: 18px;
   font-weight: border;
   color: #fff;
+  animation: ${({ animate }) => (animate ? fadeInDown : "none")} 0.5s
+    ease-in-out;
 `;
 // signup,마이페이지,사이드바 버튼을 wrapping StyledComponent
 const SideWrapping = styled.div`
@@ -109,6 +118,11 @@ const SideWrapping = styled.div`
   border: none;
   display: flex;
   align-items: center;
+  margin-left: 70px;
+  @media (max-width: 700px) {
+    width: 90px;
+    margin-left: 100px;
+  }
 `;
 // signup 버튼 StyledComponent
 const SignUpBtn = styled.div`
@@ -148,7 +162,7 @@ const SideBarBody = styled.div`
   display: flex;
   flex-direction: column;
   transform: ${(props) =>
-    props.isOpen ? "translateX(80vw)" : "translateX(100vw)"};
+    props.isOpen ? "translateX(calc(100vw - 300px))" : "translateX(100vw)"};
   transition: transform 0.4s ease;
 `;
 // 411%,512%
@@ -185,7 +199,7 @@ const ProfileDiv = styled.div`
 `;
 const PrifileDiv2 = styled.div`
   width: 300px;
-  height: 80px;
+  height: 120px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -209,6 +223,7 @@ const ProfileBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 43px;
   & > p {
     color: #fff;
   }
@@ -248,7 +263,8 @@ const SideMenuDiv = styled.div`
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
-  const { bgimg, setBgimgurl, name, pfimg } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
+  const { setBgimgurl, bgimgurl, name, pfimg } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
+  const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
   const email = localStorage.getItem("email");
   const navigate = useNavigate();
   const [member, setMember] = useState("");
@@ -256,7 +272,9 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   const backImgChange = (alcohol) => {
+    setAnimate(true);
     setBgimgurl(alcohol);
+    setTimeout(() => setAnimate(false), 500); // 애니메이션 종료 후 상태 초기화
   };
   // 회원 이름이 변경되면 서버에 회원 정보 조회해서 화면 업데이트
   // useEffect(() => {
@@ -273,16 +291,20 @@ const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <DivLogo>
+        <DivHeader>
           <Link to="/">
             <Logo logourl={logo} />
           </Link>
-        </DivLogo>
-        <DivHeader>
           <Nav>
             <Item>
-              <Link to="/recommend" style={{ textDecoration: "none" }}>
-                <ItemFont>인기주류</ItemFont>
+              <Link
+                to="/recommend"
+                style={{ textDecoration: "none" }}
+                onClick={() => {
+                  backImgChange(bgimgurl);
+                }}
+              >
+                <ItemFont animate={animate}>인기주류</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -293,7 +315,7 @@ const Header = () => {
                   backImgChange(traditional);
                 }}
               >
-                <ItemFont>전통주</ItemFont>
+                <ItemFont animate={animate}>전통주</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -304,7 +326,7 @@ const Header = () => {
                   backImgChange(wiskey);
                 }}
               >
-                <ItemFont>위스키</ItemFont>
+                <ItemFont animate={animate}>위스키</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -315,7 +337,7 @@ const Header = () => {
                   backImgChange(wine);
                 }}
               >
-                <ItemFont>와인</ItemFont>
+                <ItemFont animate={animate}>와인</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -326,7 +348,7 @@ const Header = () => {
                   backImgChange(beer);
                 }}
               >
-                <ItemFont>맥주</ItemFont>
+                <ItemFont animate={animate}>맥주</ItemFont>
               </Link>
             </Item>
             <SideWrapping>
@@ -354,10 +376,11 @@ const Header = () => {
                 <ProfileDiv>
                   <div className="profileImage">
                     <ProfileImg>
-                      <ProfileBtn>
-                        <p>업로드</p>
-                      </ProfileBtn>
+                      <VscAccount size={100} color="gray" />
                     </ProfileImg>
+                    <ProfileBtn>
+                      <p>업로드</p>
+                    </ProfileBtn>
                   </div>
                   <div className="divExitUser">
                     {/* // 사이드바를 누를 경우 닫음 */}

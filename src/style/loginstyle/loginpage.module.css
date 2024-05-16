@@ -9,7 +9,7 @@
 .box {
   min-width: 500px;
   width: auto;
-  height: 550px;
+  height: 600px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -85,30 +85,30 @@ p {
 
 @media (max-width: 700px) {
   .box {
-    min-width: 300px;
-    height: 400px;
+    min-width: 400px;
+    height: 500px;
   }
   .imageItem {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 40px;
   }
   input[type="email"],
   input[type="password"] {
-    width: 180px;
-    height: 20px;
-    margin-bottom: 10px;
+    width: 200px;
+    height: 25px;
+    margin-bottom: 15px;
   }
   input::placeholder {
     font-size: 15px;
   }
   .caution,
   .loginsub a {
-    font-size: 10px;
+    font-size: 12px;
   }
   .finalCheck {
     width: 150px;
-    height: 30px;
+    height: 35px;
     line-height: 30px;
     font-size: 15px;
   }
