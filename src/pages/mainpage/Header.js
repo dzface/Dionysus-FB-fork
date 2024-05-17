@@ -354,7 +354,7 @@ const Header = () => {
             <SideWrapping>
               <Link to="/login" style={{ textDecoration: "none" }}>
                 <SignUpBtn>
-                  <ItemFont>SignUp</ItemFont>
+                  <ItemFont>로그인</ItemFont>
                 </SignUpBtn>
               </Link>
               <SideBarBtn>

@@ -7,8 +7,8 @@
 }
 
 .box {
-  min-width: 300px;
-  width: 100%;
+  min-width: 500px;
+  width: auto;
   height: 600px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
