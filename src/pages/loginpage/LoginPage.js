@@ -20,28 +20,28 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (caution === "확인되었습니다.") {
-      axios
-        .post("http://localhost:8111/users/login", {
+      try {
+        const response = await axios.post("http://localhost:8111/users/login", {
           USER_ID: email,
           USER_PW: password,
-        })
-        .then((response) => {
-          // Handle success.
-          const user = response.data[0];
-          if (user) {
-            localStorage.setItem("user_id", user.user_id);
-            localStorage.setItem("user_pw", user.user_pw);
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          // Handle error.
-          console.log("An error occurred:", error.response);
         });
+
+        // Handle success.
+        const user = response.data[0];
+        if (user) {
+          localStorage.setItem("user_id", user.user_id);
+          localStorage.setItem("user_pw", user.user_pw);
+          navigate("/");
+        }
+      } catch (error) {
+        // Handle error.
+        console.log("An error occurred:", error.response);
+      }
     }
   };
+
   return (
     <>
       <div className={styles.container}>
