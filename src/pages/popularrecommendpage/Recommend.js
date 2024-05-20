@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import img1 from "../../img/popularrecommendpageimg/pexels-markusspiske-121191.jpg";
 import bg from "../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
-
+import { Link } from "react-router-dom";
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
@@ -202,48 +202,28 @@ const Recommend = () => {
                   <ItemTitleText isBig={isBig}>기분에 따른 추천</ItemTitleText>
                 </ItemTitle>
                 <RecommendIconDiv>
-                  <IconBox
-                    onClick={() => {
-                      clickToggle(0);
-                    }}
-                    isclick={isclick === 0}
-                  >
+                  <IconBox>
                     <IconImg
                       src={
                         process.env.PUBLIC_URL + "/recommendationicon/행복.png"
                       }
                     />
                   </IconBox>
-                  <IconBox
-                    onClick={() => {
-                      clickToggle(0);
-                    }}
-                    isclick={isclick === 0}
-                  >
+                  <IconBox>
                     <IconImg
                       src={
                         process.env.PUBLIC_URL + "/recommendationicon/슬픔.png"
                       }
                     />
                   </IconBox>
-                  <IconBox
-                    onClick={() => {
-                      clickToggle(0);
-                    }}
-                    isclick={isclick === 0}
-                  >
+                  <IconBox>
                     <IconImg
                       src={
                         process.env.PUBLIC_URL + "/recommendationicon/화남.png"
                       }
                     />
                   </IconBox>
-                  <IconBox
-                    onClick={() => {
-                      clickToggle(0);
-                    }}
-                    isclick={isclick === 0}
-                  >
+                  <IconBox>
                     <IconImg
                       src={
                         process.env.PUBLIC_URL + "/recommendationicon/사랑.png"
@@ -275,46 +255,28 @@ const Recommend = () => {
                 <ItemTitleText>날씨에 따른 추천</ItemTitleText>
               </ItemTitle>
               <RecommendIconDiv>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(1);
-                  }}
-                  isclick={isclick === 1}
-                >
-                  <IconImg
-                    src={
-                      process.env.PUBLIC_URL + "/recommendationicon/맑음.png"
-                    }
-                  />
+                <IconBox>
+                  <Link to="/MoodResult">
+                    <IconImg
+                      src={
+                        process.env.PUBLIC_URL + "/recommendationicon/맑음.png"
+                      }
+                    />
+                  </Link>
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(1);
-                  }}
-                  isclick={isclick === 1}
-                >
+                <IconBox>
                   <IconImg
                     src={
                       process.env.PUBLIC_URL + "/recommendationicon/흐림.png"
                     }
                   />
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(1);
-                  }}
-                  isclick={isclick === 1}
-                >
+                <IconBox>
                   <IconImg
                     src={process.env.PUBLIC_URL + "/recommendationicon/비.png"}
                   />
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(1);
-                  }}
-                  isclick={isclick === 1}
-                >
+                <IconBox>
                   <IconImg
                     src={process.env.PUBLIC_URL + "/recommendationicon/눈.png"}
                   />
@@ -341,48 +303,28 @@ const Recommend = () => {
                 <ItemTitleText>음식에 따른 추천</ItemTitleText>
               </ItemTitle>
               <RecommendIconDiv>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(2);
-                  }}
-                  isclick={isclick === 2}
-                >
+                <IconBox>
                   <IconImg
                     src={
                       process.env.PUBLIC_URL + "/recommendationicon/한식.png"
                     }
                   />
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(2);
-                  }}
-                  isclick={isclick === 2}
-                >
+                <IconBox>
                   <IconImg
                     src={
                       process.env.PUBLIC_URL + "/recommendationicon/일식.png"
                     }
                   />
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(2);
-                  }}
-                  isclick={isclick === 2}
-                >
+                <IconBox>
                   <IconImg
                     src={
                       process.env.PUBLIC_URL + "/recommendationicon/양식.png"
                     }
                   />
                 </IconBox>
-                <IconBox
-                  onClick={() => {
-                    clickToggle(2);
-                  }}
-                  isclick={isclick === 2}
-                >
+                <IconBox>
                   <IconImg
                     src={
                       process.env.PUBLIC_URL + "/recommendationicon/중식.png"

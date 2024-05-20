@@ -17,7 +17,7 @@ import Wiskey from "./pages/wiskeypage/Wiskey";
 import MemInfo from "./pages/mypage/MemInfo";
 import Mypage from "./pages/mypage/Mypage";
 import SignOut from "./pages/mypage/SignOut";
-
+import MoodResult from "./pages/popularrecommendpage/moodrecommend/MoodResult";
 function App() {
   return (
     <>
@@ -41,6 +41,7 @@ function App() {
             {/* Footer가 필요한 페이지 중첩라우팅 */}
             <Route element={<IncludeFooter />}>
               <Route path="/recommend" element={<Recommend />} />
+              <Route path="/moodresult" element={<MoodResult />} />
               <Route path="/beer" element={<Beer />} />
               <Route path="/traditional" element={<Traditional />} />
               <Route path="/wine" element={<Wine />} />
