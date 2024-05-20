@@ -44,8 +44,16 @@ const SelectListDiv = styled.div`
 `;
 const SelectList = styled.select`
   width: 100px;
-  height: 25px;
+  height: 30px;
   font-size: 13px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+  & > option {
+    border: none;
+  }
 `;
 const Hrtag = styled.hr`
   border: none;

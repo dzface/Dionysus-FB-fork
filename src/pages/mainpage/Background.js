@@ -32,7 +32,9 @@ const BackgroundImg = styled.div`
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  position: relative;
   animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.55s forwards;
+  opacity: ${({ opacity }) => (opacity ? "0.5" : "1")};
 `;
 
 // ImgChangeBtnsDiv StyledComponent
@@ -69,7 +71,7 @@ const ImgBtnDiv = styled.div`
   }
 `;
 
-const Background = ({ children, backbtn, scroll, opacity }) => {
+const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
 
@@ -95,9 +97,13 @@ const Background = ({ children, backbtn, scroll, opacity }) => {
     // 초기 배경 이미지 설정
     setBgimgurl(wine);
   }, []); // []를 넘겨 useEffect가 한 번만 실행되도록 합니다.
-  console.log(scroll);
   return (
-    <BackgroundImg imageurl={bgimgurl} isFading={isFading} scroll={scroll}>
+    <BackgroundImg
+      imageurl={bgimgurl}
+      isFading={isFading}
+      scroll={scroll}
+      opacity={opacityisTrue}
+    >
       {children}
       <ImgChangeBtnsDiv backbtn={backbtn}>
         <ImgBtnDiv>
