@@ -2,7 +2,6 @@ import axios from "axios";
 const DOMAIN = "http://localhost:8111";
 
 const AxiosApi = {
-  SOCKET_URL: "ws://localhost:8111/",
   // 개별 회원 조회
   memberGetOne: async (email) => {
     return await axios.get(DOMAIN + `/my/detail/${email}`);
@@ -43,7 +42,7 @@ const AxiosApi = {
     };
     return await axios.post(DOMAIN + "/mypage/memberdel", member);
   },
-
+  //찜 목록 불러오기
   jjimAlcohol: async (
     user_id,
     alcohol_name,
@@ -63,6 +62,11 @@ const AxiosApi = {
       price: price,
     };
     return await axios.post(DOMAIN + "/mypage/jjimalcohol", alcohol);
+  },
+  // 알콜 카테고리 불러오기
+  // all은 전체 알콜정보, 아니면 개별 알콜정보
+  alcoholSelect: async (Category) => {
+    return await axios.get(DOMAIN + "/alcohol/selectalcohol", Category);
   },
 };
 

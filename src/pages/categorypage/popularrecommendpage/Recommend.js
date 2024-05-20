@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Common from "../Common/Common";
 import bg from "../../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
+import AxiosApi from "../../../api/AxiosApi";
+
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
