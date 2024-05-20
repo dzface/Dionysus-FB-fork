@@ -9,7 +9,6 @@ const Container = styled.div`
   border-radius: 8px;
 
   @media (min-width: 768px) {
-    max-width: 800px;
     margin: 20px auto;
   }
 `;
