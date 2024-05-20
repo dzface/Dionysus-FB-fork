@@ -6,18 +6,17 @@ import LoginPage from "./pages/loginpage/LoginPage";
 import SignupPage from "./pages/loginpage/SighupPage";
 import FindIDPage from "./pages/loginpage/FindIDPage";
 import FindPWPage from "./pages/loginpage/FindPWPage";
-import Recommend from "./pages/popularrecommendpage/Recommend";
+import Recommend from "./pages/categorypage/popularrecommendpage/Recommend";
 import IncludeFooter from "./global/IncludeFooter";
 import NotIncludeFooter from "./global/NotIncludeFooter";
 import MainPage from "./pages/mainpage/MainPage";
-import Beer from "./pages/beerpage/Beer";
-import Traditional from "./pages/traditionalpage/Traditional";
-import Wine from "./pages/winepage/Wine";
-import Wiskey from "./pages/wiskeypage/Wiskey";
+import Beer from "./pages/categorypage/beerpage/Beer";
+import Traditional from "./pages/categorypage/traditionalpage/Traditional";
+import Wine from "./pages/categorypage/winepage/Wine";
+import Wiskey from "./pages/categorypage/wiskeypage/Wiskey";
 import MemInfo from "./pages/mypage/MemInfo";
 import Mypage from "./pages/mypage/Mypage";
 import SignOut from "./pages/mypage/SignOut";
-import MoodResult from "./pages/popularrecommendpage/moodrecommend/MoodResult";
 function App() {
   return (
     <>
@@ -41,7 +40,6 @@ function App() {
             {/* Footer가 필요한 페이지 중첩라우팅 */}
             <Route element={<IncludeFooter />}>
               <Route path="/recommend" element={<Recommend />} />
-              <Route path="/moodresult" element={<MoodResult />} />
               <Route path="/beer" element={<Beer />} />
               <Route path="/traditional" element={<Traditional />} />
               <Route path="/wine" element={<Wine />} />

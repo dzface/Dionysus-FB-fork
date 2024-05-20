@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import img1 from "../../img/popularrecommendpageimg/pexels-markusspiske-121191.jpg";
-import bg from "../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
+import Common from "../Common/Common";
+import bg from "../../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
 import { Link } from "react-router-dom";
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
@@ -50,10 +50,6 @@ const WineItem = styled.div`
     isBig ? "600px" : "300px"}; // isBig에 따라 높이를 설정합니다.
   background-color: ${({ bgColor }) =>
     bgColor}; // isBig에 따라 배경색을 설정합니다.
-  /* display: flex; // 플렉스 박스로 설정합니다.
-  flex-direction: row; // 세로 방향으로 아이템을 배치합니다.
-  justify-content: center; // 수직 가운데 정렬합니다.
-  align-items: center; // 수평 가운데 정렬합니다. */
   cursor: pointer; // 포인터 모양의 커서를 설정합니다.
   transition: all 0.5s ease; // 전환 효과를 설정합니다.
   top: ${({ isBig }) => (isBig ? "120px" : "0")};
@@ -86,50 +82,6 @@ const WineItemImage = styled.img`
   border-radius: 0 0 5% 5%;
 `;
 
-// Input 스타일 컴포넌트를 생성합니다.
-const Input = styled.input`
-  width: 600px; // 너비를 600px로 설정합니다.
-  padding: 8px; // 안쪽 여백을 설정합니다.
-  text-align: center; // 텍스트를 가운데 정렬합니다.
-  margin-bottom: 20px; // 하단 여백을 설정합니다.
-  border: 1px solid #ccc; // 테두리 스타일을 설정합니다.
-  border-radius: 4px; // 테두리의 둥근 정도를 설정합니다.
-  font-size: 16px; // 글꼴 크기를 설정합니다.
-  @media (max-width: 700px) {
-    width: 300px;
-    height: 30px;
-  }
-`;
-
-// List 스타일 컴포넌트를 생성합니다.
-const List = styled.ul`
-  width: 600px; // 너비를 600px로 설정합니다.
-  border: 10px solid white; // 테두리 스타일을 설정합니다.
-  list-style: none; // 리스트 스타일을 제거합니다.
-  padding: 0; // 안쪽 여백을 제거합니다.
-  margin: auto; // 가운데 정렬합니다.
-`;
-
-// ListItem 스타일 컴포넌트를 생성합니다.
-const ListItem = styled.li`
-  display: flex; // 플렉스 박스로 설정합니다.
-  align-items: center; // 수직 가운데 정렬합니다.
-  padding: 10px; // 안쪽 여백을 설정합니다.
-  border-bottom: 1px solid #ccc; // 아이템 사이에 경계선을 설정합니다.
-`;
-
-// ItemImage 스타일 컴포넌트를 생성합니다.
-const ItemImage = styled.img`
-  width: 50px; // 너비를 50px로 설정합니다.
-  height: 50px; // 높이를 50px로 설정합니다.
-  margin-right: 10px; // 오른쪽 여백을 설정합니다.
-  object-fit: cover; // 이미지가 요소에 맞게 잘릴 수 있도록 설정합니다.
-`;
-
-// ItemDescription 스타일 컴포넌트를 생성합니다.
-const ItemDescription = styled.div`
-  flex: 1; // 남은 공간을 모두 차지하도록 설정합니다.
-`;
 // 와인 아이템 내용을 감싸는 Wrapper 스타일 컴포넌트를 생성합니다.
 const Wrapper = styled.div`
   width: 100%;
@@ -163,27 +115,13 @@ const IconImg = styled.img`
   height: 150px;
   border-radius: 50%;
 `;
-const SelectListDiv = styled.div`
-  width: 100vw;
-  height: 25px;
-  display: flex;
-  justify-content: end;
-  margin-right: 38vw;
-`;
-const SelectList = styled.select`
-  width: 100px;
-  height: 25px;
-  font-size: 13px;
-`;
+
 const Recommend = () => {
   const [isBig, setIsBig] = useState(null);
-  const [isclick, setisclick] = useState(null);
   const toggleSize = (index) => {
     setIsBig(isBig === index ? null : index);
   };
-  const clickToggle = (index2) => {
-    setisclick(isclick === index2 ? null : index2);
-  };
+
   return (
     <Container>
       <h1>다양한 주류 추천</h1>
@@ -343,175 +281,7 @@ const Recommend = () => {
           )}
         </WineItem>
       </WineContainer>
-      <Input type="text" placeholder="무엇을 찾고 계신가요?" />
-      <SelectListDiv>
-        <SelectList>
-          <option>최신등록순</option>
-          <option>별점높은순</option>
-          <option>도수낮은순</option>
-          <option>가격낮은순</option>
-        </SelectList>
-      </SelectListDiv>
-      <List>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 1" />
-          <ItemDescription>
-            <span>와인 1 - 50,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        <ListItem>
-          <ItemImage src={img1} alt="와인 2" />
-          <ItemDescription>
-            <span>와인 2 - 30,000원</span>
-          </ItemDescription>
-        </ListItem>
-        {/* 필요한 만큼 리스트 아이템을 추가할 수 있습니다. */}
-      </List>
-      {/* <HorizontalLine /> */}
+      <Common />
     </Container>
   );
 };

@@ -32,7 +32,6 @@ const BackgroundImg = styled.div`
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  opacity: 1;
   animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.55s forwards;
 `;
 
@@ -70,7 +69,7 @@ const ImgBtnDiv = styled.div`
   }
 `;
 
-const Background = ({ children, backbtn, scroll }) => {
+const Background = ({ children, backbtn, scroll, opacity }) => {
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
 
