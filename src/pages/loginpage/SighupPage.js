@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../../style/loginstyle/SignupPage.module.css";
 import BackButton from "./BackButton";
 import axios from "axios";
@@ -11,6 +12,7 @@ const SignupPage = () => {
   const [nickName, setNickName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const navigate =useNavigate;
   useEffect(() => {
     console.log(email);
   }, [email]);
@@ -18,19 +20,20 @@ const SignupPage = () => {
   const regist = () => {
     axios
       .post("http://localhost:8111/users/signup", {
-        id: "email",
-        pw: "password",
-        name: "userName",
-        jumin: "jumin",
-        nick: "nickName",
-        phone: "phone",
-        address: "address",
+        user_id: email,
+        user_pw: password,
+        user_name: userName,
+        user_jumin: jumin,
+        user_nick: nickName,
+        user_phone: phone,
+        user_address: address,
       })
       .then((response) => {
         // Handle success.
         console.log("Well done!");
         console.log("User profile", response.data.user);
         console.log("User token", response.data.jwt);
+        navigate("/")
       })
       .catch((error) => {
         // Handle error.

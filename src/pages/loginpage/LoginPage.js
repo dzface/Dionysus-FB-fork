@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../style/loginstyle/loginpage.module.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [caution, setCaution] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkInputs(email, password);
@@ -20,11 +22,26 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     if (caution === "확인되었습니다.") {
-      // 로그인 로직 추가
-      console.log("로그인되었습니다.");
+      axios
+        .post("http://localhost:8111/users/login", {
+          USER_ID: email,
+          USER_PW: password,
+        })
+        .then((response) => {
+          // Handle success.
+          const user = response.data[0];
+          if (user) {
+            localStorage.setItem("user_id", user.user_id);
+            localStorage.setItem("user_pw", user.user_pw);
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          // Handle error.
+          console.log("An error occurred:", error.response);
+        });
     }
   };
-
   return (
     <>
       <div className={styles.container}>
