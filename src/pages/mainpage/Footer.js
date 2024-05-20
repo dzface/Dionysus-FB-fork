@@ -11,7 +11,6 @@ const FooterBody = styled.footer`
   height: 20vh;
   background-color: rgba(0, 0, 0, 0.8);
   border: none;
-  position: absolute;
   display: flex;
   bottom: 0;
   @media (max-width: 700px) {

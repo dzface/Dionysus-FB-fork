@@ -134,7 +134,18 @@ const Wrapper = styled.div`
   justify-content: center; // 수직 가운데 정렬합니다.
   align-items: center; // 수평 가운데 정렬합니다.
 `;
-
+const SelectListDiv = styled.div`
+  width: 100vw;
+  height: 25px;
+  display: flex;
+  justify-content: end;
+  margin-right: 38vw;
+`;
+const SelectList = styled.select`
+  width: 100px;
+  height: 25px;
+  font-size: 13px;
+`;
 const Beer = () => {
   const [isBig, setIsBig] = useState(null);
 
@@ -147,6 +158,14 @@ const Beer = () => {
       <h1>테마별 맥주 추천</h1>
       {/* 와인 목록 내용 */}
       <Input type="text" placeholder="무엇을 찾고 계신가요?" />
+      <SelectListDiv>
+        <SelectList>
+          <option>최신등록순</option>
+          <option>별점높은순</option>
+          <option>도수낮은순</option>
+          <option>가격낮은순</option>
+        </SelectList>
+      </SelectListDiv>
       <List>
         <ListItem>
           <ItemImage src={img1} alt="와인 1" />

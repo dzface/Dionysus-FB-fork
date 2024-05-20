@@ -3,7 +3,7 @@ import Header from "../pages/mainpage/Header";
 import { Outlet } from "react-router-dom";
 const NotIncludeFooter = () => {
   return (
-    <Background opacity={0.5}>
+    <Background backbtn={false} scroll={false}>
       <Header />
       <Outlet />
     </Background>

@@ -3,7 +3,7 @@ import Background from "./Background";
 const MainPage = () => {
   return (
     <>
-      <Background>
+      <Background backbtn={true} scroll={false}>
         <Header />
       </Background>
     </>

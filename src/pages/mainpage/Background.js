@@ -25,13 +25,13 @@ const flipOutY = keyframes`
 // BackgroundImg StyledComponent
 const BackgroundImg = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: ${({ scroll }) => (scroll ? "2600px" : "100vh")};
   border: none;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  position: fixed;
+  background-attachment: fixed;
   opacity: 1;
   animation: ${({ isFading }) => (isFading ? flipOutY : "none")} 0.55s forwards;
 `;
@@ -43,23 +43,24 @@ const ImgChangeBtnsDiv = styled.div`
   border: none;
   position: absolute;
   bottom: 0;
-  display: flex;
+  display: ${({ backbtn }) => (backbtn ? "flex" : "none")};
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
   z-index: 5;
 `;
 
 // 배경바꾸는 버튼 styledComponent
 const ImgBtnDiv = styled.div`
-  width: 3vw;
-  height: 5vh;
+  width: 43px;
+  height: 43px;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   & > button {
-    width: 1.3vw;
-    height: 1.3vw;
+    width: 20px;
+    height: 20px;
     border: none;
     background-color: #fff;
     border-radius: 50%;
@@ -69,7 +70,7 @@ const ImgBtnDiv = styled.div`
   }
 `;
 
-const Background = ({ children }) => {
+const Background = ({ children, backbtn, scroll }) => {
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
 
@@ -95,11 +96,11 @@ const Background = ({ children }) => {
     // 초기 배경 이미지 설정
     setBgimgurl(wine);
   }, []); // []를 넘겨 useEffect가 한 번만 실행되도록 합니다.
-
+  console.log(scroll);
   return (
-    <BackgroundImg imageurl={bgimgurl} isFading={isFading}>
+    <BackgroundImg imageurl={bgimgurl} isFading={isFading} scroll={scroll}>
       {children}
-      <ImgChangeBtnsDiv>
+      <ImgChangeBtnsDiv backbtn={backbtn}>
         <ImgBtnDiv>
           <button onClick={() => onClick(beer, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>

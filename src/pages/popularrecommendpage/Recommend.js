@@ -163,6 +163,18 @@ const IconImg = styled.img`
   height: 150px;
   border-radius: 50%;
 `;
+const SelectListDiv = styled.div`
+  width: 100vw;
+  height: 25px;
+  display: flex;
+  justify-content: end;
+  margin-right: 38vw;
+`;
+const SelectList = styled.select`
+  width: 100px;
+  height: 25px;
+  font-size: 13px;
+`;
 const Recommend = () => {
   const [isBig, setIsBig] = useState(null);
   const [isclick, setisclick] = useState(null);
@@ -390,6 +402,14 @@ const Recommend = () => {
         </WineItem>
       </WineContainer>
       <Input type="text" placeholder="무엇을 찾고 계신가요?" />
+      <SelectListDiv>
+        <SelectList>
+          <option>최신등록순</option>
+          <option>별점높은순</option>
+          <option>도수낮은순</option>
+          <option>가격낮은순</option>
+        </SelectList>
+      </SelectListDiv>
       <List>
         <ListItem>
           <ItemImage src={img1} alt="와인 1" />

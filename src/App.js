@@ -17,7 +17,7 @@ import Wiskey from "./pages/wiskeypage/Wiskey";
 import MemInfo from "./pages/mypage/MemInfo";
 import Mypage from "./pages/mypage/Mypage";
 import SignOut from "./pages/mypage/SignOut";
-import axios from "axios";
+
 function App() {
   return (
     <>
