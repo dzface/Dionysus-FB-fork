@@ -39,9 +39,10 @@ const AxiosApi = {
     return await axios.post(DOMAIN + "/mypage/memcheck", member);
   },
   // 회원정보 삭제
-  memberDelete: async (user_id) => {
+  memberDelete: async (user_name, user_jumin) => {
     const member = {
-      user_id: user_id,
+      user_name: user_name,
+      user_jumin: user_jumin,
     };
     return await axios.post(DOMAIN + "/mypage/memberdel", member);
   },
