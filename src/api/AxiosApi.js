@@ -65,8 +65,10 @@ const AxiosApi = {
   },
   // 알콜 카테고리 불러오기
   // all은 전체 알콜정보, 아니면 개별 알콜정보
-  alcoholSelect: async (Category) => {
-    return await axios.get(DOMAIN + "/alcohol/selectalcohol", Category);
+  alcoholSelect: async (category) => {
+    return await axios.get(
+      DOMAIN + `/alcohol/selectalcohol?category=${category}`
+    );
   },
 };
 

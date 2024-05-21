@@ -69,43 +69,48 @@ const Jjim = styled.div`
   height: 100px;
   margin-left: 7px;
 `;
-const ListItem = () => {
+const ListItem = ({ data }) => {
+  console.log(data);
   return (
-    <ItemBox>
-      <ItemImage alcoholimg={alcoholimg} />
-      <ItemContext>
-        <div className="com">코트 드 프로방스(Cotes de Provence)</div>
-        <div className="name">미라발 로즈 2021/22</div>
-        <div>
-          <div className="country_of_origin">프랑스(france)</div>
-          <div className="abv">ABV:12.5%</div>
-          <div className="volume">750ml</div>
-          <div className="price">33,512원</div>
-        </div>
-        <div className="score">
-          4
-          <FaStar size={20} color="yellow" />
-          <FaStar size={20} color="yellow" />
-          <FaStar size={20} color="yellow" />
-          <FaStar size={20} color="yellow" />
-          <FaStar size={20} color="white" />
-        </div>
-      </ItemContext>
-      <ItemReview>
-        <div className="review">Review</div>
-        <div className="reviewvalue">
-          레드와인 중에 가장 바디감 있고 연인끼지 마시기 좋았습니다.
-          스테이크랑도 잘 어울리고 파스타랑 같이 먹을 때도 완전 강추@!~!
-        </div>
-        <div className="more">
-          더보기
-          <IoMdArrowDropdown size={28} />
-        </div>
-      </ItemReview>
-      <Jjim>
-        <FaHeart size={28} color="red" />
-      </Jjim>
-    </ItemBox>
+    <>
+      {data &&
+        data.map((item, index) => (
+          <ItemBox key={index}>
+            <ItemImage alcoholimg={alcoholimg} />
+            <ItemContext>
+              <div className="com">{item.com}</div>
+              <div className="name">{item.alcohol_name}</div>
+              <div>
+                <div className="country_of_origin">
+                  {item.country_of_origin}
+                </div>
+                <div className="abv">{item.abv}%</div>
+                <div className="volume">{item.volume}ml</div>
+                <div className="price">{item.price}원</div>
+              </div>
+              <div className="score">
+                {item.score}
+                <FaStar size={20} color="yellow" />
+                <FaStar size={20} color="yellow" />
+                <FaStar size={20} color="yellow" />
+                <FaStar size={20} color="yellow" />
+                <FaStar size={20} color="white" />
+              </div>
+            </ItemContext>
+            <ItemReview>
+              <div className="review">Review</div>
+              <div className="reviewvalue">{item.review}</div>
+              <div className="more">
+                더보기
+                <IoMdArrowDropdown size={28} />
+              </div>
+            </ItemReview>
+            <Jjim>
+              <FaHeart size={28} color="red" />
+            </Jjim>
+          </ItemBox>
+        ))}
+    </>
   );
 };
 

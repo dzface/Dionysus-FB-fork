@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import logo from "../../img/mainpageimg/logo/logo1.jpeg";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../../global/UserStore";
 import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import beer from "../../img/mainpageimg/background/beer.jpg";
@@ -263,7 +263,7 @@ const SideMenuDiv = styled.div`
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
-  const { setBgimgurl, bgimgurl, name, pfimg } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
+  const { setBgimgurl, setCategory, bgimgurl, category, name, pfimg } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
   const email = localStorage.getItem("email");
   const navigate = useNavigate();
@@ -302,6 +302,7 @@ const Header = () => {
                 style={{ textDecoration: "none" }}
                 onClick={() => {
                   backImgChange(bgimgurl);
+                  setCategory("all");
                 }}
               >
                 <ItemFont animate={animate}>인기주류</ItemFont>
@@ -313,6 +314,7 @@ const Header = () => {
                 style={{ textDecoration: "none" }}
                 onClick={() => {
                   backImgChange(traditional);
+                  setCategory("전통주");
                 }}
               >
                 <ItemFont animate={animate}>전통주</ItemFont>
@@ -324,6 +326,7 @@ const Header = () => {
                 style={{ textDecoration: "none" }}
                 onClick={() => {
                   backImgChange(wiskey);
+                  setCategory("위스키");
                 }}
               >
                 <ItemFont animate={animate}>위스키</ItemFont>
@@ -335,6 +338,7 @@ const Header = () => {
                 style={{ textDecoration: "none" }}
                 onClick={() => {
                   backImgChange(wine);
+                  setCategory("와인");
                 }}
               >
                 <ItemFont animate={animate}>와인</ItemFont>
@@ -346,6 +350,7 @@ const Header = () => {
                 style={{ textDecoration: "none" }}
                 onClick={() => {
                   backImgChange(beer);
+                  setCategory("맥주");
                 }}
               >
                 <ItemFont animate={animate}>맥주</ItemFont>

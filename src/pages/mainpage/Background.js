@@ -25,7 +25,7 @@ const flipOutY = keyframes`
 // BackgroundImg StyledComponent
 const BackgroundImg = styled.div`
   width: 100vw;
-  height: ${({ scroll }) => (scroll ? "2600px" : "100vh")};
+  height: ${({ scroll }) => (scroll ? "5000px" : "100vh")};
   border: none;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
