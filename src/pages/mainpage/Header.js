@@ -7,7 +7,7 @@ import { UserContext } from "../../global/UserStore";
 import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import beer from "../../img/mainpageimg/background/beer.jpg";
 import wine from "../../img/mainpageimg/background/wine.jpg";
-import wiskey from "../../img/mainpageimg/background/wiskey.jpg";
+import whiskey from "../../img/mainpageimg/background/whiskey.jpg";
 import { CiBeerMugFull } from "react-icons/ci"; // 맥주 icon
 import { PiWineFill } from "react-icons/pi"; //와인 icon
 import { IoMdWine } from "react-icons/io"; // 위스키 icon
@@ -325,7 +325,7 @@ const Header = () => {
                 to="/wiskey"
                 style={{ textDecoration: "none" }}
                 onClick={() => {
-                  backImgChange(wiskey);
+                  backImgChange(whiskey);
                   setCategory("위스키");
                 }}
               >
@@ -407,7 +407,7 @@ const Header = () => {
                 <PrifileDiv2>
                   <Link to="/login" style={{ textDecoration: "none" }}>
                     <BtnStyle>
-                      <p>Sign Up</p>
+                      <p>로그인</p>
                     </BtnStyle>
                   </Link>
                   <Link to="/mypage" style={{ textDecoration: "none" }}>
@@ -445,7 +445,7 @@ const Header = () => {
                     to="/wiskey"
                     style={{ textDecoration: "none" }}
                     onClick={() => {
-                      backImgChange(wiskey);
+                      backImgChange(whiskey);
                     }}
                     className="sidemenu"
                   >

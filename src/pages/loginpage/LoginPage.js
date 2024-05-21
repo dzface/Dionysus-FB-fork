@@ -13,7 +13,7 @@ const LoginPage = () => {
   }, [email, password]);
 
   const checkInputs = (inputEmail, inputPassword) => {
-    if (inputEmail !== "" && inputPassword !== "") {
+    if (inputEmail !== "" && inputPassword.length > 3) {
       setCaution("확인되었습니다.");
     } else {
       setCaution("값을 입력하세요.");
@@ -25,7 +25,7 @@ const LoginPage = () => {
       try {
         const response = await axios.post("http://localhost:8111/users/login", {
           USER_ID: email,
-          USER_PW: password,
+          USER_PW: password
         });
 
         // Handle success.
@@ -33,6 +33,12 @@ const LoginPage = () => {
         if (user) {
           localStorage.setItem("user_id", user.user_id);
           localStorage.setItem("user_pw", user.user_pw);
+          localStorage.setItem("user_name", user.user_name);
+          localStorage.setItem("user_jumin", user.user_jumin);
+          localStorage.setItem("user_nick", user.user_nick);
+          localStorage.setItem("user_phone", user.user_phone);
+          localStorage.setItem("user_address", user.user_address);
+          console.log(user);
           navigate("/");
         }
       } catch (error) {
