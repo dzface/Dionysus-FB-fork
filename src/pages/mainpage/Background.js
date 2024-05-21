@@ -2,9 +2,10 @@ import { useState, useContext, useEffect } from "react";
 import beer from "../../img/mainpageimg/background/beer.jpg";
 import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import wine from "../../img/mainpageimg/background/wine.jpg";
-import wiskey from "../../img/mainpageimg/background/wiskey.jpg";
+import whiskey from "../../img/mainpageimg/background/whiskey.jpg";
 import styled, { keyframes } from "styled-components";
 import { UserContext } from "../../global/UserStore";
+import video from "../../img/mainpageimg/video/video.mp4";
 
 // FlipOutY animation
 const flipOutY = keyframes`
@@ -70,16 +71,18 @@ const ImgBtnDiv = styled.div`
     }
   }
 `;
-
+const VideoBackground = styled.video`
+  width: 100vw;
+  height: 100vh;
+`;
 const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
 
   const [isFading, setIsFading] = useState(false);
-  const [nextBgImgUrl, setNextBgImgUrl] = useState(bgimgurl);
 
   const onClick = (url) => {
-    setNextBgImgUrl(url);
+    setBgimgurl(url);
 
     setIsFading(true);
   };
@@ -87,15 +90,15 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
   useEffect(() => {
     if (isFading) {
       const timer = setTimeout(() => {
-        setBgimgurl(nextBgImgUrl);
+        setBgimgurl(bgimgurl);
         setIsFading(false);
       }, 750); // Match this duration with the CSS animation duration
       return () => clearTimeout(timer);
     }
-  }, [isFading, nextBgImgUrl, setBgimgurl]);
+  }, [isFading, bgimgurl, setBgimgurl]);
   useEffect(() => {
     // 초기 배경 이미지 설정
-    setBgimgurl(wine);
+    setBgimgurl(beer);
   }, []); // []를 넘겨 useEffect가 한 번만 실행되도록 합니다.
   return (
     <BackgroundImg
@@ -116,7 +119,7 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
           <button onClick={() => onClick(wine, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(wiskey, "rgba(0,0,0,0.5)")} />
+          <button onClick={() => onClick(whiskey, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
       </ImgChangeBtnsDiv>
     </BackgroundImg>
