@@ -1,11 +1,16 @@
 import Header from "./Header";
 import Background from "./Background";
-const MainPage = () => {
+import VideoBackground from "./VideoBackground";
+const MainPage = ({ hidden, backheight }) => {
   return (
     <>
-      <Background backbtn={true} scroll={false} opacityisTrue={false}>
+      {/* 이미지메인배경 */}
+      {/* <Background backbtn={true} scroll={false} opacityisTrue={false}>
         <Header />
-      </Background>
+      </Background> */}
+      <VideoBackground>
+        <Header />
+      </VideoBackground>
     </>
   );
 };

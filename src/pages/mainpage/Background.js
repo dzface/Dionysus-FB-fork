@@ -5,7 +5,6 @@ import wine from "../../img/mainpageimg/background/wine.jpg";
 import whiskey from "../../img/mainpageimg/background/whiskey.jpg";
 import styled, { keyframes } from "styled-components";
 import { UserContext } from "../../global/UserStore";
-import video from "../../img/mainpageimg/video/video.mp4";
 
 // FlipOutY animation
 const flipOutY = keyframes`
@@ -23,8 +22,8 @@ const flipOutY = keyframes`
   }
 `;
 
-// BackgroundImg StyledComponent
 const BackgroundImg = styled.div`
+  overflow-x: hidden; // 수평 스크롤을 숨김
   width: 100vw;
   height: ${({ scroll }) => (scroll ? "5000px" : "100vh")};
   border: none;
@@ -41,7 +40,7 @@ const BackgroundImg = styled.div`
 // ImgChangeBtnsDiv StyledComponent
 const ImgChangeBtnsDiv = styled.div`
   width: 100vw;
-  height: 5vh;
+  height: 10vh;
   border: none;
   position: absolute;
   bottom: 0;
@@ -50,6 +49,7 @@ const ImgChangeBtnsDiv = styled.div`
   align-items: center;
   margin-bottom: 20px;
   z-index: 5;
+  display: ${({ hidden }) => (hidden ? "none" : "flex")};
 `;
 
 // 배경바꾸는 버튼 styledComponent
@@ -71,10 +71,6 @@ const ImgBtnDiv = styled.div`
     }
   }
 `;
-const VideoBackground = styled.video`
-  width: 100vw;
-  height: 100vh;
-`;
 const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
   const context = useContext(UserContext);
   const { bgimgurl, setBgimgurl } = context;
@@ -83,10 +79,8 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
 
   const onClick = (url) => {
     setBgimgurl(url);
-
     setIsFading(true);
   };
-
   useEffect(() => {
     if (isFading) {
       const timer = setTimeout(() => {
