@@ -69,12 +69,12 @@ const Jjim = styled.div`
   height: 100px;
   margin-left: 7px;
 `;
-const ListItem = ({ data }) => {
-  console.log(data);
+const ListItem = ({ alcohols }) => {
+  console.log(alcohols);
   return (
     <>
-      {data &&
-        data.map((item, index) => (
+      {alcohols &&
+        alcohols.map((item, index) => (
           <ItemBox key={index}>
             <ItemImage alcoholimg={alcoholimg} />
             <ItemContext>

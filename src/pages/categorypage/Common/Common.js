@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import ListItem from "./ListItem";
-import axios from "axios";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../../../global/UserStore";
 import AxiosApi from "../../../api/AxiosApi";
+import SortOptions from "./SortOptions";
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
@@ -45,19 +45,7 @@ const SelectListDiv = styled.div`
   justify-content: end;
   margin-right: 38vw;
 `;
-const SelectList = styled.select`
-  width: 100px;
-  height: 30px;
-  font-size: 13px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border: none;
-  border-radius: 2px;
-  text-align: center;
-  & > option {
-    border: none;
-  }
-`;
+
 const Hrtag = styled.hr`
   border: none;
   width: 80vw;
@@ -67,36 +55,40 @@ const Hrtag = styled.hr`
 `;
 const Common = () => {
   const context = useContext(UserContext);
-  const [data, setData] = useState([]);
+  const [alcohols, setAlcohols] = useState([]);
+  const [sortBy, setSortBy] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const { category } = context;
   useEffect(() => {
     const alcoholList = async () => {
       try {
-        console.log(category);
-        const rsp = await AxiosApi.alcoholSelect(category);
-        console.log(rsp.data);
-
-        setData(rsp.data);
-      } catch (e) {
-        console.log(e);
+        let rsp;
+        if (searchTerm.trim() !== "") {
+          rsp = await AxiosApi.searchAlcohols(category, searchTerm);
+        } else {
+          rsp = await AxiosApi.alcoholSelect(category, sortBy);
+        }
+        setAlcohols(rsp.data);
+      } catch (error) {
+        console.error("Failed to fetch alcohols:", error);
       }
     };
     alcoholList();
-  }, []);
+  }, [category, sortBy, searchTerm]);
   return (
     <Container>
       <Hrtag />
-      <Input type="text" placeholder="무엇을 찾고 계신가요?" />
+      <Input
+        type="text"
+        placeholder="무엇을 찾고 계신가요?"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <SelectListDiv>
-        <SelectList>
-          <option>최신등록순</option>
-          <option>별점높은순</option>
-          <option>도수낮은순</option>
-          <option>가격낮은순</option>
-        </SelectList>
+        <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
       </SelectListDiv>
       <List>
-        <ListItem data={data} />
+        <ListItem alcohols={alcohols} />
       </List>
       {/* <HorizontalLine /> */}
     </Container>

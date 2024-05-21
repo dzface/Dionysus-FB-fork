@@ -407,7 +407,7 @@ const Header = () => {
                 <PrifileDiv2>
                   <Link to="/login" style={{ textDecoration: "none" }}>
                     <BtnStyle>
-                      <p>Sign Up</p>
+                      <p>로그인</p>
                     </BtnStyle>
                   </Link>
                   <Link to="/mypage" style={{ textDecoration: "none" }}>
