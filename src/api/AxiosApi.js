@@ -2,18 +2,20 @@ import axios from "axios";
 const DOMAIN = "http://localhost:8111";
 
 const AxiosApi = {
-
   // 회원 가입 여부 확인
   memberRegCheck: async (email) => {
     return await axios.get(DOMAIN + `/users/check?USER_ID=${email}`);
   },
   // 주민등록 DB 조회
-  juminRegCheck: async (jumin)=>{
-    return await axios.get(DOMAIN+`/users/jumin-check?USER_JUMIN=${jumin}`);
+  juminRegCheck: async (jumin) => {
+    return await axios.get(DOMAIN + `/users/jumin-check?USER_JUMIN=${jumin}`);
   },
   // 개별 회원 조회
-  memberGetOne: async (email) => {
-    return await axios.get(DOMAIN + `/my/detail/${email}`);
+  memberSelect: async (user_id) => {
+    const member = {
+      user_id: user_id,
+    };
+    return await axios.post(DOMAIN + "/mypage/memberselect", member);
   },
   // 회원 정보 수정
   menberUpdate: async (
@@ -42,7 +44,7 @@ const AxiosApi = {
       user_name: user_name,
       user_jumin: user_jumin,
     };
-    return await axios.post(DOMAIN + "/mypage/membercheck", member);
+    return await axios.post(DOMAIN + "/mypage/memcheck", member);
   },
   // 회원정보 삭제
   memberDelete: async (user_id) => {
@@ -73,11 +75,84 @@ const AxiosApi = {
     return await axios.post(DOMAIN + "/mypage/jjimalcohol", alcohol);
   },
   // 알콜 카테고리 불러오기
-  // all은 전체 알콜정보, 아니면 개별 알콜정보
-  alcoholSelect: async (category) => {
-    return await axios.get(
-      DOMAIN + `/alcohol/selectalcohol?category=${category}`
-    );
+  // all은 전체 알콜정보, 아니면 개별 알콜정보 orderBy를 통해서 sort해서 넘어옴.
+  alcoholSelect: async (category, sortBy) => {
+    try {
+      return await axios.get(
+        DOMAIN + `/alcohol/selectalcohol?category=${category}&sortBy=${sortBy}`
+      );
+    } catch (error) {
+      console.error("Error select alcohol", error);
+      throw error;
+    }
+  },
+  //input으로 알콜명 검색하면 해당되는 내용 select
+  searchAlcohols: async (category, searchTerm) => {
+    try {
+      return await axios.get(
+        `${DOMAIN}/search/selectsearch?category=${category}&searchTerm=${searchTerm}`
+      );
+    } catch (error) {
+      console.error("Error searching alcohols:", error);
+      throw error;
+    }
+  },
+  addReview: async (alcoholName, review) => {
+    try {
+      const response = await axios.post(`${DOMAIN}/review/insertreview`, {
+        alcohol_name: alcoholName,
+        review,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error adding review:", error);
+      throw error;
+    }
+  },
+  updateReview: async (alcoholName, review) => {
+    try {
+      const response = await axios.put(`${DOMAIN}/review/updatereview`, {
+        alcohol_name: alcoholName,
+        review,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating review:", error);
+      throw error;
+    }
+  },
+  deleteReview: async (alcoholName) => {
+    try {
+      const response = await axios.delete(`${DOMAIN}/review/deletereview`, {
+        params: { alcohol_name: alcoholName },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      throw error;
+    }
+  },
+  addScore: async (alcoholName, score) => {
+    return axios.post(`${DOMAIN}/score/add`, { alcoholName, score });
+  },
+  updateScore: async (alcoholName, score) => {
+    return axios.put(`${DOMAIN}/score/update`, { alcoholName, score });
+  },
+  fetchAverageScore: async (alcoholName) => {
+    return axios.get(`${DOMAIN}/score/average`, {
+      params: { alcoholName },
+    });
+  },
+  fetchJjim: async (userId) => {
+    return axios.get(`${DOMAIN}/jjim`, { params: { userId } });
+  },
+  addJjim: async (alcoholName) => {
+    return axios.post(`${DOMAIN}/jjim/add`, { alcoholName });
+  },
+  removeJjim: async (alcoholName) => {
+    return axios.delete(`${DOMAIN}/jjim/remove`, {
+      params: { alcoholName },
+    });
   },
 };
 
