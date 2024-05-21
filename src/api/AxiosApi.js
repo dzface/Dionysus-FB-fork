@@ -4,8 +4,11 @@ const DOMAIN = "http://localhost:8111";
 const AxiosApi = {
   SOCKET_URL: "ws://localhost:8111/",
   // 개별 회원 조회
-  memberGetOne: async (email) => {
-    return await axios.get(DOMAIN + `/my/detail/${email}`);
+  memberSelect: async (user_id) => {
+    const member = {
+      user_id: user_id,
+    };
+    return await axios.post(DOMAIN + "/mypage/memberselect", member);
   },
   // 회원 정보 수정
   menberUpdate: async (
@@ -34,7 +37,7 @@ const AxiosApi = {
       user_name: user_name,
       user_jumin: user_jumin,
     };
-    return await axios.post(DOMAIN + "/mypage/membercheck", member);
+    return await axios.post(DOMAIN + "/mypage/memcheck", member);
   },
   // 회원정보 삭제
   memberDelete: async (user_id) => {

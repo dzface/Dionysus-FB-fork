@@ -1,5 +1,8 @@
 import "../../style/mypagestyle/MypageStyle.scss";
 import { Link } from "react-router-dom";
+import ReviewItem from "./Common/ReviewItem";
+import JjimItem from "./Common/JjimItem";
+
 // import { UseContext, useState } from "react";
 // import { UserContext } from "../../global/UserStore";
 // import { storage } from "../../firebase/profileupload/ProfileImgUpload";
@@ -26,7 +29,7 @@ const Mypage = () => {
   //   }
   // };
   return (
-    <body>
+    <div>
       <div className="container">
         <div className="contents">
           <div className="mem">
@@ -60,66 +63,13 @@ const Mypage = () => {
 
           <h2>찜 목록</h2>
           <hr />
-
-          <div className="jjimcontainer">
-            <div className="alinfo">
-              <div className="alimg"></div>
-              <div className="alinfo1">
-                <p>제조사</p>
-                <p>술 이름</p>
-                <div className="alinfo2">
-                  <p>국가</p>
-                  <p>도수</p>
-                  <p>용량</p>
-                  <p>가격</p>
-                </div>
-                <div className="alinfo3">
-                  <p>별점</p>
-                  <button className="seereview">리뷰확인 ▼</button>
-                </div>
-              </div>
-              <div className="reviewbox">
-                Review
-                <textarea name="reviewbox">안녕하세요 리뷰입니다</textarea>
-                <button className="more">더보기 ▼</button>
-              </div>
-
-              <div className="heart">♥</div>
-            </div>
-          </div>
-
+          <JjimItem />
           <h2>후기</h2>
           <hr />
-
-          <div className="jjimcontainer">
-            <div className="alinfo">
-              <div className="alimg"></div>
-              <div className="alinfo1">
-                <p>제조사</p>
-                <p>술 이름</p>
-                <div className="alinfo2">
-                  <p>국가</p>
-                  <p>도수</p>
-                  <p>용량</p>
-                  <p>가격</p>
-                </div>
-                <div className="alinfo3">
-                  <p>별점</p>
-                  <button className="seereview">리뷰확인 ▼</button>
-                </div>
-              </div>
-              <div className="reviewbox">
-                Review
-                <textarea name="reviewbox">안녕하세요 리뷰입니다</textarea>
-                <button className="more">더보기 ▼</button>
-              </div>
-
-              <div className="heart">♥</div>
-            </div>
-          </div>
+          <ReviewItem />
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

@@ -2,45 +2,65 @@ import styles from "../../style/mypagestyle/SignOut.module.css";
 import BackButton from "../loginpage/BackButton";
 import AxiosApi from "../../api/AxiosApi";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SignOut = () => {
   const navigate = useNavigate();
+  // const { user_id } = useReq();
   const [delName, setDelName] = useState("");
   const [delJumin, setDelJumin] = useState("");
-  const [members, setMembers] = useState("");
+  const [member, setMember] = useState([]);
   const [delId, setDelId] = useState("");
-  const [isCurrentUser, setIsCurrentUser] = useState(false); // 로그인유저 확인
+  // const [isCurrentUser, setIsCurrentUser] = useState(false); // 로그인유저 확인
   // const context = useContext(UseContext);
   // const { setDelId } = context;
+
   useEffect(() => {
-    const membersFunc = async () => {
-      const rsp = await AxiosApi.memberCheck(delName, delJumin);
-      console.log(rsp.data);
-      setMembers(rsp.data);
+    const membersInfo = async () => {
+      try {
+        const rsp = await AxiosApi.memberSelect("user1@naver.com"); // 회원 정보 가져오기
+        setMember(rsp.data);
+        setDelId(rsp.data.user_id);
+        setDelName(rsp.data.user_name);
+        setDelJumin(rsp.data.user_jumin);
+      } catch (e) {
+        console.log(e);
+      }
     };
-    membersFunc();
-  }, []);
-  const onMemberDelete = async (e) => {
-    e.preventDefault();
-    const rsp = await AxiosApi.memberDelete(delId);
+    membersInfo();
+    // // 로컬스토리지에서 로그인한 사용자 정보 가져 오기
+    // const loginUserEmail = localStorage.getItem("user_id");
+    // // 로그인한 사용자와 글쓴이가 같은지 비교
+    // if (loginUserEmail === user_id) {
+    //   setIsCurrentUser(true);
+    // }
+  }, [delId]);
+
+  const memberDelete = async () => {
     try {
-      const rsp = await AxiosApi.memberDelete(delId);
-      if (rsp.status === 200) {
-        setDelName(delName);
-        setDelJumin(delJumin);
-        setMembers(rsp.data);
+      const isMemberValid = await AxiosApi.memberCheck(delName, delJumin);
+      if (isMemberValid === true) {
+        const rsp = await AxiosApi.memberDelete(delId);
+        setDelId(rsp);
+        // setMember(rsp.data);
+        // navigate(`/mypage`);
       }
     } catch (e) {
       console.log(e);
     }
   };
 
+  // const onClick = (e) => {
+  //   memberDelete(e);
+  //   navigate(`/mypage`);
+  // };
+
   return (
     <div className={styles.container}>
       <BackButton />
       <div className={styles.box}>
         <p className={styles.title}>회원탈퇴</p>
+
         <div className={styles.imageItem}></div>
 
         <input
@@ -51,12 +71,12 @@ const SignOut = () => {
         />
         <input
           type="text"
-          placeholder="주민등록번호"
+          placeholder={member.delJumin}
           value={delJumin}
           onChange={(e) => setDelJumin(e.target.value)}
         />
         <p></p>
-        <div className={styles.finalCheck} onClick={onMemberDelete}>
+        <div className={styles.finalCheck} onClick={memberDelete}>
           탈퇴
         </div>
       </div>
