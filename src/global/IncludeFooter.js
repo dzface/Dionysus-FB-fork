@@ -2,20 +2,22 @@ import Background from "../pages/mainpage/Background";
 import Header from "../pages/mainpage/Header";
 import Footer from "../pages/mainpage/Footer";
 import { Outlet } from "react-router-dom";
-// import styled from "styled-components";
-// const CoverBack =  styled.div`
-//   width:100vw;
-
-// `;
+import styled from "styled-components";
+const WrapBackground = styled.div`
+  width: auto;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+`;
 const IncludeFooter = () => {
   return (
-    <>
-      <Background backbtn={false} scroll={true}>
+    <WrapBackground>
+      <Background backbtn={false} scroll={true} opacityisTrue={false}>
         <Header />
         <Outlet />
       </Background>
       <Footer />
-    </>
+    </WrapBackground>
   );
 };
 

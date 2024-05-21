@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Common from "../Common/Common";
 import bg from "../../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
-import { Link } from "react-router-dom";
+import AxiosApi from "../../../api/AxiosApi";
+
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
@@ -12,7 +13,7 @@ const Container = styled.div`
   align-items: center; // 수평 가운데 정렬합니다.
   margin: 0 auto; // 좌우 여백을 자동으로 설정합니다.
   padding: 20px; // 안쪽 여백을 설정합니다.
-  position: relative; // 상대적인 위치를 설정합니다.
+  position: absolute;
 
   h1 {
     width: 280px; // 너비를 300px로 설정합니다.
@@ -194,13 +195,11 @@ const Recommend = () => {
               </ItemTitle>
               <RecommendIconDiv>
                 <IconBox>
-                  <Link to="/MoodResult">
-                    <IconImg
-                      src={
-                        process.env.PUBLIC_URL + "/recommendationicon/맑음.png"
-                      }
-                    />
-                  </Link>
+                  <IconImg
+                    src={
+                      process.env.PUBLIC_URL + "/recommendationicon/맑음.png"
+                    }
+                  />
                 </IconBox>
                 <IconBox>
                   <IconImg

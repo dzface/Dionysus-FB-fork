@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import ListItem from "./ListItem";
-
+import axios from "axios";
+import { useEffect, useContext, useState } from "react";
+import { UserContext } from "../../../global/UserStore";
+import AxiosApi from "../../../api/AxiosApi";
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
@@ -44,8 +47,16 @@ const SelectListDiv = styled.div`
 `;
 const SelectList = styled.select`
   width: 100px;
-  height: 25px;
+  height: 30px;
   font-size: 13px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+  & > option {
+    border: none;
+  }
 `;
 const Hrtag = styled.hr`
   border: none;
@@ -55,6 +66,23 @@ const Hrtag = styled.hr`
   margin-bottom: 20px;
 `;
 const Common = () => {
+  const context = useContext(UserContext);
+  const [data, setData] = useState([]);
+  const { category } = context;
+  useEffect(() => {
+    const alcoholList = async () => {
+      try {
+        console.log(category);
+        const rsp = await AxiosApi.alcoholSelect(category);
+        console.log(rsp.data);
+
+        setData(rsp.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    alcoholList();
+  }, []);
   return (
     <Container>
       <Hrtag />
@@ -68,7 +96,7 @@ const Common = () => {
         </SelectList>
       </SelectListDiv>
       <List>
-        <ListItem />
+        <ListItem data={data} />
       </List>
       {/* <HorizontalLine /> */}
     </Container>

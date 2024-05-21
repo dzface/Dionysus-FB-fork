@@ -9,7 +9,9 @@ const UserStore = (props) => {
   const [profileimg, setProfileimg] = useState(
     localStorage.getItem("pfimg") || "이미지 없음"
   );
-
+  const [category, setCategory] = useState(
+    localStorage.getItem("category") || "all"
+  );
   useEffect(() => {
     localStorage.setItem("bgimg", bgimgurl);
   }, [bgimgurl]);
@@ -22,6 +24,9 @@ const UserStore = (props) => {
     localStorage.setItem("pfimg", profileimg);
   }, [profileimg]);
 
+  useEffect(() => {
+    localStorage.setItem("category", category);
+  }, [category]);
   return (
     <UserContext.Provider
       value={{
@@ -31,6 +36,8 @@ const UserStore = (props) => {
         setName,
         profileimg,
         setProfileimg,
+        category,
+        setCategory,
       }}
     >
       {props.children}
