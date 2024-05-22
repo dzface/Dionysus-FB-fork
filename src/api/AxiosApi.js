@@ -13,7 +13,8 @@ const AxiosApi = {
   // 아이디 찾기
   findIdResult: async (userName, jumin) => {
     try {
-      const response = await axios.get(`${DOMAIN}/users/findid`, { //보안성을 위해 params 도입 gtp추천
+      const response = await axios.get(`${DOMAIN}/users/findid`, {
+        //보안성을 위해 params 도입 gtp추천
         params: {
           user_name: userName,
           user_jumin: jumin,
@@ -21,14 +22,15 @@ const AxiosApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching user ID:', error);
+      console.error("Error fetching user ID:", error);
       throw error;
     }
   },
   // 비밀번호 찾기
   findPwResult: async (email, userName, jumin) => {
     try {
-      const response = await axios.get(`${DOMAIN}/users/findpw`, { //보안성을 위해 params 도입 gtp추천
+      const response = await axios.get(`${DOMAIN}/users/findpw`, {
+        //보안성을 위해 params 도입 gtp추천
         params: {
           user_id: email,
           user_name: userName,
@@ -37,7 +39,7 @@ const AxiosApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching user ID:', error);
+      console.error("Error fetching user ID:", error);
       throw error;
     }
   },
@@ -49,25 +51,23 @@ const AxiosApi = {
     return await axios.post(DOMAIN + "/mypage/memberselect", member);
   },
   // 회원 정보 수정
-  menberUpdate: async (
-    user_id,
+  memberUpdate: async (
     user_pw,
     user_name,
-    user_jumin,
     user_nick,
     user_phone,
-    user_address
+    user_address,
+    user_id
   ) => {
     const member = {
-      user_id: user_id,
       user_pw: user_pw,
       user_name: user_name,
-      user_jumin: user_jumin,
       user_nick: user_nick,
       user_phone: user_phone,
       user_address: user_address,
+      user_id: user_id,
     };
-    return await axios.put(DOMAIN + "/mypage/memberupdate", member);
+    return await axios.post(DOMAIN + "/mypage/memberupdate", member);
   },
   // 이름 주민번호 체크
   memberCheck: async (user_name, user_jumin) => {

@@ -28,6 +28,17 @@ const Mypage = () => {
   //     console.log(e);
   //   }
   // };
+
+  const logout = () => {
+    localStorage.setItem("user_id", "");
+    localStorage.setItem("user_pw", "");
+    localStorage.setItem("user_name", "");
+    localStorage.setItem("user_nick", "");
+    localStorage.setItem("user_phone", "");
+    localStorage.setItem("user_address", "");
+    localStorage.setItem("user_jumin", "");
+  };
+
   return (
     <div>
       <div className="container">
@@ -38,7 +49,8 @@ const Mypage = () => {
                 <div className="person">
                   <div className="img"></div>
                   <p>
-                    <span>홍길동</span>님 반갑습니다!
+                    <span>{localStorage.getItem("user_name")}</span>님
+                    반갑습니다!
                   </p>
                 </div>
                 <div className="btn">
@@ -49,15 +61,15 @@ const Mypage = () => {
                     <button>회원탈퇴</button>
                   </Link>
                   <Link to="/">
-                    <button>로그아웃</button>
+                    <button onClick={logout}>로그아웃</button>
                   </Link>
                 </div>
               </div>
             </div>
             <div className="meminfo2">
-              <p>아이디 :</p>
-              <p>주소 : </p>
-              <p>전화번호 :</p>
+              <p>아이디 : {localStorage.getItem("user_id")}</p>
+              <p>주소 : {localStorage.getItem("user_address")}</p>
+              <p>전화번호 :{localStorage.getItem("user_phone")}</p>
             </div>
           </div>
 
