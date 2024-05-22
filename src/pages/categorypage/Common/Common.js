@@ -69,6 +69,7 @@ const Common = () => {
           rsp = await AxiosApi.alcoholSelect(category, sortBy);
         }
         setAlcohols(rsp.data);
+        console.log(rsp.data);
       } catch (error) {
         console.error("Failed to fetch alcohols:", error);
       }

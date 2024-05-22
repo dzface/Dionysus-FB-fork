@@ -76,7 +76,7 @@ const AxiosApi = {
     return await axios.post(DOMAIN + "/mypage/jjimalcohol", alcohol);
   },
   // 알콜 카테고리 불러오기
-  // all은 전체 알콜정보, 아니면 개별 알콜정보 orderBy를 통해서 sort해서 넘어옴.
+  // all은 전체 알콜정보, 아니면 개별 알콜정보 orderBy를 통해서 sort해서 넘어옴, 사용함.
   alcoholSelect: async (category, sortBy) => {
     try {
       return await axios.get(
@@ -87,7 +87,7 @@ const AxiosApi = {
       throw error;
     }
   },
-  //input으로 알콜명 검색하면 해당되는 내용 select
+  //input으로 알콜명 검색하면 해당되는 내용 select, 사용함.
   searchAlcohols: async (category, searchTerm) => {
     try {
       return await axios.get(
@@ -95,6 +95,14 @@ const AxiosApi = {
       );
     } catch (error) {
       console.error("Error searching alcohols:", error);
+      throw error;
+    }
+  },
+  selectReview: async () => {
+    try {
+      return await axios.get(`${DOMAIN}/review/selectreview`);
+    } catch (error) {
+      console.error("Error selecting review", error);
       throw error;
     }
   },

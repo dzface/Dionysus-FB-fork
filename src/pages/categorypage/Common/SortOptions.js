@@ -1,6 +1,9 @@
 // SortOptions.js
 import React from "react";
 import styled from "styled-components";
+const Label = styled.label`
+  color: #fff;
+`;
 const SelectList = styled.select`
   width: 100px;
   height: 30px;
@@ -10,6 +13,7 @@ const SelectList = styled.select`
   border: none;
   border-radius: 2px;
   text-align: center;
+  cursor: pointer;
   & > option {
     border: none;
   }
@@ -17,7 +21,7 @@ const SelectList = styled.select`
 const SortOptions = ({ sortBy, setSortBy }) => {
   return (
     <div>
-      <label>Sort by: </label>
+      <Label>Sort by: </Label>
       <SelectList value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
         <option value="">최신등록순</option>
         <option value="price">가격낮은순</option>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import logo from "../../img/mainpageimg/logo/logo1.jpeg";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../global/UserStore";
 import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import beer from "../../img/mainpageimg/background/beer.jpg";
@@ -148,6 +148,7 @@ const SideBarBtn = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  cursor: pointer;
 `;
 const SideBarBody = styled.div`
   width: 300px;
@@ -263,11 +264,8 @@ const SideMenuDiv = styled.div`
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
-  const { setBgimgurl, setCategory, bgimgurl, category, name, pfimg } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
+  const { setBgimgurl, setCategory, bgimgurl, userid } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
-  const email = localStorage.getItem("email");
-  const navigate = useNavigate();
-  const [member, setMember] = useState("");
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -276,18 +274,7 @@ const Header = () => {
     setBgimgurl(alcohol);
     setTimeout(() => setAnimate(false), 500); // 애니메이션 종료 후 상태 초기화
   };
-  // 회원 이름이 변경되면 서버에 회원 정보 조회해서 화면 업데이트
-  // useEffect(() => {
-  //   const getMember = async () => {
-  //     try {
-  //       const rsp = await AxiosApi.memberGetOne(email);
-  //       setMember(rsp.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   getMember();
-  // }, [name, imgUrl]);
+  console.log(userid);
   return (
     <>
       <HeaderContainer>
@@ -399,8 +386,8 @@ const Header = () => {
                       )}
                     </div>
                     <div className="user">
-                      <sapn>{member.name}</sapn>
-                      <span>{member.email}</span>
+                      <sapn></sapn>
+                      <span></span>
                     </div>
                   </div>
                 </ProfileDiv>

@@ -25,7 +25,7 @@ const flipOutY = keyframes`
 const BackgroundImg = styled.div`
   overflow-x: hidden; // 수평 스크롤을 숨김
   width: 100vw;
-  height: ${({ scroll }) => (scroll ? "5000px" : "100vh")};
+  height: ${({ scroll }) => (scroll ? "4000px" : "100vh")};
   border: none;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
@@ -49,7 +49,6 @@ const ImgChangeBtnsDiv = styled.div`
   align-items: center;
   margin-bottom: 20px;
   z-index: 5;
-  display: ${({ hidden }) => (hidden ? "none" : "flex")};
 `;
 
 // 배경바꾸는 버튼 styledComponent

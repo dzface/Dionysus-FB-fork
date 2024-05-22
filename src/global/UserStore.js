@@ -3,9 +3,7 @@ export const UserContext = createContext(null);
 
 const UserStore = (props) => {
   const [bgimgurl, setBgimgurl] = useState(localStorage.getItem("bgimg"));
-  const [name, setName] = useState(
-    localStorage.getItem("name") || "로그인 해주세요"
-  );
+  const [userid, setUserid] = useState(localStorage.getItem("user_id") || "");
   const [profileimg, setProfileimg] = useState(
     localStorage.getItem("pfimg") || "이미지 없음"
   );
@@ -17,8 +15,8 @@ const UserStore = (props) => {
   }, [bgimgurl]);
 
   useEffect(() => {
-    localStorage.setItem("name", name);
-  }, [name]);
+    localStorage.setItem("user_id", userid);
+  }, [userid]);
 
   useEffect(() => {
     localStorage.setItem("pfimg", profileimg);
@@ -32,8 +30,8 @@ const UserStore = (props) => {
       value={{
         bgimgurl,
         setBgimgurl,
-        name,
-        setName,
+        userid,
+        setUserid,
         profileimg,
         setProfileimg,
         category,

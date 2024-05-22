@@ -2,7 +2,6 @@ import styled from "styled-components";
 import alcoholimg from "../../../img/popularrecommendpageimg/pexels-markusspiske-121191.jpg";
 import { FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
 // ListItem 스타일 컴포넌트를 생성합니다.
 const ItemBox = styled.div`
   width: 1000px;
@@ -55,22 +54,50 @@ const ItemReview = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
   color: #fff;
+
   & > .review {
     font-size: 20px;
     margin-bottom: 5px;
   }
-  & > .more {
+  .more {
+    margin-top: 10px;
     display: flex;
-    justify-content: end;
+  }
+  .reviewvalue {
+    margin: 0;
+    width: 370px;
+    height: 60px;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+  }
+  & > .btnclass {
+    display: flex;
+  }
+  & > div > button {
+    width: 70px;
+    height: 25px;
+    border-radius: 7px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 15px;
+    margin-left: 220px;
+  }
+  .arrow {
+    width: auto;
+    height: auto;
+    cursor: pointer;
   }
 `;
+
 const Jjim = styled.div`
   width: 40px;
   height: 100px;
   margin-left: 7px;
 `;
+
 const ListItem = ({ alcohols }) => {
-  console.log(alcohols);
   return (
     <>
       {alcohols &&
@@ -100,13 +127,9 @@ const ListItem = ({ alcohols }) => {
             <ItemReview>
               <div className="review">Review</div>
               <div className="reviewvalue">{item.review}</div>
-              <div className="more">
-                더보기
-                <IoMdArrowDropdown size={28} />
-              </div>
             </ItemReview>
             <Jjim>
-              <FaHeart size={28} color="red" />
+              <FaHeart size={28} color="rgba(255,255,255,0.4)" />
             </Jjim>
           </ItemBox>
         ))}
