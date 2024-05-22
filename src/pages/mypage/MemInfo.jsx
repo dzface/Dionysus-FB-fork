@@ -93,6 +93,7 @@ const MemInfo = () => {
           type="text"
           name="user_id"
           placeholder={localStorage.getItem("user_id")}
+          disabled
         />
 
         <input
@@ -111,6 +112,7 @@ const MemInfo = () => {
           type="text"
           name="user_jumin"
           placeholder={localStorage.getItem("user_jumin")}
+          disabled
         />
         <input
           type="text"
