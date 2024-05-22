@@ -30,13 +30,13 @@ const Mypage = () => {
   // };
 
   const logout = () => {
-    localStorage.setItem("user_id", "");
-    localStorage.setItem("user_pw", "");
-    localStorage.setItem("user_name", "");
-    localStorage.setItem("user_nick", "");
-    localStorage.setItem("user_phone", "");
-    localStorage.setItem("user_address", "");
-    localStorage.setItem("user_jumin", "");
+    sessionStorage.setItem("user_id", "");
+    sessionStorage.setItem("user_pw", "");
+    sessionStorage.setItem("user_name", "");
+    sessionStorage.setItem("user_nick", "");
+    sessionStorage.setItem("user_phone", "");
+    sessionStorage.setItem("user_address", "");
+    sessionStorage.setItem("user_jumin", "");
   };
 
   //전화번호 - 넣는 컴포넌트
@@ -70,7 +70,7 @@ const Mypage = () => {
                 <div className="person">
                   <div className="img"></div>
                   <p>
-                    <span>{localStorage.getItem("user_name")}</span>님
+                    <span>{sessionStorage.getItem("user_name")}</span>님
                     반갑습니다!
                   </p>
                 </div>
@@ -88,10 +88,10 @@ const Mypage = () => {
               </div>
             </div>
             <div className="meminfo2">
-              <p>아이디 : {localStorage.getItem("user_id")}</p>
-              <p>주소 : {localStorage.getItem("user_address")}</p>
+              <p>아이디 : {sessionStorage.getItem("user_id")}</p>
+              <p>주소 : {sessionStorage.getItem("user_address")}</p>
               <PhoneNumberWithHyphen
-                phoneNumber={localStorage.getItem("user_phone")}
+                phoneNumber={sessionStorage.getItem("user_phone")}
               />
             </div>
           </div>

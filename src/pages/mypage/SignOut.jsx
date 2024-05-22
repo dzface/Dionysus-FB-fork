@@ -13,7 +13,7 @@ const SignOut = () => {
   useEffect(() => {
     const membersInfo = async () => {
       // // 로컬스토리지에서 로그인한 사용자 정보 가져 오기
-      const loginUserEmail = localStorage.getItem("user_id");
+      const loginUserEmail = sessionStorage.getItem("user_id");
       try {
         const rsp = await AxiosApi.memberSelect(loginUserEmail); // 회원 정보 가져오기
         setMember(rsp.data);
@@ -34,13 +34,13 @@ const SignOut = () => {
         // setUser_jumin(rsp.data.user_jumin);
         // setUser_name(rsp.data.user_name);
 
-        localStorage.setItem("user_pw", "");
-        localStorage.setItem("user_name", "");
-        localStorage.setItem("user_nick", "");
-        localStorage.setItem("user_phone", "");
-        localStorage.setItem("user_address", "");
-        localStorage.setItem("user_id", "");
-        localStorage.setItem("user_jumin", "");
+        sessionStorage.setItem("user_pw", "");
+        sessionStorage.setItem("user_name", "");
+        sessionStorage.setItem("user_nick", "");
+        sessionStorage.setItem("user_phone", "");
+        sessionStorage.setItem("user_address", "");
+        sessionStorage.setItem("user_id", "");
+        sessionStorage.setItem("user_jumin", "");
 
         navigate(`/`);
       }
@@ -57,13 +57,13 @@ const SignOut = () => {
         <div className={styles.imageItem}></div>
         <input
           type="text"
-          placeholder={localStorage.getItem("user_name")}
+          placeholder={sessionStorage.getItem("user_name")}
           value={user_name}
           onChange={(e) => setUser_name(e.target.value)}
         />
         <input
           type="text"
-          placeholder={localStorage.getItem("user_jumin")}
+          placeholder={sessionStorage.getItem("user_jumin")}
           value={user_jumin}
           onChange={(e) => setUser_jumin(e.target.value)}
         />

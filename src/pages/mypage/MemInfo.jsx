@@ -9,7 +9,7 @@ const MemInfo = () => {
   const [user_id, setUser_id] = useState("");
   const [user_pw, setUser_pw] = useState("");
   const [user_name, setUser_name] = useState("");
-  const user_jumin = localStorage.getItem("user_jumin");
+  const user_jumin = sessionStorage.getItem("user_jumin");
   const [user_nick, setUser_nick] = useState("");
   const [user_phone, setUser_phone] = useState("");
   const [user_address, setUser_address] = useState("");
@@ -21,7 +21,7 @@ const MemInfo = () => {
     const memberInfo = async () => {
       try {
         const rsp = await AxiosApi.memberSelect(
-          localStorage.getItem("user_id")
+          sessionStorage.getItem("user_id")
         ); // 회원 정보 가져오기
         setMember(rsp.data);
         setUser_id(rsp.data.user_id);
@@ -36,7 +36,7 @@ const MemInfo = () => {
     };
     memberInfo();
     // 로컬스토리지에서 로그인한 사용자 정보 가져 오기
-    const loginUserEmail = localStorage.getItem("user_id");
+    const loginUserEmail = sessionStorage.getItem("user_id");
     // 로그인한 사용자와 글쓴이가 같은지 비교
     if (loginUserEmail === user_id) {
       setIsCurrentUser(true);
@@ -53,11 +53,11 @@ const MemInfo = () => {
         user_address,
         user_id
       );
-      localStorage.setItem("user_pw", user_pw);
-      localStorage.setItem("user_name", user_name);
-      localStorage.setItem("user_nick", user_nick);
-      localStorage.setItem("user_phone", user_phone);
-      localStorage.setItem("user_address", user_address);
+      sessionStorage.setItem("user_pw", user_pw);
+      sessionStorage.setItem("user_name", user_name);
+      sessionStorage.setItem("user_nick", user_nick);
+      sessionStorage.setItem("user_phone", user_phone);
+      sessionStorage.setItem("user_address", user_address);
       navigate("/mypage");
     } catch (e) {
       console.log(e);
@@ -92,7 +92,7 @@ const MemInfo = () => {
         <input
           type="text"
           name="user_id"
-          placeholder={localStorage.getItem("user_id")}
+          placeholder={sessionStorage.getItem("user_id")}
           disabled
         />
 
@@ -100,37 +100,37 @@ const MemInfo = () => {
           type="text"
           name="user_pw"
           onChange={onChangePw}
-          placeholder={localStorage.getItem("user_pw")}
+          placeholder={sessionStorage.getItem("user_pw")}
         />
         <input
           type="text"
           name="user_name"
           onChange={onChangeName}
-          placeholder={localStorage.getItem("user_name")}
+          placeholder={sessionStorage.getItem("user_name")}
         />
         <input
           type="text"
           name="user_jumin"
-          placeholder={localStorage.getItem("user_jumin")}
+          placeholder={sessionStorage.getItem("user_jumin")}
           disabled
         />
         <input
           type="text"
           name="user_nick"
           onChange={onChangeNick}
-          placeholder={localStorage.getItem("user_nick")}
+          placeholder={sessionStorage.getItem("user_nick")}
         />
         <input
           type="text"
           name="user_phone"
           onChange={onChangePhone}
-          placeholder={localStorage.getItem("user_phone")}
+          placeholder={sessionStorage.getItem("user_phone")}
         />
         <input
           type="text"
           name="user_address"
           onChange={onChangeAddress}
-          placeholder={localStorage.getItem("user_address")}
+          placeholder={sessionStorage.getItem("user_address")}
         />
         <p className={styles.caution}></p>
         <div className={styles.finalCheck} onClick={handleSubmit}>

@@ -25,19 +25,19 @@ const LoginPage = () => {
       try {
         const response = await axios.post("http://localhost:8111/users/login", {
           USER_ID: email,
-          USER_PW: password
+          USER_PW: password,
         });
 
         // Handle success.
         const user = response.data[0];
         if (user) {
-          localStorage.setItem("user_id", user.user_id);
-          localStorage.setItem("user_pw", user.user_pw);
-          localStorage.setItem("user_name", user.user_name);
-          localStorage.setItem("user_jumin", user.user_jumin);
-          localStorage.setItem("user_nick", user.user_nick);
-          localStorage.setItem("user_phone", user.user_phone);
-          localStorage.setItem("user_address", user.user_address);
+          sessionStorage.setItem("user_id", user.user_id);
+          sessionStorage.setItem("user_pw", user.user_pw);
+          sessionStorage.setItem("user_name", user.user_name);
+          sessionStorage.setItem("user_jumin", user.user_jumin);
+          sessionStorage.setItem("user_nick", user.user_nick);
+          sessionStorage.setItem("user_phone", user.user_phone);
+          sessionStorage.setItem("user_address", user.user_address);
           console.log(user);
           navigate("/");
         }
