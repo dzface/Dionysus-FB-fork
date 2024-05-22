@@ -59,6 +59,9 @@ h2 {
 .meminfo1 {
   flex-wrap: wrap;
 }
+.meminfo2 {
+  color: white;
+}
 
 .profile {
   width: 100%;
@@ -93,12 +96,17 @@ h2 {
 .person span {
   font-size: 20px;
   font-weight: 700;
+  color: #000000;
 }
 @media (max-width: 700px) {
   .person span {
     font-size: 15px;
     font-weight: 700;
+    color: #000000;
   }
+}
+.person p {
+  color: white;
 }
 
 .alinfo {

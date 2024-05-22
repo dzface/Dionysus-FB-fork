@@ -39,6 +39,27 @@ const Mypage = () => {
     localStorage.setItem("user_jumin", "");
   };
 
+  //전화번호 - 넣는 컴포넌트
+  const PhoneNumberWithHyphen = ({ phoneNumber }) => {
+    const formatPhoneNumber = (phoneNumber) => {
+      phoneNumber = phoneNumber.replace(/\D/g, ""); // Remove all non-numeric characters
+      if (phoneNumber.length === 11) {
+        return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+      } else if (phoneNumber.length === 10) {
+        if (phoneNumber.startsWith("02")) {
+          return phoneNumber.replace(/(\d{2})(\d{4})(\d{4})/, "$1-$2-$3");
+        } else {
+          return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+        }
+      }
+      return phoneNumber;
+    };
+
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+
+    return <p>전화번호: {formattedPhoneNumber}</p>;
+  };
+
   return (
     <div>
       <div className="container">
@@ -69,10 +90,11 @@ const Mypage = () => {
             <div className="meminfo2">
               <p>아이디 : {localStorage.getItem("user_id")}</p>
               <p>주소 : {localStorage.getItem("user_address")}</p>
-              <p>전화번호 :{localStorage.getItem("user_phone")}</p>
+              <PhoneNumberWithHyphen
+                phoneNumber={localStorage.getItem("user_phone")}
+              />
             </div>
           </div>
-
           <h2>찜 목록</h2>
           <hr />
           <JjimItem />
