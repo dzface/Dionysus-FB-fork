@@ -10,6 +10,37 @@ const AxiosApi = {
   juminRegCheck: async (jumin) => {
     return await axios.get(DOMAIN + `/users/jumin-check?USER_JUMIN=${jumin}`);
   },
+  // 아이디 찾기
+  findIdResult: async (userName, jumin) => {
+    try {
+      const response = await axios.get(`${DOMAIN}/users/findid`, { //보안성을 위해 params 도입 gtp추천
+        params: {
+          user_name: userName,
+          user_jumin: jumin,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user ID:', error);
+      throw error;
+    }
+  },
+  // 비밀번호 찾기
+  findPwResult: async (email, userName, jumin) => {
+    try {
+      const response = await axios.get(`${DOMAIN}/users/findpw`, { //보안성을 위해 params 도입 gtp추천
+        params: {
+          user_id: email,
+          user_name: userName,
+          user_jumin: jumin,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user ID:', error);
+      throw error;
+    }
+  },
   // 개별 회원 조회
   memberSelect: async (user_id) => {
     const member = {
