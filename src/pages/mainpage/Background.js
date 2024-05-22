@@ -5,7 +5,7 @@ import wine from "../../img/mainpageimg/background/wine.jpg";
 import whiskey from "../../img/mainpageimg/background/whiskey.jpg";
 import styled, { keyframes } from "styled-components";
 import { UserContext } from "../../global/UserStore";
-
+import all from "../../img/mainpageimg/background/all.webp";
 // FlipOutY animation
 const flipOutY = keyframes`
   from {
@@ -102,6 +102,9 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
     >
       {children}
       <ImgChangeBtnsDiv backbtn={backbtn}>
+        <ImgBtnDiv>
+          <button onClick={() => onClick(all, "rgba(0,0,0,0.5)")} />
+        </ImgBtnDiv>
         <ImgBtnDiv>
           <button onClick={() => onClick(beer, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>

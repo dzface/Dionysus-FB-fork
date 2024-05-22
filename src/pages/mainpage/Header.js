@@ -8,6 +8,7 @@ import traditional from "../../img/mainpageimg/background/traditional.jpg";
 import beer from "../../img/mainpageimg/background/beer.jpg";
 import wine from "../../img/mainpageimg/background/wine.jpg";
 import whiskey from "../../img/mainpageimg/background/whiskey.jpg";
+import all from "../../img/mainpageimg/background/all.webp";
 import { CiBeerMugFull } from "react-icons/ci"; // 맥주 icon
 import { PiWineFill } from "react-icons/pi"; //와인 icon
 import { IoMdWine } from "react-icons/io"; // 위스키 icon
@@ -27,9 +28,9 @@ const HeaderContainer = styled.header`
 `;
 //logoImg StyledComponent
 const Logo = styled.div`
-  width: 110px; /* 로고의 너비를 설정합니다 */
+  width: 110px;
   height: 120px;
-  background-image: ${({ logourl }) => `url(${logourl})`};
+  background-image: ${({ $logourl }) => `url(${$logourl})`};
   border: none;
   border-radius: 20%;
   background-repeat: no-repeat;
@@ -108,7 +109,7 @@ const ItemFont = styled.p`
   font-size: 18px;
   font-weight: border;
   color: #fff;
-  animation: ${({ animate }) => (animate ? fadeInDown : "none")} 0.5s
+  animation: ${({ $animate }) => ($animate ? fadeInDown : "none")} 0.5s
     ease-in-out;
 `;
 // signup,마이페이지,사이드바 버튼을 wrapping StyledComponent
@@ -162,8 +163,8 @@ const SideBarBody = styled.div`
   z-index: 50;
   display: flex;
   flex-direction: column;
-  transform: ${(props) =>
-    props.isOpen ? "translateX(calc(100vw - 300px))" : "translateX(100vw)"};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? "translateX(calc(100vw - 300px))" : "translateX(100vw)"};
   transition: transform 0.4s ease;
 `;
 // 411%,512%
@@ -175,6 +176,7 @@ const ProfileDiv = styled.div`
     width: 100px;
     height: 100px;
   }
+
   & .divExitUser {
     width: 200px;
     height: 150px;
@@ -264,7 +266,7 @@ const SideMenuDiv = styled.div`
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
-  const { setBgimgurl, setCategory, bgimgurl, userid } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
+  const { setBgimgurl, setCategory } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -274,13 +276,12 @@ const Header = () => {
     setBgimgurl(alcohol);
     setTimeout(() => setAnimate(false), 500); // 애니메이션 종료 후 상태 초기화
   };
-  console.log(userid);
   return (
     <>
       <HeaderContainer>
         <DivHeader>
           <Link to="/">
-            <Logo logourl={logo} />
+            <Logo $logourl={logo} />
           </Link>
           <Nav>
             <Item>
@@ -288,11 +289,11 @@ const Header = () => {
                 to="/recommend"
                 style={{ textDecoration: "none" }}
                 onClick={() => {
-                  backImgChange(bgimgurl);
+                  backImgChange(all);
                   setCategory("all");
                 }}
               >
-                <ItemFont animate={animate}>인기주류</ItemFont>
+                <ItemFont $animate={animate}>인기주류</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -304,7 +305,7 @@ const Header = () => {
                   setCategory("전통주");
                 }}
               >
-                <ItemFont animate={animate}>전통주</ItemFont>
+                <ItemFont $animate={animate}>전통주</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -316,7 +317,7 @@ const Header = () => {
                   setCategory("위스키");
                 }}
               >
-                <ItemFont animate={animate}>위스키</ItemFont>
+                <ItemFont $animate={animate}>위스키</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -328,7 +329,7 @@ const Header = () => {
                   setCategory("와인");
                 }}
               >
-                <ItemFont animate={animate}>와인</ItemFont>
+                <ItemFont $animate={animate}>와인</ItemFont>
               </Link>
             </Item>
             <Item>
@@ -340,7 +341,7 @@ const Header = () => {
                   setCategory("맥주");
                 }}
               >
-                <ItemFont animate={animate}>맥주</ItemFont>
+                <ItemFont $animate={animate}>맥주</ItemFont>
               </Link>
             </Item>
             <SideWrapping>
@@ -360,7 +361,7 @@ const Header = () => {
                 )}
               </SideBarBtn>
               <SideBarBody
-                isOpen={isMenuOpen}
+                $isOpen={isMenuOpen}
                 onClick={() => {
                   setIsMenuOpen(false);
                 }}
@@ -386,7 +387,7 @@ const Header = () => {
                       )}
                     </div>
                     <div className="user">
-                      <sapn></sapn>
+                      <span></span>
                       <span></span>
                     </div>
                   </div>

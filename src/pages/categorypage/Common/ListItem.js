@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import alcoholimg from "../../../img/popularrecommendpageimg/pexels-markusspiske-121191.jpg";
 import { FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-// ListItem 스타일 컴포넌트를 생성합니다.
+import { useState } from "react";
+
 const ItemBox = styled.div`
   width: 1000px;
   height: 170px;
@@ -10,14 +10,25 @@ const ItemBox = styled.div`
   justify-content: space-evenly;
   align-items: center;
 `;
-const ItemImage = styled.div`
-  width: 110px;
-  height: 140px;
-  background-image: ${({ alcoholimg }) => `url(${alcoholimg})`};
-  background-size: cover;
+
+const ImageContainer = styled.div`
+  width: 140px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
+
+const ItemImage = styled.img`
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 15px;
+  background-color: #fff;
+`;
+
 const ItemContext = styled.div`
-  width: 330px;
+  width: 400px;
   height: 140px;
   & > .com {
     width: auto;
@@ -48,6 +59,7 @@ const ItemContext = styled.div`
     height: 30px;
   }
 `;
+
 const ItemReview = styled.div`
   width: 400px;
   height: 140px;
@@ -103,7 +115,9 @@ const ListItem = ({ alcohols }) => {
       {alcohols &&
         alcohols.map((item, index) => (
           <ItemBox key={index}>
-            <ItemImage alcoholimg={alcoholimg} />
+            <ImageContainer>
+              <ImageWithFallback alcoholName={item.alcohol_name} />
+            </ImageContainer>
             <ItemContext>
               <div className="com">{item.com}</div>
               <div className="name">{item.alcohol_name}</div>
@@ -135,6 +149,21 @@ const ListItem = ({ alcohols }) => {
         ))}
     </>
   );
+};
+
+const ImageWithFallback = ({ alcoholName }) => {
+  const [srcIndex, setSrcIndex] = useState(0);
+  const extensions = ["png", "jpg", "jpeg", "webp"];
+
+  const handleError = () => {
+    if (srcIndex < extensions.length - 1) {
+      setSrcIndex(srcIndex + 1);
+    }
+  };
+
+  const src = `${process.env.PUBLIC_URL}/alcoholimg/${alcoholName}.${extensions[srcIndex]}`;
+
+  return <ItemImage src={src} onError={handleError} />;
 };
 
 export default ListItem;
