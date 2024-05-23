@@ -135,6 +135,14 @@ const AxiosApi = {
       throw error;
     }
   },
+  selectpopular: async (tag) => {
+    try {
+      return await axios.get(`${DOMAIN}/popular/selectpopular?tag=${tag}`);
+    } catch (error) {
+      console.error("Error selecting review", error);
+      throw error;
+    }
+  },
   selectReview: async () => {
     try {
       return await axios.get(`${DOMAIN}/review/selectreview`);
