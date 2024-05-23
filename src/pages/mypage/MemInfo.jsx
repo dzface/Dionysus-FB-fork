@@ -36,11 +36,11 @@ const MemInfo = () => {
     };
     memberInfo();
     // 로컬스토리지에서 로그인한 사용자 정보 가져 오기
-    const loginUserEmail = sessionStorage.getItem("user_id");
+    // const loginUserEmail = sessionStorage.getItem("user_id");
     // 로그인한 사용자와 글쓴이가 같은지 비교
-    if (loginUserEmail === user_id) {
-      setIsCurrentUser(true);
-    }
+    // if (loginUserEmail === user_id) {
+    //   setIsCurrentUser(true);
+    // }
   }, []);
 
   const handleSubmit = async () => {
@@ -92,7 +92,7 @@ const MemInfo = () => {
         <input
           type="text"
           name="user_id"
-          placeholder={sessionStorage.getItem("user_id")}
+          placeholder={member.user_id}
           disabled
         />
 
@@ -100,37 +100,37 @@ const MemInfo = () => {
           type="text"
           name="user_pw"
           onChange={onChangePw}
-          placeholder={sessionStorage.getItem("user_pw")}
+          placeholder={member.user_pw}
         />
         <input
           type="text"
           name="user_name"
           onChange={onChangeName}
-          placeholder={sessionStorage.getItem("user_name")}
+          placeholder={member.user_name}
         />
         <input
           type="text"
           name="user_jumin"
-          placeholder={sessionStorage.getItem("user_jumin")}
+          placeholder={member.user_jumin}
           disabled
         />
         <input
           type="text"
           name="user_nick"
           onChange={onChangeNick}
-          placeholder={sessionStorage.getItem("user_nick")}
+          placeholder={member.user_nick}
         />
         <input
           type="text"
           name="user_phone"
           onChange={onChangePhone}
-          placeholder={sessionStorage.getItem("user_phone")}
+          placeholder={member.user_phone}
         />
         <input
           type="text"
           name="user_address"
           onChange={onChangeAddress}
-          placeholder={sessionStorage.getItem("user_address")}
+          placeholder={member.user_address}
         />
         <p className={styles.caution}></p>
         <div className={styles.finalCheck} onClick={handleSubmit}>

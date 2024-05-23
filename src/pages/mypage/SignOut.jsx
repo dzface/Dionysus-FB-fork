@@ -34,13 +34,7 @@ const SignOut = () => {
         // setUser_jumin(rsp.data.user_jumin);
         // setUser_name(rsp.data.user_name);
 
-        sessionStorage.setItem("user_pw", "");
-        sessionStorage.setItem("user_name", "");
-        sessionStorage.setItem("user_nick", "");
-        sessionStorage.setItem("user_phone", "");
-        sessionStorage.setItem("user_address", "");
-        sessionStorage.setItem("user_id", "");
-        sessionStorage.setItem("user_jumin", "");
+        sessionStorage.clear();
 
         navigate(`/`);
       }
@@ -57,14 +51,12 @@ const SignOut = () => {
         <div className={styles.imageItem}></div>
         <input
           type="text"
-          placeholder={sessionStorage.getItem("user_name")}
-          value={user_name}
+          placeholder="이름"
           onChange={(e) => setUser_name(e.target.value)}
         />
         <input
           type="text"
-          placeholder={sessionStorage.getItem("user_jumin")}
-          value={user_jumin}
+          placeholder="주민등록번호"
           onChange={(e) => setUser_jumin(e.target.value)}
         />
         <p></p>
