@@ -5,7 +5,9 @@ import BackButton from "./BackButton";
 import axios from "axios";
 import AxiosApi from "../../api/AxiosApi";
 import { documentId } from "firebase/firestore";
-
+import ReactModal from "react-modal";
+import ModalApi from "../../api/ModalApi";
+ReactModal.setAppElement("#root"); 
 const SignupPage = () => {
   const navigate = useNavigate();
   //입력단
@@ -34,6 +36,17 @@ const SignupPage = () => {
   const [nickNameError, setNickNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [addressError, setAddressError] = useState("");
+
+  //모달 상태
+  const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [FailModalOpen, setFailModalOpen] = useState(false);
+  const handleSuccessCloseModal = () => {
+    setSuccessModalOpen(false);
+    navigate("/"); // Navigate to the home page or any other page
+  };
+  const handleFailCloseModal = () => {
+    setFailModalOpen(false);
+  };
 
   // 회원 가입 여부 DB 확인
   const memberRegCheck = async (email) => {
@@ -132,7 +145,7 @@ const SignupPage = () => {
     setAddress(e.target.value);
     setIsAddress(true);
   };
-  const regist = () => {
+  const regist = () => { // 가입버튼 클릭시 이벤트 처리
     axios
       .post("http://localhost:8111/users/signup", {
         user_id: email,
@@ -145,14 +158,13 @@ const SignupPage = () => {
       })
       .then((response) => {
         // Handle success.
-        console.log("Well done!");
-        console.log("User profile", response.data.user);
-        console.log("User token", response.data.jwt);
-        navigate("/");
+        setSuccessModalOpen(true); // Show success modal
+        // navigate("/");
       })
       .catch((error) => {
         // Handle error.
         console.log("An error occurred:", error.response);
+        setFailModalOpen(true) // Show fail modal
       });
   };
   // 모든 필드의 유효성 검사를 통과했는지 확인
@@ -264,6 +276,8 @@ const SignupPage = () => {
           가입
         </div>
       </div>
+      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"회원가입 성공"} modalText={"앙기모띠"}/>
+      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"회원가입 실패"} modalText={"입력 정보를 다시 확인해주세요."}/>
     </div>
   );
 };
