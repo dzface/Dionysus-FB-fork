@@ -9,12 +9,10 @@ const MemInfo = () => {
   const [user_id, setUser_id] = useState("");
   const [user_pw, setUser_pw] = useState("");
   const [user_name, setUser_name] = useState("");
-  const user_jumin = sessionStorage.getItem("user_jumin");
   const [user_nick, setUser_nick] = useState("");
   const [user_phone, setUser_phone] = useState("");
   const [user_address, setUser_address] = useState("");
-  const [isCurrentUser, setIsCurrentUser] = useState(false);
-  const [currentInfo, setCurrentInfo] = useState();
+
   const navigate = useNavigate();
 
   useEffect(() => {

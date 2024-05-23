@@ -86,25 +86,31 @@ const AxiosApi = {
     return await axios.post(DOMAIN + "/mypage/memberdel", member);
   },
   //찜 목록 불러오기
-  jjimAlcohol: async (
-    user_id,
-    alcohol_name,
-    country_of_origin,
-    com,
-    abv,
-    volume,
-    price
-  ) => {
-    const alcohol = {
+  jjimAlcohol: async (user_id) => {
+    const member = {
       user_id: user_id,
-      alcohol_name: alcohol_name,
-      country_of_origin: country_of_origin,
-      com: com,
-      abv: abv,
-      volume: volume,
-      price: price,
     };
-    return await axios.post(DOMAIN + "/mypage/jjimalcohol", alcohol);
+    return await axios.post(DOMAIN + "/mypage/jjimalcohol", member);
+  },
+  // 별점 계산
+  calScore: async (alcohol_name) => {
+    const alcohol = {
+      alcohol_name: alcohol_name,
+    };
+    return await axios.post(DOMAIN + "/mypage/mypagescore", alcohol);
+  },
+  // 찜에 있는 리뷰
+  jjimReview: async (alcohol_name) => {
+    const alcohol = {
+      alcohol_name: alcohol_name,
+    };
+    return await axios.post(DOMAIN + "/mypage/jjimalcoholreview", alcohol);
+  },
+  reviewAlcohol: async (user_id) => {
+    const member = {
+      user_id: user_id,
+    };
+    return await axios.post(DOMAIN + "/mypage/reviewalcohol", member);
   },
   // 알콜 카테고리 불러오기
   // all은 전체 알콜정보, 아니면 개별 알콜정보 orderBy를 통해서 sort해서 넘어옴, 사용함.

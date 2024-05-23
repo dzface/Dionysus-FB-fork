@@ -2,7 +2,6 @@ import "../../style/mypagestyle/MypageStyle.scss";
 import { Link } from "react-router-dom";
 import ReviewItem from "./Common/ReviewItem";
 import JjimItem from "./Common/JjimItem";
-import { useEffect } from "react";
 
 // import { UseContext, useState } from "react";
 // import { UserContext } from "../../global/UserStore";
