@@ -23,7 +23,7 @@ const ImageContainer = styled.div`
 const ItemImage = styled.img`
   width: 90%;
   height: 90%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 15px;
   background-color: #fff;
 `;
@@ -387,18 +387,8 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
 };
 
 const ImageWithFallback = ({ alcoholName }) => {
-  const [srcIndex, setSrcIndex] = useState(0);
-  const extensions = ["png", "jpg", "jpeg", "webp"];
-
-  const handleError = () => {
-    if (srcIndex < extensions.length - 1) {
-      setSrcIndex(srcIndex + 1);
-    }
-  };
-
-  const src = `${process.env.PUBLIC_URL}/alcoholimg/${alcoholName}.${extensions[srcIndex]}`;
-
-  return <ItemImage src={src} onError={handleError} />;
+  const src = `${process.env.PUBLIC_URL}/alcoholimg/${alcoholName}.jpg`;
+  return <ItemImage src={src} />;
 };
 
 export default ListItem;
