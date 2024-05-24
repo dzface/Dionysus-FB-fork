@@ -78,39 +78,10 @@ const ItemReview = styled.div`
     font-size: 20px;
     margin-bottom: 5px;
   }
-  & > textarea {
-    color: #fff;
-    font-size: 15px;
-  }
 
-  .reviewvalue {
-    margin: 0;
-    width: 370px;
-    height: 60px;
-    border-radius: 0;
-    border: none;
-    background-color: transparent;
-  }
   .reviewdiv {
     display: flex;
     align-items: center;
-  }
-  .reviewbtn {
-    width: 70px;
-    height: 25px;
-    border-radius: 7px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    font-size: 14px;
-    margin-left: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      color: lightgray;
-    }
   }
   .more {
     font-size: 15px;
@@ -121,14 +92,41 @@ const ItemReview = styled.div`
     }
   }
 `;
-
-const Jjim = styled.div`
-  width: 40px;
-  height: 100px;
-  margin-left: 7px;
-  & > .faheart {
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.4);
+const ReviewValue = styled.textarea`
+  margin: 0;
+  width: 370px;
+  height: 60px;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 15px;
+  display: ${({ isOne }) => (isOne ? "none" : "block")};
+`;
+const ReviewView = styled.div`
+  margin: 0;
+  width: 370px;
+  height: 60px;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  display: ${({ isOne }) => (isOne ? "block" : "none")};
+`;
+const ReviewBtn = styled.div`
+  width: 70px;
+  height: 25px;
+  border-radius: 7px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 14px;
+  margin-left: 250px;
+  display: ${({ isOne }) => (isOne ? "none" : "flex")};
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: lightgray;
   }
 `;
 const ScoreSelect = styled.select`
@@ -162,88 +160,48 @@ const ScoreButton = styled.button`
   }
 `;
 
-const ListItem = ({ alcohols, alcoholList }) => {
+const ListItem = ({ alcohols, alcoholList, isOne }) => {
+  //해당 컴포넌트의 별점을 선택시 상태를 저장하는 변수
   const [scoreChoices, setScoreChoices] = useState(
     new Array(alcohols.length).fill(null)
   );
+  //각 컴포넌트마다 추가 별점 점수 상태를 저장하는 변수
   const [selectedScores, setSelectedScores] = useState(
     new Array(alcohols.length).fill(null)
   );
+  //기능 접근을 위해 해당 컴포넌트의 알콜이름을 저장하는 변수
   const [selectedAlcoholNames, setSelectedAlcoholNames] = useState(
     new Array(alcohols.length).fill(null)
   );
+  //각 컴포넌트마다 색깔 상태를 저장하는 변수
   const [heartColors, setHeartColors] = useState(
     new Array(alcohols.length).fill("rgba(255,255,255,0.4)")
   );
+  //각 컴포넌트마다 리뷰입력 상태를 저장하는 변수
   const [reviewInputs, setReviewInputs] = useState(
     new Array(alcohols.length).fill("")
   );
+  //해당 알콜이름의 점수선택을 비활성화 하기위한 변수
   const [scoreSelectDisabled, setScoreSelectDisabled] = useState(
     alcohols.reduce((acc, cur) => {
       acc[cur.alcohol_name] = false;
       return acc;
     }, {})
   );
-
-  useEffect(() => {
-    const userId = sessionStorage.getItem("user_id");
-    if (userId) {
-      const initialHeartColors = alcohols.map((alcohol) =>
-        alcohol.jjim ? "red" : "rgba(255,255,255,0.4)"
-      );
-      setHeartColors(initialHeartColors);
-    } else {
-      setHeartColors(new Array(alcohols.length).fill("rgba(255,255,255,0.4)"));
-    }
-  }, [alcohols]);
-
-  const handleHeartClick = async (index) => {
-    const userId = sessionStorage.getItem("user_id");
-    const alcoholName = alcohols[index].alcohol_name;
-
-    if (!userId) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
-    try {
-      if (heartColors[index] === "red") {
-        const deletersp = await AxiosApi.deleteJjim(userId, alcoholName);
-        console.log(deletersp);
-        setHeartColors((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[index] = "rgba(255,255,255,0.4)";
-          return newColors;
-        });
-      } else {
-        const insertrsp = await AxiosApi.insertJjim(userId, alcoholName);
-        console.log(insertrsp);
-        setHeartColors((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[index] = "red";
-          return newColors;
-        });
-      }
-
-      alcoholList();
-    } catch (error) {
-      console.error("Error toggling jjim:", error);
-      alert("찜 상태를 변경하는 데 실패했습니다.");
-    }
-  };
-
+  const [jjimData, setJjimData] = useState([]);
+  //별점 입력시 데이터를 저장하는 함수.
   const handleScoreChange = (index, value) => {
     const newScoreChoices = [...scoreChoices];
     newScoreChoices[index] = value;
     setScoreChoices(newScoreChoices);
   };
-
+  //리뷰 입력시 데이터를 저장하는 함수.
   const handleReviewInputChange = (index, value) => {
     const newReviewInputs = [...reviewInputs];
     newReviewInputs[index] = value;
     setReviewInputs(newReviewInputs);
   };
-
+  //해당하는 컴포넌트의 리뷰를 등록하는 함수.
   const handleReviewSaveClick = async (index) => {
     const userId = sessionStorage.getItem("user_id");
     const alcoholName = alcohols[index].alcohol_name;
@@ -265,7 +223,7 @@ const ListItem = ({ alcohols, alcoholList }) => {
       alert("리뷰 등록에 실패했습니다.");
     }
   };
-
+  //해당하는 컴포넌트의 별점을 추가하는 함수.
   const handleScoreButtonClick = async (index, alcoholName) => {
     const userId = sessionStorage.getItem("user_id");
     const score = scoreChoices[index];
@@ -281,7 +239,7 @@ const ListItem = ({ alcohols, alcoholList }) => {
     try {
       await AxiosApi.insertScore(userId, alcoholName, score);
       alert("별점이 성공적으로 등록되었습니다.");
-
+      //별점값을 누적해서 저장하는 부분.
       const newSelectedScores = [...selectedScores];
       newSelectedScores[index] = score;
       setSelectedScores(newSelectedScores);
@@ -289,7 +247,7 @@ const ListItem = ({ alcohols, alcoholList }) => {
       const newSelectedAlcoholNames = [...selectedAlcoholNames];
       newSelectedAlcoholNames[index] = alcoholName;
       setSelectedAlcoholNames(newSelectedAlcoholNames);
-
+      // 값을 렌더링해서 별점값 계산 후 반영 ,등수를 재조정.
       alcoholList();
       setScoreSelectDisabled((prev) => {
         const newState = { ...prev };
@@ -302,10 +260,58 @@ const ListItem = ({ alcohols, alcoholList }) => {
     }
   };
 
+  const handleHeartClick = async (index) => {
+    const userId = sessionStorage.getItem("user_id");
+    const alcoholName = alcohols[index].alcohol_name;
+
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      const updatedJjimData = Array.isArray(jjimData) ? [...jjimData] : [];
+
+      if (updatedJjimData.includes(alcoholName)) {
+        const deletesp = await AxiosApi.deleteJjim(userId, alcoholName);
+        console.log(deletesp);
+
+        const indexToDelete = updatedJjimData.findIndex(
+          (name) => name === alcoholName
+        );
+        updatedJjimData.splice(indexToDelete, 1);
+
+        setJjimData(updatedJjimData);
+
+        setHeartColors((prev) => {
+          const newHeartColors = [...prev];
+          newHeartColors[index] = "rgba(255,255,255,0.4)";
+          return newHeartColors;
+        });
+      } else {
+        await AxiosApi.insertJjim(userId, alcoholName);
+        const newJjimData = [...updatedJjimData, alcoholName];
+        setJjimData(newJjimData);
+
+        setHeartColors((prev) => {
+          const newHeartColors = [...prev];
+          newHeartColors[index] = "red";
+          return newHeartColors;
+        });
+      }
+    } catch (error) {
+      console.error("Error updating jjim data:", error);
+      alert("찜하기 기능을 업데이트하는 중에 오류가 발생했습니다.");
+    }
+  };
+  // isOne이 true인 경우 첫 번째 항목만 반환
+  const displayedAlcohols =
+    isOne && alcohols.length > 0 ? [alcohols[0]] : alcohols;
+
   return (
     <>
-      {alcohols &&
-        alcohols.map((item, index) => (
+      {displayedAlcohols &&
+        displayedAlcohols.map((item, index) => (
           <ItemBox key={index}>
             <ImageContainer>
               <ImageWithFallback alcoholName={item.alcohol_name} />
@@ -352,29 +358,28 @@ const ListItem = ({ alcohols, alcoholList }) => {
             </ItemContext>
             <ItemReview>
               <div className="review">Review</div>
-              <textarea
-                className="reviewvalue"
+              <ReviewValue
+                isOne={isOne}
                 value={reviewInputs[index]}
                 onChange={(e) => handleReviewInputChange(index, e.target.value)}
               />
+              <ReviewView isOne={isOne}>{item.review}</ReviewView>
               <divr className="reviewdiv">
-                <div
-                  className="reviewbtn"
+                <ReviewBtn
+                  isOne={isOne}
                   onClick={() => handleReviewSaveClick(index)}
                 >
                   입력
-                </div>
+                </ReviewBtn>
                 <div className="more">더보기</div>
               </divr>
             </ItemReview>
-            <Jjim>
-              <FaHeart
-                className="faheart"
-                size={28}
-                color={heartColors[index]}
-                onClick={() => handleHeartClick(index)}
-              />
-            </Jjim>
+            <FaHeart
+              size="30"
+              className="heart"
+              color={heartColors[index]}
+              onClick={() => handleHeartClick(index)}
+            />
           </ItemBox>
         ))}
     </>

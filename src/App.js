@@ -26,6 +26,7 @@ function App() {
       <UserStore>
         <Router>
           <Routes>
+            {/* 첫 화면 */}
             <Route path="/" element={<MainPage />} />
             {/* Footer가 없는 페이지 중첩라우팅 */}
             <Route element={<NotIncludeFooter />}>

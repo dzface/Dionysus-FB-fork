@@ -71,15 +71,18 @@ const ImgBtnDiv = styled.div`
   }
 `;
 const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
+  //useContext를 변수에 선언
   const context = useContext(UserContext);
+  //만들어놨던 useContext값들을 사용하기 위해 가져옴.
   const { bgimgurl, setBgimgurl } = context;
-
+  //fade효과를 주기 위한 게산값 저장 변수
   const [isFading, setIsFading] = useState(false);
-
+  //버튼을 클릭했을 때 이미지를 저장하고 애니메이션 상태를 주는 부분.
   const onClick = (url) => {
     setBgimgurl(url);
     setIsFading(true);
   };
+  //배경 변화 버튼을 눌렀을 때 변화되는 부분
   useEffect(() => {
     if (isFading) {
       const timer = setTimeout(() => {
@@ -89,10 +92,6 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
       return () => clearTimeout(timer);
     }
   }, [isFading, bgimgurl, setBgimgurl]);
-  useEffect(() => {
-    // 초기 배경 이미지 설정
-    setBgimgurl(beer);
-  }, []); // []를 넘겨 useEffect가 한 번만 실행되도록 합니다.
   return (
     <BackgroundImg
       imageurl={bgimgurl}
@@ -106,16 +105,16 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
           <button onClick={() => onClick(all, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(beer, "rgba(0,0,0,0.5)")} />
+          <button onClick={() => onClick(traditional, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(traditional, "rgba(0,0,0,0.5)")} />
+          <button onClick={() => onClick(whiskey, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
           <button onClick={() => onClick(wine, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
         <ImgBtnDiv>
-          <button onClick={() => onClick(whiskey, "rgba(0,0,0,0.5)")} />
+          <button onClick={() => onClick(beer, "rgba(0,0,0,0.5)")} />
         </ImgBtnDiv>
       </ImgChangeBtnsDiv>
     </BackgroundImg>

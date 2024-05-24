@@ -85,12 +85,12 @@ const AxiosApi = {
     };
     return await axios.post(DOMAIN + "/mypage/memberdel", member);
   },
-  //찜 목록 불러오기
+  //MyPage 찜 목록 불러오기
   jjimAlcohol: async (user_id) => {
     const member = {
       user_id: user_id,
     };
-    return await axios.post(DOMAIN + "/mypage/jjimalcohol", member);
+    return await axios.post(DOMAIN + "/mypage/jjimalcohollist", member);
   },
   // 별점 계산
   calScore: async (alcohol_name) => {
@@ -106,11 +106,13 @@ const AxiosApi = {
     };
     return await axios.post(DOMAIN + "/mypage/jjimalcoholreview", alcohol);
   },
-  reviewAlcohol: async (user_id) => {
+
+  //Mypage에서 리뷰 목록 불러오는 부분
+  alcoholreviewlist: async (user_id) => {
     const member = {
       user_id: user_id,
     };
-    return await axios.post(DOMAIN + "/mypage/reviewalcohol", member);
+    return await axios.post(DOMAIN + "/mypage/alcoholreviewlist", member);
   },
   // 알콜 카테고리 불러오기
   // all은 전체 알콜정보, 아니면 개별 알콜정보 orderBy를 통해서 sort해서 넘어옴, 사용함.
@@ -207,6 +209,10 @@ const AxiosApi = {
   },
   fetchJjim: async (userId) => {
     return axios.get(`${DOMAIN}/jjim`, { params: { userId } });
+  },
+  //찜 데이터 가져오기
+  selectJjim: async (user_id) => {
+    return axios.get(`${DOMAIN}/jjim/selectjjim?user_id=${user_id}`);
   },
   //찜한 값을 DB에 추가
   insertJjim: async (user_id, alcohol_name) => {

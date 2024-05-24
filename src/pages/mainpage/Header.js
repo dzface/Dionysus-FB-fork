@@ -218,19 +218,6 @@ const ProfileImg = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ProfileBtn = styled.div`
-  width: 60px;
-  height: 30px;
-  border-radius: 20%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 43px;
-  & > p {
-    color: #fff;
-  }
-`;
 const BtnStyle = styled.div`
   width: 90px;
   height: 40px;
@@ -268,9 +255,11 @@ const Header = () => {
   const context = useContext(UserContext);
   const { setBgimgurl, setCategory } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
+  //아이콘을 눌렀을 때 사이드바 오픈
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  //사이드바에서 주류페이지 접근시 해당 배경을 변경하는 함수
   const backImgChange = (alcohol) => {
     setAnimate(true);
     setBgimgurl(alcohol);
@@ -371,9 +360,6 @@ const Header = () => {
                     <ProfileImg>
                       <VscAccount size={100} color="gray" />
                     </ProfileImg>
-                    <ProfileBtn>
-                      <p>업로드</p>
-                    </ProfileBtn>
                   </div>
                   <div className="divExitUser">
                     {/* // 사이드바를 누를 경우 닫음 */}
