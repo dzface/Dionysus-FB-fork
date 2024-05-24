@@ -43,7 +43,7 @@ const MemInfo = () => {
 
   const handleSubmit = async () => {
     try {
-      const rsp = await AxiosApi.memberUpdate(
+      await AxiosApi.memberUpdate(
         user_pw,
         user_name,
         user_nick,

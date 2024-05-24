@@ -173,7 +173,8 @@ const SignupPage = () => {
               break;
             case 401:
               <>
-                인증에 실패했습니다.<br />
+                인증에 실패했습니다.
+                <br />
                 이메일 또는 비밀번호를 확인해주세요.
               </>;
               console.log();
