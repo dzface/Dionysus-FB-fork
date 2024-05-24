@@ -12,14 +12,16 @@ const LoginPage = () => {
   const [caution, setCaution] = useState("");
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [FailModalOpen, setFailModalOpen] = useState(false);
+  const [modalContent, setModalContent] =useState("")
   const navigate = useNavigate();
-  const handleSuccessCloseModal = () => {
+  const handleSuccessCloseModal = () => { //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
     navigate("/"); // Navigate to the home page or any other page
   };
   const handleFailCloseModal = () => {
     setFailModalOpen(false);
   };
+
 
   useEffect(() => {
     checkInputs(email, password);
@@ -33,14 +35,13 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogin = async () => { // 로그인 버튼클릭 이후 구현부분
+  const handleLogin= async () => { // 로그인 버튼클릭 이후 구현부분
     if (caution === "확인되었습니다.") {
       try {
         const response = await axios.post("http://localhost:8111/users/login", {
           USER_ID: email,
           USER_PW: password,
         });
-
         // Handle success.
         const user = response.data[0];
         if (user) {
@@ -54,11 +55,46 @@ const LoginPage = () => {
           console.log(user);
           setSuccessModalOpen(true); // Show success modal
           
+        } else { // 서버의 응답을 줬지만 성공이 아닌 경우
+          setFailModalOpen(true)
+          console.log();
         }
       } catch (error) {
-        // Handle error.
-        setFailModalOpen(true)
-        console.log("An error occurred:", error.response);
+        if (error.response) {
+          // 서버가 응답했지만 상태 코드가 2xx 범위를 벗어나는 경우
+          switch (error.response.status) {
+            case 400:
+              setModalContent("잘못된 요청입니다. 입력 값을 확인해주세요.");
+              break;
+            case 401:
+              setModalContent(
+                <>
+                  인증에 실패했습니다.<br />
+                  이메일 또는 비밀번호를 확인해주세요.
+                </>
+              );
+          console.log();
+              break;
+            case 403:
+              setModalContent("접근 권한이 없습니다.");
+              break;
+            case 404:
+              setModalContent("서버를 찾을 수 없습니다.");
+              break;
+            case 500:
+              setModalContent("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+              break;
+            default:
+              setModalContent(`오류가 발생했습니다: ${error.response.statusText}`);
+          }
+        } else if (error.request) {
+          // 요청이 서버에 도달하지 못한 경우 (네트워크 오류 등)
+          setModalContent("서버가 응답하지 않습니다.");
+        } else {
+          // 요청을 설정하는 중에 오류가 발생한 경우
+          setModalContent(`오류가 발생했습니다: ${error.message}`);
+        }
+        setFailModalOpen(true);
       }
     }
   };
@@ -99,8 +135,8 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"로그인 성공"} modalText={"앙기모띠"}/>
-      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"로그인 실패"} modalText={"아이디 비밀번호를 다시 확인해주세요."}/>
+      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"로그인 성공"} modalText={""}/>
+      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"로그인 실패"} modalText={modalContent}/>
     </>
   );
 };

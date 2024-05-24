@@ -5,9 +5,9 @@ import BackButton from "./BackButton";
 import axios from "axios";
 import AxiosApi from "../../api/AxiosApi";
 import { documentId } from "firebase/firestore";
-import ReactModal from "react-modal";
+import ReactModal from "react-modal"; // 모달 적용부분
 import ModalApi from "../../api/ModalApi";
-ReactModal.setAppElement("#root"); 
+ReactModal.setAppElement("#root");
 const SignupPage = () => {
   const navigate = useNavigate();
   //입력단
@@ -40,7 +40,9 @@ const SignupPage = () => {
   //모달 상태
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [FailModalOpen, setFailModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const handleSuccessCloseModal = () => {
+    //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
     navigate("/"); // Navigate to the home page or any other page
   };
@@ -145,7 +147,8 @@ const SignupPage = () => {
     setAddress(e.target.value);
     setIsAddress(true);
   };
-  const regist = () => { // 가입버튼 클릭시 이벤트 처리
+  const regist = () => {
+    // 가입버튼 클릭시 이벤트 처리
     axios
       .post("http://localhost:8111/users/signup", {
         user_id: email,
@@ -162,9 +165,43 @@ const SignupPage = () => {
         // navigate("/");
       })
       .catch((error) => {
-        // Handle error.
-        console.log("An error occurred:", error.response);
-        setFailModalOpen(true) // Show fail modal
+        if (error.response) {
+          // 서버가 응답했지만 상태 코드가 2xx 범위를 벗어나는 경우
+          switch (error.response.status) {
+            case 400:
+              setModalContent("잘못된 요청입니다. 입력 값을 확인해주세요.");
+              break;
+            case 401:
+              <>
+                인증에 실패했습니다.<br />
+                이메일 또는 비밀번호를 확인해주세요.
+              </>;
+              console.log();
+              break;
+            case 403:
+              setModalContent("접근 권한이 없습니다.");
+              break;
+            case 404:
+              setModalContent("서버를 찾을 수 없습니다.");
+              break;
+            case 500:
+              setModalContent(
+                "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+              );
+              break;
+            default:
+              setModalContent(
+                `오류가 발생했습니다: ${error.response.statusText}`
+              );
+          }
+        } else if (error.request) {
+          // 요청이 서버에 도달하지 못한 경우 (네트워크 오류 등)
+          setModalContent("서버가 응답하지 않습니다.");
+        } else {
+          // 요청을 설정하는 중에 오류가 발생한 경우
+          setModalContent(`오류가 발생했습니다: ${error.message}`);
+        }
+        setFailModalOpen(true);
       });
   };
   // 모든 필드의 유효성 검사를 통과했는지 확인
@@ -276,8 +313,18 @@ const SignupPage = () => {
           가입
         </div>
       </div>
-      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"회원가입 성공"} modalText={"앙기모띠"}/>
-      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"회원가입 실패"} modalText={"입력 정보를 다시 확인해주세요."}/>
+      <ModalApi.SuccessModal
+        isOpen={SuccessModalOpen}
+        onClose={handleSuccessCloseModal}
+        modalTitle={"회원가입 완료"}
+        modalText={""}
+      />
+      <ModalApi.FailModal
+        isOpen={FailModalOpen}
+        onClose={handleFailCloseModal}
+        modalTitle={"회원가입 실패"}
+        modalText={modalContent}
+      />
     </div>
   );
 };
