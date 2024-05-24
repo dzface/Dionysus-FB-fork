@@ -72,6 +72,7 @@ const MemInfo = () => {
     if (!newPw) {
       setPasswordError("");
       setUser_pw(member.newPw);
+      setIsPassword(true);
       return; // 입력이 없으면 이후 코드 실행 안 함
     }
     // 비밀번호 검증 함수
@@ -102,6 +103,7 @@ const MemInfo = () => {
     if (!newPhone) {
       setPhoneError("");
       setUser_phone(member.user_phone);
+      setIsPhone(true);
       return; // 입력이 없으면 이후 코드 실행 안 함
     }
     // 유효성 검사
@@ -192,8 +194,8 @@ const MemInfo = () => {
           <p
             style={{
               color: "red",
-              marginTop: "-22px",
-              fontSize: "12px",
+              marginTop: "-23px",
+              fontSize: "13px",
             }}
           >
             {phoneError}

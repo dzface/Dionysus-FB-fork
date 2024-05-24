@@ -36,10 +36,10 @@ input {
   background-color: rgba(0, 0, 0, 0.6);
   border: none;
   border-radius: 20px;
-  /* text-align: center; */
+  text-align: center;
   padding-left: 10px;
   font-size: 16px;
-  margin-bottom: 28px; /* 원하는 마진 값으로 설정 */
+  margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   box-sizing: border-box;
 }
 input::placeholder {
