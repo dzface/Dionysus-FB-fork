@@ -5,7 +5,7 @@ const MainPage = ({ hidden, backheight }) => {
   return (
     <VideoBackground>
       <Header />
-      <ImageUploader />
+      {/* <ImageUploader /> */}
     </VideoBackground>
   );
 };

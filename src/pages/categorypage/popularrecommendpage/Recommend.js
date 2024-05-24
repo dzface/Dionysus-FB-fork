@@ -125,7 +125,18 @@ const CommonBox = styled.div`
 const ButtonItem = styled.button`
   margin-left: auto;
 `;
-
+const TitleDiv = styled.div`
+  width: 100vw;
+  height: 60px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 20px;
+`;
 const Recommend = () => {
   const [isBig, setIsBig] = useState(null);
   const [showRecommend2, setShowRecommend2] = useState(false);
@@ -206,7 +217,7 @@ const Recommend = () => {
                   {isBig === index ? (
                     <RecommendIconDiv>
                       {index === 0
-                        ? ["행복", "슬픔", "화남", "사랑"].map((iconName) => (
+                        ? ["기쁨", "슬픔", "화남", "사랑"].map((iconName) => (
                             <IconBox key={iconName}>
                               <IconImg
                                 src={getIconImagePath(iconName)}
@@ -241,6 +252,9 @@ const Recommend = () => {
           </>
         )}
       </ThemeContainer>
+      <TitleDiv>
+        <p>인기주류 Top 10!</p>
+      </TitleDiv>
       <Common />
     </Container>
   );

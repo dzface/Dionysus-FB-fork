@@ -36,11 +36,7 @@ const Mypage = () => {
   //전화번호 - 넣는 컴포넌트
   const PhoneNumberWithHyphen = ({ phoneNumber }) => {
     const formatPhoneNumber = (phoneNumber) => {
-      if (!phoneNumber) {
-        return ""; // phoneNumber가 null 또는 undefined일 때 빈 문자열 반환
-      }
-
-      phoneNumber = phoneNumber.replace(/\D/g, ""); // 숫자가 아닌 모든 문자 제거
+      phoneNumber = phoneNumber.replace(/\D/g, ""); // Remove all non-numeric characters
       if (phoneNumber.length === 11) {
         return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
       } else if (phoneNumber.length === 10) {

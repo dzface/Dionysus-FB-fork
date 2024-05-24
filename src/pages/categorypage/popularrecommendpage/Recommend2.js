@@ -81,8 +81,8 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
     fetchPopularDrinks();
   }, [selectedIcon, selectmenu]);
 
-   // 정렬 함수
-   const sortItems = (items) => {
+  // 정렬 함수
+  const sortItems = (items) => {
     if (sortBy === "price") {
       // 가격 순으로 정렬
       return items.sort((a, b) => a.price - b.price);

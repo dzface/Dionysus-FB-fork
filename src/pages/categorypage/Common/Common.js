@@ -59,21 +59,19 @@ const Common = () => {
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { category } = context;
+  const alcoholList = async () => {
+    try {
+      const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, "");
+      const response =
+        sanitizedSearchTerm.trim() !== ""
+          ? await AxiosApi.searchAlcohols(category, sanitizedSearchTerm)
+          : await AxiosApi.alcoholSelect(category, sortBy);
+      setAlcohols(response.data);
+    } catch (error) {
+      console.error("Failed to fetch alcohols:", error);
+    }
+  };
   useEffect(() => {
-    const alcoholList = async () => {
-      try {
-        let rsp;
-        if (searchTerm.trim() !== "") {
-          rsp = await AxiosApi.searchAlcohols(category, searchTerm);
-        } else {
-          rsp = await AxiosApi.alcoholSelect(category, sortBy);
-        }
-        setAlcohols(rsp.data);
-        console.log(rsp.data);
-      } catch (error) {
-        console.error("Failed to fetch alcohols:", error);
-      }
-    };
     alcoholList();
   }, [category, sortBy, searchTerm]);
   return (
@@ -89,7 +87,7 @@ const Common = () => {
         <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
       </SelectListDiv>
       <List>
-        <ListItem alcohols={alcohols} />
+        <ListItem alcohols={alcohols} alcoholList={alcoholList} />
       </List>
       {/* <HorizontalLine /> */}
     </Container>

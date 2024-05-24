@@ -151,13 +151,15 @@ const AxiosApi = {
       throw error;
     }
   },
-  addReview: async (alcoholName, review) => {
+  //테이블에 review값을 넘김.
+  addReview: async (user_id, alcohol_name, review) => {
     try {
-      const response = await axios.post(`${DOMAIN}/review/insertreview`, {
-        alcohol_name: alcoholName,
-        review,
-      });
-      return response.data;
+      const addreview = {
+        user_id: user_id,
+        alcohol_name: alcohol_name,
+        review: review,
+      };
+      return await axios.post(`${DOMAIN}/review/insertreview`, addreview);
     } catch (error) {
       console.error("Error adding review:", error);
       throw error;
@@ -186,8 +188,14 @@ const AxiosApi = {
       throw error;
     }
   },
-  addScore: async (alcoholName, score) => {
-    return axios.post(`${DOMAIN}/score/add`, { alcoholName, score });
+  //별점 테이블에 값을 추가하는 부분
+  insertScore: async (user_id, alcoholName, score) => {
+    const scoreinfo = {
+      user_id: user_id,
+      alcohol_name: alcoholName,
+      score: score,
+    };
+    return axios.put(`${DOMAIN}/score/insertscore`, scoreinfo);
   },
   updateScore: async (alcoholName, score) => {
     return axios.put(`${DOMAIN}/score/update`, { alcoholName, score });
@@ -200,13 +208,21 @@ const AxiosApi = {
   fetchJjim: async (userId) => {
     return axios.get(`${DOMAIN}/jjim`, { params: { userId } });
   },
-  addJjim: async (alcoholName) => {
-    return axios.post(`${DOMAIN}/jjim/add`, { alcoholName });
+  //찜한 값을 DB에 추가
+  insertJjim: async (user_id, alcohol_name) => {
+    const insertJjim = {
+      user_id: user_id,
+      alcohol_name: alcohol_name,
+    };
+    return axios.post(`${DOMAIN}/jjim/insertjjim`, insertJjim);
   },
-  removeJjim: async (alcoholName) => {
-    return axios.delete(`${DOMAIN}/jjim/remove`, {
-      params: { alcoholName },
-    });
+  //찜한 값을 DB에서 삭제
+  deleteJjim: async (user_id, alcohol_name) => {
+    const deletejjim = {
+      user_id: user_id,
+      alcohol_name: alcohol_name,
+    };
+    return axios.post(`${DOMAIN}/jjim/deletejjim`, deletejjim);
   },
 };
 
