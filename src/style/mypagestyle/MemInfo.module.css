@@ -1,5 +1,5 @@
 .container {
-  width: 500px;
+  width: 100vw;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
@@ -7,8 +7,8 @@
 }
 
 .box {
-  width: 500px;
-  height: 600px;
+  width: 40%;
+  height: 760px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -18,7 +18,7 @@
     rgba(82, 1, 32, 0.6) 0%,
     rgba(150, 43, 9, 0.6) 20%,
     rgba(181, 113, 20, 0.6) 40%,
-    rgba(8, 64, 62, 0.7) 60%,
+    rgba(8, 64, 62, 0.6) 60%,
     rgba(112, 101, 19, 0.6) 80%,
     rgba(82, 1, 32, 0.6) 100%
   );
@@ -30,20 +30,23 @@
   margin-bottom: 20px;
 }
 input {
-  width: 250px;
+  width: 300px;
   height: 30px;
   color: rgba(255, 255, 255, 0.9);
   background-color: rgba(0, 0, 0, 0.6);
   border: none;
   border-radius: 20px;
-  padding: 5px 0 5px 10px;
-  margin-bottom: 20px; /* 원하는 마진 값으로 설정 */
+  /* text-align: center; */
+  padding-left: 10px;
+  font-size: 16px;
+  margin-bottom: 28px; /* 원하는 마진 값으로 설정 */
+  box-sizing: border-box;
 }
 input::placeholder {
   color: rgb(250, 250, 250);
-  font-size: 20px;
+  font-size: 16px;
   font-style: inherit;
-  padding-left: 5%;
+  padding-left: 0;
 }
 .caution {
   font-size: 15px;

@@ -9,6 +9,8 @@ const SignOut = () => {
   const [user_name, setUser_name] = useState("");
   const [user_jumin, setUser_jumin] = useState("");
   const [member, setMember] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     const membersInfo = async () => {
@@ -31,13 +33,9 @@ const SignOut = () => {
       const isMemberValid = await AxiosApi.memberCheck(user_name, user_jumin);
       if (isMemberValid) {
         const rsp = await AxiosApi.memberDelete(user_name, user_jumin);
-        // setUser_jumin(rsp.data.user_jumin);
-        // setUser_name(rsp.data.user_name);
-
         sessionStorage.clear();
-
-        navigate(`/`);
       }
+      navigate(`/`);
     } catch (e) {
       console.log(e);
     }
