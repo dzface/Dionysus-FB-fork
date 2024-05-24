@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Common from "../Common/Common";
-import bg from "../../../img/popularrecommendpageimg/pexels-pixabay-2145.jpg";
 import Recommend2 from "./Recommend2";
 import Menu from "./Menu";
 
@@ -64,13 +63,13 @@ const ItemTitle = styled.div`
 
 const ItemTitleText = styled.p`
   margin-top: 20px;
-  font-size: ${({ isBig }) => (isBig ? "20px" : "25px")};
+  font-size: 26px;
 `;
 
 const ThemeItemImage = styled.img`
   margin-top: 5px;
   width: 100%;
-  height: 100%;
+  height: 266px;;
   object-fit: fill;
   border-radius: 0 0 5% 5%;
 `;
@@ -82,7 +81,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: ${({ isBig }) => (isBig ? "absolute" : "relative")};
+  position: absolute;
 `;
 
 const RecommendIconDiv = styled.div`
@@ -170,11 +169,18 @@ const Recommend = () => {
     return `${process.env.PUBLIC_URL}/recommendationicon/${iconName}.png`;
   };
 
+  const getBackgroundImagePath = (index) => {
+    const images = [
+      `${process.env.PUBLIC_URL}/recommendationicon/background/기분.jpg`, // 기분에 따른 추천 이미지
+      `${process.env.PUBLIC_URL}/recommendationicon/background/날씨.jpg`, // 날씨에 따른 추천 이미지
+      `${process.env.PUBLIC_URL}/recommendationicon/background/음식.jpg`, // 음식에 따른 추천 이미지
+    ];
+    return images[index];
+  };
+
   return (
     <Container>
       <h1>다양한 주류 추천</h1>
-      {console.log("메뉴:", selectedMenu)} {/* 콘솔 로그 추가 */}
-      {console.log("showMenu:", showMenu)} {/* 콘솔 로그 추가 */}
       <ThemeContainer>
         {showMenu && (
           <CommonBox>
@@ -204,7 +210,8 @@ const Recommend = () => {
               >
                 <Wrapper>
                   <ItemTitle>
-                    <ItemTitleText>
+                    <ItemTitleText
+                    isBig={index}>
                       {
                         [
                           "기분에 따른 추천",
@@ -244,7 +251,10 @@ const Recommend = () => {
                           ))}
                     </RecommendIconDiv>
                   ) : (
-                    <ThemeItemImage src={bg} alt="와인 이미지" />
+                    <ThemeItemImage
+                    src={getBackgroundImagePath(index)}
+                    alt="배경 이미지"
+                  />
                   )}
                 </Wrapper>
               </ThemeItem>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import AxiosApi from "../../../api/AxiosApi";
 import ListItem from "../Common/ListItem";
 import SortOptions from "../Common/SortOptions";
@@ -10,12 +10,26 @@ const ThemeItem = styled.div`
   z-index: 1;
 `;
 
+// 키프레임 정의
+const fadeInTopLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`;
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${fadeInTopLeft} 1s; /* 애니메이션 적용 */
 `;
 
 const ItemTitle = styled.div`
@@ -64,20 +78,16 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
   const [popularDrinks, setPopularDrinks] = useState([]);
   const [listItemCount, setListItemCount] = useState(0);
   const [sortBy, setSortBy] = useState(""); // 정렬 기준을 저장할 상태
-
+  const fetchPopularDrinks = async () => {
+    try {
+      const response = await AxiosApi.selectpopular(selectedIcon || selectmenu);
+      setPopularDrinks(response.data); // 받아온 데이터를 popularDrinks state에 설정합니다.
+      setListItemCount(response.data.length); // ListItem 컴포넌트의 개수를 설정합니다.
+    } catch (error) {
+      console.error("인기 음료를 가져오는 중 오류 발생:", error);
+    }
+  };
   useEffect(() => {
-    const fetchPopularDrinks = async () => {
-      try {
-        const response = await AxiosApi.selectpopular(
-          selectedIcon || selectmenu
-        );
-        setPopularDrinks(response.data); // 받아온 데이터를 popularDrinks state에 설정합니다.
-        setListItemCount(response.data.length); // ListItem 컴포넌트의 개수를 설정합니다.
-      } catch (error) {
-        console.error("인기 음료를 가져오는 중 오류 발생:", error);
-      }
-    };
-
     fetchPopularDrinks();
   }, [selectedIcon, selectmenu]);
 
@@ -124,7 +134,8 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
           <SelectListDiv>
             <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
           </SelectListDiv>
-          <ListItem alcohols={sortedDrinks} /> {/* 정렬된 아이템 전달 */}
+          <ListItem alcohols={sortedDrinks} alcoholList={fetchPopularDrinks} />{" "}
+          {/* 정렬된 아이템 전달 */}
         </RecommendIconDiv>
       </Wrapper>
     </ThemeItem>
