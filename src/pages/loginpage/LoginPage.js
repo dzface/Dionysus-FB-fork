@@ -1,10 +1,11 @@
+import ReCAPTCHA from "react-google-recaptcha"; // 구글 recapcha 인증 AIP 임포트 스타일임포트보다 위에 작성해야함
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ReactModal from "react-modal"; // 모달 적용부분
 import ModalApi from "../../api/ModalApi";
 import styles from "../../style/loginstyle/loginpage.module.css";
-ReactModal.setAppElement("#root"); 
+ReactModal.setAppElement("#root");
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,16 +13,19 @@ const LoginPage = () => {
   const [caution, setCaution] = useState("");
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [FailModalOpen, setFailModalOpen] = useState(false);
-  const [modalContent, setModalContent] =useState("")
+  const [modalContent, setModalContent] = useState("");
   const navigate = useNavigate();
-  const handleSuccessCloseModal = () => { //모달 닫은 이후 핸들링
+  const handleSuccessCloseModal = () => {
+    //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
     navigate("/"); // Navigate to the home page or any other page
   };
   const handleFailCloseModal = () => {
     setFailModalOpen(false);
   };
-
+  const API_KEY = "6Lde4OgpAAAAAOcM2qCr9rgVt_yDWl_6kCpDx7_G"; // 사이트키 등록
+  const [captchaValue, setCaptchaValue] = useState(""); // recaptcha 토큰을 저장하기 위한 state
+  const [captchaVerified, setCaptchaVerified] = useState(false); // reCAPTCHA 검증 상태
 
   useEffect(() => {
     checkInputs(email, password);
@@ -35,12 +39,14 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogin= async () => { // 로그인 버튼클릭 이후 구현부분
+  const handleLogin = async () => {
+    // 로그인 버튼클릭 이후 구현부분
     if (caution === "확인되었습니다.") {
       try {
         const response = await axios.post("http://localhost:8111/users/login", {
           USER_ID: email,
           USER_PW: password,
+          captchaToken: captchaValue, // 캡챠 토큰도 함께 전송
         });
         // Handle success.
         const user = response.data[0];
@@ -54,10 +60,10 @@ const LoginPage = () => {
           sessionStorage.setItem("user_address", user.user_address);
           console.log(user);
           setSuccessModalOpen(true); // Show success modal
-          
-        } else { // 서버의 응답을 줬지만 성공이 아닌 경우
-          setFailModalOpen(true)
-          console.log();
+        } else {
+          // 서버의 응답을 줬지만 성공이 아닌 경우
+          setFailModalOpen(true);
+          console.log(captchaValue);
         }
       } catch (error) {
         if (error.response) {
@@ -69,11 +75,12 @@ const LoginPage = () => {
             case 401:
               setModalContent(
                 <>
-                  인증에 실패했습니다.<br />
+                  인증에 실패했습니다.
+                  <br />
                   이메일 또는 비밀번호를 확인해주세요.
                 </>
               );
-          console.log();
+              console.log();
               break;
             case 403:
               setModalContent("접근 권한이 없습니다.");
@@ -82,10 +89,14 @@ const LoginPage = () => {
               setModalContent("서버를 찾을 수 없습니다.");
               break;
             case 500:
-              setModalContent("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+              setModalContent(
+                "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+              );
               break;
             default:
-              setModalContent(`오류가 발생했습니다: ${error.response.statusText}`);
+              setModalContent(
+                `오류가 발생했습니다: ${error.response.statusText}`
+              );
           }
         } else if (error.request) {
           // 요청이 서버에 도달하지 못한 경우 (네트워크 오류 등)
@@ -96,6 +107,25 @@ const LoginPage = () => {
         }
         setFailModalOpen(true);
       }
+    }
+  };
+  const verifyCaptchaToken = async (token) => { // recaptcha 버튼 클릭시 token 백엔드로 전송하는 함수
+    try {
+      const response = await axios.post('/api/verify-recaptcha', {
+        token: token,
+      });
+
+      if (response.data.success) {
+        setCaptchaVerified(true);
+      } else {
+        setCaptchaVerified(false);
+        setModalContent("reCAPTCHA verification failed");
+        setFailModalOpen(true);
+      }
+    } catch (error) {
+      setCaptchaVerified(false);
+      setModalContent("Error during reCAPTCHA verification");
+      setFailModalOpen(true);
     }
   };
 
@@ -124,19 +154,38 @@ const LoginPage = () => {
             <Link to="/findid">Find ID /</Link>
             <Link to="/findpw">Password</Link>
           </p>
+        
+          <ReCAPTCHA // recaptcha 버튼 컴포넌트
+            sitekey={API_KEY}
+            onChange={(value) => {
+              setCaptchaValue(value || "");
+              verifyCaptchaToken(value); // reCAPTCHA 토큰 검증
+            }}
+          /> 
           <div
             className={styles.finalCheck}
-            onClick={handleLogin}
+            onClick={caution === "확인되었습니다." && captchaValue ? handleLogin : null}
             style={{
-              cursor: caution === "확인되었습니다." ? "pointer" : "not-allowed",
+              backgroundColor: caution === "확인되었습니다." && captchaValue ? "rgba(0, 0, 0, 0.6)" : "grey",
+              disable: caution === "확인되었습니다." && captchaValue ? "false" : "true",
             }}
           >
             Login
           </div>
         </div>
       </div>
-      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"로그인 성공"} modalText={""}/>
-      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"로그인 실패"} modalText={modalContent}/>
+      <ModalApi.SuccessModal
+        isOpen={SuccessModalOpen}
+        onClose={handleSuccessCloseModal}
+        modalTitle={"로그인 성공"}
+        modalText={""}
+      />
+      <ModalApi.FailModal
+        isOpen={FailModalOpen}
+        onClose={handleFailCloseModal}
+        modalTitle={"로그인 실패"}
+        modalText={modalContent}
+      />
     </>
   );
 };
