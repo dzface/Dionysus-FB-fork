@@ -306,7 +306,7 @@ const SignupPage = () => {
         <div
           className={styles.finalCheck}
           style={{
-            cursor: isFormValid ? "pointer" : "not-allowed",
+            disable : isFormValid ? "false" : "true",
             backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",
           }}
           onClick={isFormValid ? regist : null}
