@@ -14,11 +14,24 @@ const Captcha = ({ onVerify }) => {
     onVerify(value); // 인증 완료 후 부모 컴포넌트에 값 전달
   }
   return (
-    <div>
-      <ReCAPTCHA
-        sitekey="6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"
-        onChange={onChange}
-      />
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignContent:"center",
+      margin: "0 0 0 100px"
+    }}>
+      <div
+        style={{
+          transform: "scale(0.7)",
+          transformOrigin: "0 0",
+          height: "60px",
+        }}
+      >
+        <ReCAPTCHA
+          sitekey="6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"
+          onChange={onChange}
+        />
+      </div>
     </div>
   );
 };
@@ -152,11 +165,13 @@ const LoginPage = () => {
             <Link to="/findid">Find ID /</Link>
             <Link to="/findpw">Password</Link>
           </p>
-          <Captcha onVerify={handleCaptchaVerify} />
+          <Captcha onVerify={handleCaptchaVerify} style={{}} />
           <div
             className={styles.finalCheck}
             onClick={
-              caution === "확인되었습니다." && captchaVerified ? handleLogin : null
+              caution === "확인되었습니다." && captchaVerified
+                ? handleLogin
+                : null
             }
             style={{
               backgroundColor:

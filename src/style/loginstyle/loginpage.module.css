@@ -1,5 +1,6 @@
 .container {
-  width: 500px;
+  width: 450px;
+  height: 600px;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
@@ -7,9 +8,9 @@
 }
 
 .box {
-  min-width: 500px;
-  width: auto;
-  height: 600px;
+  min-width: 350px;
+  width: 100%;
+  height: 100%;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -28,17 +29,19 @@
 
 input[type="email"],
 input[type="password"] {
-  width: 200px;
-  height: 30px;
+  width: 300px !important;
+  height: 50px;
+  font-size: 25px;
+  text-align: left;
   color: white;
   background-color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 20px; /* 원하는 마진 값으로 설정 */
+  margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
 }
 input::placeholder {
-  line-height: 10px;
-  font-size: 20px;
+  text-align: left;
+  vertical-align:middle; 
+  font-size: 25px !important; /* 또는 font-size: 20px; !important; */
   color: rgb(250, 250, 250);
-  font-style: inherit;
 }
 
 .success {
@@ -48,8 +51,8 @@ input::placeholder {
   color: red;
 }
 .imageItem {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background-image: url("../../img/loginpageimg/person-icon.png");
   border-radius: 100%;
   background-repeat: no-repeat;
@@ -64,7 +67,7 @@ p {
 }
 .caution {
   position: relative;
-  font-size: 15px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.9);
   min-height: 30px;
 }
@@ -87,27 +90,29 @@ p {
   color: rgba(255, 255, 255, 0.9);
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20px;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 @media (max-width: 700px) {
   .box {
-    min-width: 400px;
-    height: 500px;
+    width: 300px;
+    height: 470px;
   }
+
   .imageItem {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     margin-bottom: 40px;
   }
   input[type="email"],
   input[type="password"] {
-    width: 200px;
-    height: 25px;
+    width: 200px !important;
+    height: 30px !important;
+    font-size: 20px !important;
     margin-bottom: 15px;
   }
   input::placeholder {
-    font-size: 15px;
+    font-size: 15px !important;
   }
   .caution,
   .loginsub a {

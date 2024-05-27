@@ -226,26 +226,26 @@ const SignupPage = () => {
           value={email}
           onChange={onChangeEmail}
         />
-        <div id={styles.hint}>
+        <p id={styles.hint}>
           {email.length > 0 && (
             <span className={isEmail ? styles.success : styles.error}>
               {emailError}
             </span>
           )}
-        </div>
+        </p>
         <input
           type="text"
           placeholder="비밀번호"
           value={password}
           onChange={onChangePassword}
         />
-        <div id={styles.hint}>
+        <p id={styles.hint}>
           {password.length > 0 && (
             <span className={isPassword ? styles.success : styles.error}>
               {passwordError}
             </span>
           )}
-        </div>
+        </p>
         <input
           type="text"
           placeholder="이름"
@@ -259,13 +259,13 @@ const SignupPage = () => {
           value={jumin}
           onChange={onChangeJumin}
         />
-        <div id={styles.hint}>
+        <p id={styles.hint}>
           {jumin.length > 0 && (
             <span className={isJumin ? styles.success : styles.error}>
               {juminError}
             </span>
           )}
-        </div>
+        </p>
         <input
           type="text"
           placeholder="닉네임"
@@ -281,13 +281,13 @@ const SignupPage = () => {
           value={phone}
           onChange={onChangePhone}
         />
-        <div id={styles.hint}>
+        <p id={styles.hint}>
           {phone.length > 0 && (
             <span className={isPhone ? styles.success : styles.error}>
               {phoneError}
             </span>
           )}
-        </div>
+        </p>
         <input
           type="text"
           placeholder="주소"
@@ -295,13 +295,13 @@ const SignupPage = () => {
           value={address}
           onChange={onChangeAddress}
         />
-        <div id={styles.hint}>
+        <p id={styles.hint}>
           {address.length > 0 && (
             <span className={isAddress ? styles.success : styles.error}>
               {addressError}
             </span>
           )}
-        </div>
+        </p>
         <p className={styles.caution}></p>
         <div
           className={styles.finalCheck}
