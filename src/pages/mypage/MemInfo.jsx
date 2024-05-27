@@ -3,6 +3,7 @@ import BackButton from "../loginpage/BackButton";
 import { useState, useEffect } from "react";
 import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
+import LoginCheckComponent from "../loginpage/LoginCheckComponent";
 
 const MemInfo = () => {
   const [member, setMember] = useState("");
@@ -134,7 +135,9 @@ const MemInfo = () => {
   const isFormValid = isPassword && isPhone;
 
   return (
+    
     <div className={styles.container}>
+      <LoginCheckComponent></LoginCheckComponent>
       <BackButton />
       <div className={styles.box}>
         <p className={styles.title}>정보수정</p>

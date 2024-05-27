@@ -2,6 +2,7 @@ import "../../style/mypagestyle/MypageStyle.scss";
 import { Link } from "react-router-dom";
 import ReviewItem from "./Common/ReviewItem";
 import JjimItem from "./Common/JjimItem";
+import LoginCheckComponent from "../loginpage/LoginCheckComponent";
 
 // import { UseContext, useState } from "react";
 // import { UserContext } from "../../global/UserStore";
@@ -56,6 +57,7 @@ const Mypage = () => {
 
   return (
     <div>
+      <LoginCheckComponent>
       <div className="container">
         <div className="contents">
           <div className="mem">
@@ -97,6 +99,7 @@ const Mypage = () => {
           <ReviewItem />
         </div>
       </div>
+      </LoginCheckComponent>
     </div>
   );
 };
