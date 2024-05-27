@@ -16,7 +16,7 @@ const Captcha = ({ onVerify }) => {
   return (
     <div>
       <ReCAPTCHA
-        sitekey="6Lde4OgpAAAAAOcM2qCr9rgVt_yDWl_6kCpDx7_G"
+        sitekey="6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"
         onChange={onChange}
       />
     </div>
@@ -41,7 +41,7 @@ const LoginPage = () => {
   };
   const [captchaValue, setCaptchaValue] = useState(""); // recaptcha 토큰을 저장하기 위한 state
   const [captchaVerified, setCaptchaVerified] = useState(false); // reCAPTCHA 인증 상태
-  const API_KEY = "6Lde4OgpAAAAAOcM2qCr9rgVt_yDWl_6kCpDx7_G"; // 사이트키 등록
+  const API_KEY = "6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"; // 사이트키 등록
 
   useEffect(() => {
     checkInputs(email, password);
