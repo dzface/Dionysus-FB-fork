@@ -91,6 +91,7 @@ const Box = styled.div`
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     margin-top: 40px;
+    cursor: pointer;
   }
   @media (max-width: 700px) {
     width: 300px;

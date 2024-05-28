@@ -98,6 +98,7 @@ const Box = styled.div`
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
+    cursor: pointer;
   }
   @media (max-width: 700px) {
     width: 300px;

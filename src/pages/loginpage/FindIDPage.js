@@ -69,13 +69,15 @@ const Box = styled.div`
     position: relative;
     width: 1000px;
     color: #999;
-    right: 180px;
-    bottom: 2vh;
+    bottom: 3vh;
+    display: flex;
+    justify-content: center;
   }
+
   & .success {
     position: absolute;
-    left: 880px;
-    bottom: 15px;
+    left: 660px;
+    bottom: 5px;
     font-size: 30px;
   }
   & .error {
@@ -98,6 +100,7 @@ const Box = styled.div`
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
+    cursor: pointer;
   }
   @media (max-width: 700px) {
     width: 300px;
@@ -129,9 +132,9 @@ const Box = styled.div`
       font-size: 5px;
     }
     .success {
-      left: 880px;
-      bottom: 15px;
-      font-size: 30px;
+      left: 690px;
+      bottom: -18px;
+      font-size: 22px;
     }
 
     .finalCheck {
