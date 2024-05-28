@@ -48,24 +48,26 @@ const JjimMore = styled.div`
 `;
 const JjimMoreItem = styled.div`
   position: absolute;
-  border: solid 1px;
+  border-radius: 10px;
   background-color: rgba(95, 95, 95);
-  width: 66%;
+  width: 48%;
   height: 500px; /* 원하는 높이로 설정하세요 */
   overflow-y: scroll;
-  margin: -4px;
+  margin-left: -24px;
+  margin-top: -8px;
   padding: 0;
   z-index: 1;
   display: ${(props) => (props.jjimVisible ? "block" : "none")};
 `;
 const ReviewMoreItem = styled.div`
   position: absolute;
-  border: solid 1px;
+  border-radius: 10px;
   background-color: rgba(95, 95, 95);
-  width: 1110px;
+  width: 48%;
   height: 500px; /* 원하는 높이로 설정하세요 */
   overflow-y: scroll;
-  margin: -4px;
+  margin-left: -24px;
+  margin-top: -8px;
   padding: 0;
   z-index: 1;
   display: ${(props) => (props.reviewVisible ? "block" : "none")};
