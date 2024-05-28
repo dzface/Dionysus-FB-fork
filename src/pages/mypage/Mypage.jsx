@@ -196,17 +196,11 @@ const Mypage = () => {
             <JjimMore>
               <JjimMoreItem jjimVisible={jjimVisible}>
                 <JjimItem />
-                <JjimItem />
-                <JjimItem />
-                <JjimItem />
-                <JjimItem />
                 <ExitBtn>
                   <button onClick={toggleJjimExit}>X 닫기</button>
                 </ExitBtn>
               </JjimMoreItem>
               <ReviewMoreItem reviewVisible={reviewVisible}>
-                <ReviewItem />
-                <ReviewItem />
                 <ReviewItem />
                 <ExitBtn>
                   <button onClick={toggleReviewExit}>X 닫기</button>
@@ -215,7 +209,7 @@ const Mypage = () => {
               <h2>찜 목록</h2>
               <button onClick={toggleJjimVisibility}>나의 찜 더보기 ▶</button>
             </JjimMore>
-            <JjimItem />
+            <JjimItem isOne={true} />
             <hr />
             <ReviewMore>
               <h2>후기</h2>
@@ -224,7 +218,7 @@ const Mypage = () => {
               </button>
             </ReviewMore>
 
-            <ReviewItem />
+            <ReviewItem isOne={true} />
           </div>
         </div>
         {/* </LoginCheckComponent> */}

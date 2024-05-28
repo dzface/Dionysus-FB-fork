@@ -166,11 +166,14 @@ const SideBarBody = styled.div`
   z-index: 50;
   display: flex;
   flex-direction: column;
-  transform: ${({ $isOpen }) =>
-    $isOpen ? "translateX(calc(100vw - 300px))" : "translateX(100vw)"};
   transition: transform 0.4s ease;
+  transform: ${({ $isOpen, $scrollexist }) =>
+    $isOpen
+      ? $scrollexist
+        ? "translateX(calc(100vw - 320px))"
+        : "translateX(calc(100vw - 300px))"
+      : "translateX(100vw)"};
 `;
-// 411%,512%
 const ProfileDiv = styled.div`
   width: 300px;
   height: 130px;
@@ -281,12 +284,11 @@ const ProfileImg = styled.div`
     border-radius: 50%;
   }
 `;
-const Header = () => {
+const Header = ({ scrollexist = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
   const { setBgimgurl, setCategory } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
-  const [imageUrl, setImageUrl] = useState("");
   const userid = sessionStorage.getItem("user_id");
   const username = sessionStorage.getItem("user_name");
   const proflieurl = sessionStorage.getItem("profile_url");
@@ -392,6 +394,7 @@ const Header = () => {
               </SideBarBtn>
               <SideBarBody
                 $isOpen={isMenuOpen}
+                $scrollexist={scrollexist}
                 onClick={() => {
                   setIsMenuOpen(false);
                 }}

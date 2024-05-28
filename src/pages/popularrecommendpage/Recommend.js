@@ -73,8 +73,8 @@ const ItemTitle = styled.div`
   align-items: center;
 `;
 const ItemTitleText = styled.p`
-  margin-top: 20px;
   font-size: ${({ isBig }) => (isBig ? "20px" : "25px")};
+  margin-top: 20px;
 `;
 // WineItemImage 스타일 컴포넌트를 생성합니다.
 const WineItemImage = styled.img`

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AxiosApi from "../../../api/AxiosApi";
 import ListItem from "../../categorypage/Common/ListItem";
 
-const JjimItem = () => {
+const JjimItem = ({ isOne = false }) => {
   const [alcohol1, setAlcohol1] = useState([]);
 
   const jjimAlcoholInfo = async () => {
@@ -24,7 +24,7 @@ const JjimItem = () => {
       <ListItem
         alcohols={alcohol1}
         alcoholList={jjimAlcoholInfo}
-        isOne={true}
+        isOne={isOne}
       />
     </>
   );

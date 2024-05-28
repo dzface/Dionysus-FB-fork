@@ -17,6 +17,7 @@ import Wiskey from "./pages/categorypage/wiskeypage/Wiskey";
 import MemInfo from "./pages/mypage/MemInfo";
 import Mypage from "./pages/mypage/Mypage";
 import SignOut from "./pages/mypage/SignOut";
+import IncludeScrollMypage from "./global/IncludeScrollMypage";
 function App() {
   return (
     <>
@@ -34,7 +35,6 @@ function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/findid" element={<FindIDPage />} />
               <Route path="/findpw" element={<FindPWPage />} />
-              <Route path="/mypage" element={<Mypage />} />
               <Route path="/meminfo" element={<MemInfo />} />
               <Route path="/signout" element={<SignOut />} />
             </Route>
@@ -45,6 +45,10 @@ function App() {
               <Route path="/traditional" element={<Traditional />} />
               <Route path="/wine" element={<Wine />} />
               <Route path="/wiskey" element={<Wiskey />} />
+            </Route>
+            {/* Mypage에 스크롤이 필요함 */}
+            <Route element={<IncludeScrollMypage />}>
+              <Route path="/mypage" element={<Mypage />} />
             </Route>
           </Routes>
         </Router>

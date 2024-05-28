@@ -25,7 +25,7 @@ const flipOutY = keyframes`
 const BackgroundImg = styled.div`
   overflow-x: hidden; // 수평 스크롤을 숨김
   width: 100vw;
-  height: ${({ scroll }) => (scroll ? "2000px" : "100vh")};
+  height: ${({ scroll }) => (scroll ? "1050px" : "100vh")};
   border: none;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;

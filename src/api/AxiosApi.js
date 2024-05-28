@@ -145,9 +145,11 @@ const AxiosApi = {
       throw error;
     }
   },
-  selectReview: async () => {
+  selectReview: async (alcohol_name) => {
     try {
-      return await axios.get(`${DOMAIN}/review/selectreview`);
+      return await axios.get(
+        `${DOMAIN}/review/selectreview?alcohol_name=${alcohol_name}`
+      );
     } catch (error) {
       console.error("Error selecting review", error);
       throw error;

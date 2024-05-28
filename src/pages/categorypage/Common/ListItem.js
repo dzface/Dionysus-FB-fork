@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
@@ -8,13 +8,13 @@ const ItemBox = styled.div`
   width: 1000px;
   height: 170px;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
 `;
 
 const ImageContainer = styled.div`
   width: 140px;
   height: 170px;
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,7 +73,11 @@ const ItemReview = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
   color: #fff;
-
+  visibility: ${({ buttonvisible }) => (buttonvisible ? "hidden" : "visible")};
+  display: ${({ buttonon }) => (buttonon ? "none" : "flex")};
+  margin-right: 10px;
+  flex-direction: column;
+  justify-content: space-between;
   & > .review {
     font-size: 20px;
     margin-bottom: 5px;
@@ -106,11 +110,8 @@ const ReviewValue = styled.textarea`
 const ReviewView = styled.div`
   margin: 0;
   width: 370px;
-  height: 60px;
   border-radius: 0;
   border: none;
-  background-color: transparent;
-  display: ${({ isOne }) => (isOne ? "block" : "none")};
 `;
 const ReviewBtn = styled.div`
   width: 70px;
@@ -159,7 +160,104 @@ const ScoreButton = styled.button`
     color: yellow;
   }
 `;
-
+const Morebtnreview = styled.div`
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  color: #fff;
+  display: ${({ buttonon }) => (buttonon ? "block" : "none")};
+  position: relative;
+  margin-top: auto;
+  margin-right: 10px;
+  z-index: 10;
+  & > .review {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  .reviewdiv {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  .reviewlist {
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+  }
+  .reviewuser {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .close {
+    font-size: 15px;
+    margin-right: 7px;
+    cursor: pointer;
+    &:hover {
+      color: green;
+    }
+  }
+`;
+// bounce 애니메이션 정의
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+`;
+// bounce을 적용할 HeartIcon 정의
+const HeartIcon = styled(FaHeart)`
+  cursor: pointer;
+  ${(props) =>
+    props.bouncing &&
+    css`
+      animation: ${bounce} 1s;
+    `}
+`;
+// zoomOutUp 애니메이션 정의
+const zoomOutUp = keyframes`
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+`;
+// zoomOutUp을 적용할 AnimatedStar 정의
+const AnimatedStar = styled(FaStar)`
+  ${(props) =>
+    props.isAnimating &&
+    css`
+      animation: ${zoomOutUp} 1s forwards;
+    `}
+`;
+// flipInX 애니메이션 정의
+const flipInX = keyframes`
+  from {
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+`;
+// flipInX을 적용할 AnimatedScore 정의
+const AnimatedScore = styled.div`
+  ${(props) =>
+    props.isAnimating &&
+    css`
+      animation: ${flipInX} 0.6s forwards;
+    `}
+`;
 const ListItem = ({ alcohols, alcoholList, isOne }) => {
   //해당 컴포넌트의 별점을 선택시 상태를 저장하는 변수
   const [scoreChoices, setScoreChoices] = useState(
@@ -173,10 +271,7 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
   const [selectedAlcoholNames, setSelectedAlcoholNames] = useState(
     new Array(alcohols.length).fill(null)
   );
-  //각 컴포넌트마다 색깔 상태를 저장하는 변수
-  const [heartColors, setHeartColors] = useState(
-    new Array(alcohols.length).fill("rgba(255,255,255,0.4)")
-  );
+
   //각 컴포넌트마다 리뷰입력 상태를 저장하는 변수
   const [reviewInputs, setReviewInputs] = useState(
     new Array(alcohols.length).fill("")
@@ -188,7 +283,22 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
       return acc;
     }, {})
   );
+  //알콜에 매칭해서 해당 아이디,알콜이름,리뷰,닉네임 저장
+  const [otherreviewsave, setOtherreviewsave] = useState([]);
+  //더보기를 눌렀을 때 해당하는 컴포넌트만 더보기 창이 뜨도록 상태를 저장하는 변수
+  const [morebtnonclick, setMorebtnonclick] = useState(
+    new Array(alcohols.length).fill(false)
+  );
+  //더보기를 눌렀을 때 나머지 리뷰들 전부 숨김.
+  const [morerestreview, setMorerestreview] = useState(false);
+
   const [jjimData, setJjimData] = useState([]);
+  // 추가된 상태 정의: 하트 아이콘이 bouncing 상태인지 추적
+  const [bouncingHeart, setBouncingHeart] = useState(null);
+  // 추가된 상태 정의: 별점 아이콘이 zoomOutUp 상태인지 추적
+  const [animatingStar, setAnimatingStar] = useState(null);
+  // 추가된 상태 정의: 별점 점수가 flipInX 상태인지 추적
+  const [animatingScore, setAnimatingScore] = useState(null);
   //별점 입력시 데이터를 저장하는 함수.
   const handleScoreChange = (index, value) => {
     const newScoreChoices = [...scoreChoices];
@@ -206,7 +316,6 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
     const userId = sessionStorage.getItem("user_id");
     const alcoholName = alcohols[index].alcohol_name;
     const review = reviewInputs[index];
-
     if (!userId) {
       alert("로그인이 필요합니다.");
       return;
@@ -221,6 +330,16 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
     } catch (error) {
       console.error("Error submitting review:", error);
       alert("리뷰 등록에 실패했습니다.");
+    }
+  };
+  //해당 알콜에 맞춰 리뷰들 값을 받아오는 부분
+  const otherUserReview = async (index) => {
+    const alcoholName = alcohols[index].alcohol_name;
+    try {
+      const response = await AxiosApi.selectReview(alcoholName);
+      setOtherreviewsave(response.data);
+    } catch (error) {
+      console.error("Error Review Upload:", error);
     }
   };
   //해당하는 컴포넌트의 별점을 추가하는 함수.
@@ -254,60 +373,95 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
         newState[alcoholName] = true;
         return newState;
       });
+
+      // Star animation
+      setAnimatingStar(index);
+      setTimeout(() => setAnimatingStar(null), 1000); // 1초 후 애니메이션 상태 초기화
+      // Score animation
+      setAnimatingScore(index);
+      setTimeout(() => setAnimatingScore(null), 1000); // 0.6초 후 애니메이션 상태 초기화
     } catch (error) {
       console.error("Error submitting score:", error);
       alert("별점 등록에 실패했습니다.");
     }
   };
 
+  const morebtnOnclickEvent = (index) => {
+    const updatedMoreBtnClicks = [...morebtnonclick];
+    updatedMoreBtnClicks[index] = !updatedMoreBtnClicks[index];
+    setMorebtnonclick(updatedMoreBtnClicks);
+    setMorerestreview(true);
+
+    otherUserReview(index);
+  };
+  const closeOnclickEvent = (index) => {
+    setMorerestreview(false);
+    setMorebtnonclick((prev) => {
+      const updatedMoreBtnClicks = [...prev];
+      updatedMoreBtnClicks[index] = false;
+      return updatedMoreBtnClicks;
+    });
+  };
+  const defaultJjim = async (userId) => {
+    try {
+      const response = await AxiosApi.selectJjim(userId);
+      setJjimData(response.data);
+    } catch (error) {
+      console.error("Error fetching jjim data:", error);
+    }
+  };
+  useEffect(() => {
+    const userId = sessionStorage.getItem("user_id");
+    if (userId) {
+      defaultJjim(userId);
+    }
+  }, []);
+  //하트를 눌렀을 때 일어나는 이벤트 함수
   const handleHeartClick = async (index) => {
     const userId = sessionStorage.getItem("user_id");
-    const alcoholName = alcohols[index].alcohol_name;
-
     if (!userId) {
       alert("로그인이 필요합니다.");
       return;
     }
 
+    // 선택한 항목의 알코올 이름 가져오기
+    const alcoholName = alcohols[index].alcohol_name;
+
     try {
-      const updatedJjimData = Array.isArray(jjimData) ? [...jjimData] : [];
+      // 이미 즐겨찾기에 있는지 확인
+      const isAlreadyJjim = jjimData.some(
+        (jjim) => jjim.alcohol_name === alcoholName
+      );
 
-      if (updatedJjimData.includes(alcoholName)) {
-        const deletesp = await AxiosApi.deleteJjim(userId, alcoholName);
-        console.log(deletesp);
-
-        const indexToDelete = updatedJjimData.findIndex(
-          (name) => name === alcoholName
-        );
-        updatedJjimData.splice(indexToDelete, 1);
-
-        setJjimData(updatedJjimData);
-
-        setHeartColors((prev) => {
-          const newHeartColors = [...prev];
-          newHeartColors[index] = "rgba(255,255,255,0.4)";
-          return newHeartColors;
-        });
-      } else {
+      if (!isAlreadyJjim) {
+        // 즐겨찾기에 추가
         await AxiosApi.insertJjim(userId, alcoholName);
-        const newJjimData = [...updatedJjimData, alcoholName];
-        setJjimData(newJjimData);
 
-        setHeartColors((prev) => {
-          const newHeartColors = [...prev];
-          newHeartColors[index] = "red";
-          return newHeartColors;
-        });
+        // 즐겨찾기 상태 업데이트
+        setJjimData((prevJjimData) => [
+          ...prevJjimData,
+          { alcohol_name: alcoholName },
+        ]);
+      } else {
+        // 즐겨찾기에서 제거
+        await AxiosApi.deleteJjim(userId, alcoholName);
+
+        // 즐겨찾기 상태 업데이트
+        setJjimData((prevJjimData) =>
+          prevJjimData.filter((jjim) => jjim.alcohol_name !== alcoholName)
+        );
       }
+      // bouncing 상태 업데이트
+      setBouncingHeart(index);
+      setTimeout(() => setBouncingHeart(null), 1000); // 1초 후 bouncing 상태 초기화
     } catch (error) {
-      console.error("Error updating jjim data:", error);
-      alert("찜하기 기능을 업데이트하는 중에 오류가 발생했습니다.");
+      console.error("Error toggling jjim:", error);
+      alert("즐겨찾기 변경 중 오류가 발생했습니다.");
     }
   };
   // isOne이 true인 경우 첫 번째 항목만 반환
   const displayedAlcohols =
     isOne && alcohols.length > 0 ? [alcohols[0]] : alcohols;
-
   return (
     <>
       {displayedAlcohols &&
@@ -328,9 +482,15 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
                 <div className="price">{item.price}원</div>
               </div>
               <div className="score">
-                <FaStar size={20} color="yellow" />
+                <AnimatedStar
+                  size={20}
+                  color="yellow"
+                  isAnimating={animatingStar === index}
+                />
                 <div className="wall">|</div>
-                {item.score}
+                <AnimatedScore isAnimating={animatingScore === index}>
+                  {item.score}
+                </AnimatedScore>
 
                 <ScoreSelect
                   value={scoreChoices[index] || ""}
@@ -356,7 +516,10 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
                 </ScoreButton>
               </div>
             </ItemContext>
-            <ItemReview>
+            <ItemReview
+              buttonvisible={morerestreview}
+              buttonon={morebtnonclick[index]}
+            >
               <div className="review">Review</div>
               <ReviewValue
                 isOne={isOne}
@@ -364,21 +527,56 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
                 onChange={(e) => handleReviewInputChange(index, e.target.value)}
               />
               <ReviewView isOne={isOne}>{item.review}</ReviewView>
-              <divr className="reviewdiv">
+              <div className="reviewdiv">
                 <ReviewBtn
                   isOne={isOne}
                   onClick={() => handleReviewSaveClick(index)}
                 >
                   입력
                 </ReviewBtn>
-                <div className="more">더보기</div>
-              </divr>
+                <div
+                  className="more"
+                  onClick={() => morebtnOnclickEvent(index)}
+                >
+                  더보기
+                </div>
+              </div>
             </ItemReview>
-            <FaHeart
+            <Morebtnreview buttonon={morebtnonclick[index]}>
+              <div className="review">Review</div>
+              {otherreviewsave &&
+                otherreviewsave.map((reviewitem) => (
+                  <>
+                    <div className="reviewlist">
+                      <div className="reviewuser">
+                        <span>{reviewitem.user_nick}</span>
+                      </div>
+                      <ReviewView isOne={isOne}>{reviewitem.review}</ReviewView>
+                    </div>
+                  </>
+                ))}
+              <div className="reviewdiv">
+                <div
+                  className="close"
+                  onClick={() => {
+                    closeOnclickEvent(index);
+                  }}
+                >
+                  닫기
+                </div>
+              </div>
+            </Morebtnreview>
+            <HeartIcon
               size="30"
-              className="heart"
-              color={heartColors[index]}
-              onClick={() => handleHeartClick(index)}
+              color={
+                jjimData.some((jjim) => jjim.alcohol_name === item.alcohol_name)
+                  ? "red"
+                  : "rgba(255,255,255,0.4)"
+              }
+              onClick={() => {
+                handleHeartClick(index);
+              }}
+              bouncing={bouncingHeart === index}
             />
           </ItemBox>
         ))}
