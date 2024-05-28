@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../../style/loginstyle/SignupPage.module.css";
+import styled from "styled-components";
 import BackButton from "./BackButton";
 import axios from "axios";
 import AxiosApi from "../../api/AxiosApi";
@@ -8,6 +8,130 @@ import { documentId } from "firebase/firestore";
 import ReactModal from "react-modal"; // 모달 적용부분
 import ModalApi from "../../api/ModalApi";
 ReactModal.setAppElement("#root");
+//스타일 부분
+const Container = styled.div`
+  width: 500px;
+  height: 800px;
+  display: flex; /* 부모 요소를 flex container로 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin: 0 auto;
+`;
+const Box = styled.div`
+  width: 500px;
+  width: 100%;
+  height: 100%;
+  display: flex; /* 자식 요소들을 flex container로 설정 */
+  flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  text-align: center;
+  background: conic-gradient(
+    rgba(82, 1, 32, 0.6) 0%,
+    rgba(150, 43, 9, 0.6) 20%,
+    rgba(181, 113, 20, 0.6) 40%,
+    rgba(8, 64, 62, 0.6) 60%,
+    rgba(112, 101, 19, 0.6) 80%,
+    rgba(82, 1, 32, 0.6) 100%
+  );
+  border-radius: 10px;
+
+  & .title {
+    font-size: 30px;
+    color: white;
+    margin: 50px 0 20px 0;
+  }
+
+  & input {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 20px;
+    /* padding: 5px 0 5px 10px; */
+    margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
+  }
+  & input::placeholder {
+      font-size: 25px;
+      color: rgb(250, 250, 250);
+    }
+    & #hint {
+      position: relative;
+      width: 1000px;
+      color: #999;
+      right: 180px;
+      bottom: 3vh;
+    }
+    & .success {
+      position: absolute;
+      left: 880px;
+      bottom: 15px;
+      font-size: 30px;
+    }
+    & .error {
+      position: absolute;
+      width: auto;
+      font-size: 12px;
+      font-weight: bold;
+      color: rgb(255, 255, 255);
+    }
+    & .caution {
+      font-size: 15px;
+      position: relative;
+    }
+    & .finalCheck {
+      width: 200px;
+      height: 50px;
+      line-height: 50px; /*텍스트 상하정렬*/
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+    }
+    @media (max-width: 700px) {
+    width: 300px;
+    height: 470px;
+    
+    .title {
+      font-size: 25px;
+    }
+    input {
+      width: 200px;
+      height: 30px;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    input::placeholder {
+      font-size: 15px;
+    }
+    #hint {
+      right: 90px;
+    }
+    .error{
+      margin-top: 15px;
+      font-size: 5px;
+    }
+    .success {
+
+      left: 880px;
+      bottom: 15px;
+      font-size: 30px;
+    }
+
+    .finalCheck {
+      width: 120px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 15px;
+      margin: 5px 0 20px 0;
+    }
+  }
+`;
+
 const SignupPage = () => {
   const navigate = useNavigate();
   //입력단
@@ -216,36 +340,34 @@ const SignupPage = () => {
     isAddress;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.box}>
+    <Container>
+      <Box>
         <BackButton />
-        <p className={styles.title}>회원가입</p>
+        <p className="title">회원가입</p>
         <input
           type="text"
           placeholder="이메일"
           value={email}
           onChange={onChangeEmail}
         />
-        <p id={styles.hint}>
+        <span id="hint">
           {email.length > 0 && (
-            <span className={isEmail ? styles.success : styles.error}>
-              {emailError}
-            </span>
+            <span className={isEmail ? "success" : "error"}>{emailError}</span>
           )}
-        </p>
+        </span>
         <input
           type="text"
           placeholder="비밀번호"
           value={password}
           onChange={onChangePassword}
         />
-        <p id={styles.hint}>
+        <span id='hint'>
           {password.length > 0 && (
-            <span className={isPassword ? styles.success : styles.error}>
+            <span className={isPassword ? 'success' : 'error'}>
               {passwordError}
             </span>
           )}
-        </p>
+        </span>
         <input
           type="text"
           placeholder="이름"
@@ -259,13 +381,13 @@ const SignupPage = () => {
           value={jumin}
           onChange={onChangeJumin}
         />
-        <p id={styles.hint}>
+        <span id='hint'>
           {jumin.length > 0 && (
-            <span className={isJumin ? styles.success : styles.error}>
+            <span className={isJumin ? 'success' : 'error'}>
               {juminError}
             </span>
           )}
-        </p>
+        </span>
         <input
           type="text"
           placeholder="닉네임"
@@ -273,7 +395,6 @@ const SignupPage = () => {
           value={nickName}
           onChange={onChangeNickName}
         />
-        <div></div>
         <input
           type="text"
           placeholder="핸드폰 번호"
@@ -281,13 +402,13 @@ const SignupPage = () => {
           value={phone}
           onChange={onChangePhone}
         />
-        <p id={styles.hint}>
+        <span id='hint'>
           {phone.length > 0 && (
-            <span className={isPhone ? styles.success : styles.error}>
+            <span className={isPhone ? 'success' : 'error'}>
               {phoneError}
             </span>
           )}
-        </p>
+        </span>
         <input
           type="text"
           placeholder="주소"
@@ -295,25 +416,24 @@ const SignupPage = () => {
           value={address}
           onChange={onChangeAddress}
         />
-        <p id={styles.hint}>
+        <span id='hint'>
           {address.length > 0 && (
-            <span className={isAddress ? styles.success : styles.error}>
+            <span className={isAddress ? 'success' : 'error'}>
               {addressError}
             </span>
           )}
-        </p>
-        <p className={styles.caution}></p>
+        </span>
         <div
-          className={styles.finalCheck}
+          className='finalCheck'
           style={{
-            disable : isFormValid ? "false" : "true",
+            disable: isFormValid ? "false" : "true",
             backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",
           }}
           onClick={isFormValid ? regist : null}
         >
           가입
         </div>
-      </div>
+      </Box>
       <ModalApi.SuccessModal
         isOpen={SuccessModalOpen}
         onClose={handleSuccessCloseModal}
@@ -326,7 +446,7 @@ const SignupPage = () => {
         modalTitle={"회원가입 실패"}
         modalText={modalContent}
       />
-    </div>
+    </Container>
   );
 };
 

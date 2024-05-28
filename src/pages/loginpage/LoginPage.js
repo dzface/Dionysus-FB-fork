@@ -1,40 +1,131 @@
-import ReCAPTCHA from "react-google-recaptcha"; // 구글 recapcha 인증 AIP 임포트 스타일임포트보다 위에 작성해야함
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ReactModal from "react-modal"; // 모달 적용부분
 import ModalApi from "../../api/ModalApi";
-import styles from "../../style/loginstyle/loginpage.module.css";
+import styled from "styled-components";
+import personIcon from "../../img/loginpageimg/person-icon.png";
+import ReCaptchaComponenet from "../../api/RecaptchaAPI";
 ReactModal.setAppElement("#root");
 
-const Captcha = ({ onVerify }) => {
-  // recapcha 컴포넌트
-  function onChange(value) {
-    console.log("Captcha value:", value); // 인증 완료 후 토큰 값 콘솔에 출력
-    onVerify(value); // 인증 완료 후 부모 컴포넌트에 값 전달
-  }
-  return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignContent:"center",
-      margin: "0 0 0 100px"
-    }}>
-      <div
-        style={{
-          transform: "scale(0.7)",
-          transformOrigin: "0 0",
-          height: "60px",
-        }}
-      >
-        <ReCAPTCHA
-          sitekey="6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"
-          onChange={onChange}
-        />
-      </div>
-    </div>
+const Container = styled.div`
+  width: 450px;
+  height: 600px;
+  display: flex; /* 부모 요소를 flex container로 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin: 0 auto;
+`;
+const Box = styled.div`
+  min-width: 350px;
+  width: 100%;
+  height: 100%;
+  display: flex; /* 자식 요소들을 flex container로 설정 */
+  flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  text-align: center;
+  background: conic-gradient(
+    rgba(82, 1, 32, 0.6) 0%,
+    rgba(150, 43, 9, 0.6) 20%,
+    rgba(181, 113, 20, 0.6) 40%,
+    rgba(8, 64, 62, 0.6) 60%,
+    rgba(112, 101, 19, 0.6) 80%,
+    rgba(82, 1, 32, 0.6) 100%
   );
-};
+  border-radius: 10px;
+  & img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 50px;
+  }
+  & input {
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    text-align: left;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
+  }
+  & input::placeholder {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 25px; /* 또는 font-size: 20px; !important; */
+    color: rgb(250, 250, 250);
+  }
+  & p {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    margin: 5px;
+  }
+  & .caution {
+    position: relative;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    min-height: 30px;
+  }
+  & .loginsub a {
+    font-size: 15px;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: rgba(255, 255, 255, 0.9); /* 링크의 색상 제거 */
+  }
+  & .loginsub a:nth-child(1) {
+    margin-right: 40px;
+  }
+  &.loginsub a:nth-child(2) {
+    margin-right: 5px;
+  }
+  & .finalCheck {
+    width: 200px;
+    height: 50px;
+    line-height: 50px; /*텍스트 상하정렬*/
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    margin-top: 30px;
+  }
+  @media (max-width: 700px) {
+    width: 300px;
+    height: 470px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 40px;
+    }
+
+    input {
+      width: 200px;
+      height: 30px;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    input::placeholder {
+      font-size: 15px;
+    }
+
+    .caution,
+    .loginsub a {
+      font-size: 12px;
+    }
+
+    .finalCheck {
+      width: 150px;
+      height: 40px;
+      line-height: 30px;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+  }
+`;
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -142,10 +233,11 @@ const LoginPage = () => {
   };
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <p className={styles.imageItem}></p>
+      <Container>
+        <Box>
+          <img src={personIcon} />
           <input
+            id="email"
             type="email"
             placeholder="📧   Email"
             value={email}
@@ -157,17 +249,17 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div id="caution" className={styles.caution}>
+          <div id="caution" className="caution">
             {caution}
           </div>
-          <p className={styles.loginsub}>
+          <p className="loginsub">
             <Link to="/signup">Sign up</Link>
             <Link to="/findid">Find ID /</Link>
             <Link to="/findpw">Password</Link>
           </p>
-          <Captcha onVerify={handleCaptchaVerify} style={{}} />
+          <ReCaptchaComponenet onVerify={handleCaptchaVerify}/>
           <div
-            className={styles.finalCheck}
+            className="finalCheck"
             onClick={
               caution === "확인되었습니다." && captchaVerified
                 ? handleLogin
@@ -186,8 +278,8 @@ const LoginPage = () => {
           >
             Login
           </div>
-        </div>
-      </div>
+        </Box>
+      </Container>
       <ModalApi.SuccessModal
         isOpen={SuccessModalOpen}
         onClose={handleSuccessCloseModal}
