@@ -10,17 +10,16 @@ ReactModal.setAppElement("#root");
 
 //스타일 부분
 const Container = styled.div`
-  width: 500px;
-  height: 800px;
+  width: 100%;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   margin: 0 auto;
 `;
 const Box = styled.div`
-  width: 500px;
-  width: 100%;
-  height: 100%;
+  width: 580px;
+  height: 691px;
+  padding: 20px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -39,31 +38,32 @@ const Box = styled.div`
   & .title {
     font-size: 30px;
     color: white;
+    margin-bottom: 20px;
   }
   & img {
-    width: 300px;
-    height: 300px;
-    border-radius: 10%;
+    width: 150px;
+    height: 150px;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 50px 0 50px 0;
+    margin: 20px 0;
   }
 
   & input {
-    width: 400px;
-    height: 50px;
-    font-size: 25px;
+    width: 60%;
+    height: 40px;
+    font-size: 20px;
     text-align: left;
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 20px;
-    /* padding: 5px 0 5px 10px; */
+    padding-left: 30px;
     margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   }
   & input::placeholder {
-    font-size: 25px;
+    font-size: 20px;
     color: rgb(250, 250, 250);
+    padding-left: 0;
   }
   & #hint {
     position: relative;
@@ -91,13 +91,13 @@ const Box = styled.div`
   }
   & .finalCheck {
     width: 200px;
-    height: 50px;
-    line-height: 50px; /*텍스트 상하정렬*/
-    font-size: 20px;
+    height: 60px;
+    line-height: 60px; /*텍스트 상하정렬*/
+    text-align: center;
+    font-size: 25px;
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
-    margin: 50px 0;
   }
   @media (max-width: 700px) {
     width: 300px;
@@ -249,7 +249,7 @@ const FindIDPage = () => {
     <Container>
       <Box>
         <BackButton />
-        <p className='title'>아이디 찾기</p>
+        <p className="title">아이디 찾기</p>
         <img src={findglass}></img>
         <input
           type="text"
@@ -257,9 +257,9 @@ const FindIDPage = () => {
           placeholder="이름"
           onChange={onChangeUserName}
         />
-        <span id='hint'>
+        <span id="hint">
           {userName.length > 0 && (
-            <span className={isUserName ? 'success' : 'error'}>
+            <span className={isUserName ? "success" : "error"}>
               {userNameError}
             </span>
           )}
@@ -270,20 +270,19 @@ const FindIDPage = () => {
           placeholder="주민등록번호"
           onChange={onChangeJumin}
         />
-        <span id='hint'>
+        <span id="hint">
           {jumin.length > 0 && (
-            <span className={isJumin ? 'success' : 'error'}>
-              {juminError}
-            </span>
+            <span className={isJumin ? "success" : "error"}>{juminError}</span>
           )}
         </span>
-        <div id="caution" className='caution'></div>
+        <div id="caution" className="caution"></div>
         <div
-          className='finalCheck'
+          className="finalCheck"
           onClick={findIdButton}
           style={{
             disable: isUserName && isJumin ? "false" : "true",
-            backgroundColor: isUserName && isJumin ? "rgba(0, 0, 0, 0.6)" : "grey",
+            backgroundColor:
+              isUserName && isJumin ? "rgba(0, 0, 0, 0.6)" : "grey",
           }}
         >
           찾기

@@ -2,25 +2,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AxiosApi from "../../api/AxiosApi";
 import styled from "styled-components";
-import findkey from "../../img/loginpageimg/findkey.png"
+import findkey from "../../img/loginpageimg/findkey.png";
 import BackButton from "./BackButton";
 import ReactModal from "react-modal"; // 모달 적용부분
 import ModalApi from "../../api/ModalApi";
-ReactModal.setAppElement("#root"); 
+ReactModal.setAppElement("#root");
 //스타일 부분
 //스타일 부분
 const Container = styled.div`
-  width: 500px;
-  height: 800px;
+  width: 100%;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   margin: 0 auto;
 `;
 const Box = styled.div`
-  width: 500px;
-  width: 100%;
-  height: 100%;
+  width: 580px;
+  height: 691px;
+  padding: 20px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -39,43 +38,45 @@ const Box = styled.div`
   & .title {
     font-size: 30px;
     color: white;
+    margin-bottom: 20px;
   }
   & img {
-    width: 300px;
-    height: 300px;
-    border-radius: 10%;
+    width: 150px;
+    height: 150px;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 20px 0 50px 0;
+    margin: 20px 0;
   }
 
   & input {
-    width: 400px;
-    height: 50px;
-    font-size: 25px;
+    width: 60%;
+    height: 40px;
+    font-size: 20px;
     text-align: left;
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 20px;
-    /* padding: 5px 0 5px 10px; */
+    padding-left: 30px;
     margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   }
   & input::placeholder {
-    font-size: 25px;
+    font-size: 20px;
     color: rgb(250, 250, 250);
+    padding-left: 0;
   }
   & #hint {
     position: relative;
     width: 1000px;
     color: #999;
-    right: 180px;
-    bottom: 2vh;
+    bottom: 3vh;
+    display: flex;
+    justify-content: center;
   }
   & .success {
     position: absolute;
-    left: 880px;
-    bottom: 15px;
+    left: 660px;
+    bottom: 5px;
     font-size: 30px;
   }
   & .error {
@@ -97,7 +98,6 @@ const Box = styled.div`
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
-    margin: 50px 0;
   }
   @media (max-width: 700px) {
     width: 300px;
@@ -153,8 +153,9 @@ const FindPWPage = () => {
   // 모달 내용
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [FailModalOpen, setFailModalOpen] = useState(false);
-  const [modalContent, setModalContent] =useState("")
-  const handleSuccessCloseModal = () => { //모달 닫은 이후 핸들링
+  const [modalContent, setModalContent] = useState("");
+  const handleSuccessCloseModal = () => {
+    //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
     // navigate("/"); // Navigate to the home page or any other page
   };
@@ -165,15 +166,15 @@ const FindPWPage = () => {
   // 오류메시지 로직 단
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
-    console.log(email)
+    console.log(email);
   };
   const onChangeUserName = (e) => {
     setUserName(e.target.value);
-    console.log(userName)
+    console.log(userName);
   };
   const onChangeJumin = (e) => {
     setJumin(e.target.value);
-    console.log(jumin)
+    console.log(jumin);
   };
 
   // 찾기 결과 출력단
@@ -205,11 +206,12 @@ const FindPWPage = () => {
           case 401:
             setModalContent(
               <>
-                인증에 실패했습니다.<br />
+                인증에 실패했습니다.
+                <br />
                 자격인증 없음
               </>
             );
-        console.log();
+            console.log();
             break;
           case 403:
             setModalContent("접근 권한이 없습니다.");
@@ -218,10 +220,14 @@ const FindPWPage = () => {
             setModalContent("서버를 찾을 수 없습니다.");
             break;
           case 500:
-            setModalContent("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            setModalContent(
+              "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+            );
             break;
           default:
-            setModalContent(`오류가 발생했습니다: ${error.response.statusText}`);
+            setModalContent(
+              `오류가 발생했습니다: ${error.response.statusText}`
+            );
         }
       } else if (error.request) {
         // 요청이 서버에 도달하지 못한 경우 (네트워크 오류 등)
@@ -238,17 +244,42 @@ const FindPWPage = () => {
     <Container>
       <Box>
         <BackButton />
-        <p className='title'>비밀번호 찾기</p>
-        <img src={findkey}/>
-        <input id="email" type="text" placeholder="이메일" onChange={onChangeEmail}/>
-        <input id="user_name" type="text" placeholder="이름" onChange={onChangeUserName}/>
-        <input id="jumin" type="text" placeholder="주민등록번호" onChange={onChangeJumin}/>
-        <div className='finalCheck' onClick={findPwButton}>
+        <p className="title">비밀번호 찾기</p>
+        <img src={findkey} />
+        <input
+          id="email"
+          type="text"
+          placeholder="이메일"
+          onChange={onChangeEmail}
+        />
+        <input
+          id="user_name"
+          type="text"
+          placeholder="이름"
+          onChange={onChangeUserName}
+        />
+        <input
+          id="jumin"
+          type="text"
+          placeholder="주민등록번호"
+          onChange={onChangeJumin}
+        />
+        <div className="finalCheck" onClick={findPwButton}>
           찾기
         </div>
       </Box>
-      <ModalApi.SuccessModal isOpen={SuccessModalOpen} onClose={handleSuccessCloseModal} modalTitle={"비밀번호 찾기 결과"} modalText={`비밀번호는 ${userPw} 입니다.`}/>
-      <ModalApi.FailModal isOpen={FailModalOpen} onClose={handleFailCloseModal} modalTitle={"비밀번호 찾기 실패"} modalText={modalContent}/>
+      <ModalApi.SuccessModal
+        isOpen={SuccessModalOpen}
+        onClose={handleSuccessCloseModal}
+        modalTitle={"비밀번호 찾기 결과"}
+        modalText={`비밀번호는 ${userPw} 입니다.`}
+      />
+      <ModalApi.FailModal
+        isOpen={FailModalOpen}
+        onClose={handleFailCloseModal}
+        modalTitle={"비밀번호 찾기 실패"}
+        modalText={modalContent}
+      />
     </Container>
   );
 };

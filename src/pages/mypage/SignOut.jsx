@@ -84,8 +84,8 @@ const SignOut = () => {
   return (
     <>
       <div className={styles.container}>
-        <BackButton />
         <div className={styles.box}>
+          <BackButton />
           <p className={styles.title}>회원탈퇴</p>
           <div className={styles.imageItem}></div>
           <input
@@ -98,7 +98,6 @@ const SignOut = () => {
             placeholder="주민등록번호"
             onChange={(e) => setUser_jumin(e.target.value)}
           />
-          <p></p>
           <div className={styles.finalCheck} onClick={memberDelete}>
             탈퇴
           </div>

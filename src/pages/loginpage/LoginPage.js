@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,17 +9,16 @@ import ReCaptchaComponenet from "../../api/RecaptchaAPI";
 ReactModal.setAppElement("#root");
 
 const Container = styled.div`
-  width: 450px;
-  height: 600px;
+  width: 100%;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   margin: 0 auto;
 `;
 const Box = styled.div`
-  min-width: 350px;
-  width: 100%;
-  height: 100%;
+  width: 580px;
+  height: 691px;
+  padding: 20px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -44,19 +42,21 @@ const Box = styled.div`
     margin-bottom: 50px;
   }
   & input {
-    width: 300px;
+    width: 60%;
     height: 40px;
     font-size: 20px;
     text-align: left;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 20px;
+    padding-left: 30px;
     margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   }
   & input::placeholder {
-    text-align: left;
-    vertical-align: middle;
-    font-size: 25px; /* 또는 font-size: 20px; !important; */
+    font-size: 20px;
     color: rgb(250, 250, 250);
+    padding-left: 0;
   }
   & p {
     display: flex;
@@ -71,9 +71,10 @@ const Box = styled.div`
     min-height: 30px;
   }
   & .loginsub a {
-    font-size: 15px;
+    font-size: 18px;
     text-decoration: none; /* 링크의 밑줄 제거 */
     color: rgba(255, 255, 255, 0.9); /* 링크의 색상 제거 */
+    margin-bottom: 10px;
   }
   & .loginsub a:nth-child(1) {
     margin-right: 40px;
@@ -89,7 +90,7 @@ const Box = styled.div`
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
-    margin-top: 30px;
+    margin-top: 40px;
   }
   @media (max-width: 700px) {
     width: 300px;
@@ -257,7 +258,7 @@ const LoginPage = () => {
             <Link to="/findid">Find ID /</Link>
             <Link to="/findpw">Password</Link>
           </p>
-          <ReCaptchaComponenet onVerify={handleCaptchaVerify}/>
+          <ReCaptchaComponenet onVerify={handleCaptchaVerify} />
           <div
             className="finalCheck"
             onClick={

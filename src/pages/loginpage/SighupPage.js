@@ -10,17 +10,16 @@ import ModalApi from "../../api/ModalApi";
 ReactModal.setAppElement("#root");
 //스타일 부분
 const Container = styled.div`
-  width: 500px;
-  height: 800px;
+  width: 100%;
   display: flex; /* 부모 요소를 flex container로 설정 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   margin: 0 auto;
 `;
 const Box = styled.div`
-  width: 500px;
-  width: 100%;
+  width: 580px;
   height: 100%;
+  padding: 20px;
   display: flex; /* 자식 요소들을 flex container로 설정 */
   flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
   justify-content: center; /* 수직 가운데 정렬 */
@@ -43,58 +42,60 @@ const Box = styled.div`
   }
 
   & input {
-    width: 400px;
-    height: 50px;
-    font-size: 25px;
+    width: 60%;
+    height: 40px;
+    font-size: 20px;
     text-align: left;
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 20px;
-    /* padding: 5px 0 5px 10px; */
+    padding-left: 30px;
     margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   }
   & input::placeholder {
-      font-size: 25px;
-      color: rgb(250, 250, 250);
-    }
-    & #hint {
-      position: relative;
-      width: 1000px;
-      color: #999;
-      right: 180px;
-      bottom: 3vh;
-    }
-    & .success {
-      position: absolute;
-      left: 880px;
-      bottom: 15px;
-      font-size: 30px;
-    }
-    & .error {
-      position: absolute;
-      width: auto;
-      font-size: 12px;
-      font-weight: bold;
-      color: rgb(255, 255, 255);
-    }
-    & .caution {
-      font-size: 15px;
-      position: relative;
-    }
-    & .finalCheck {
-      width: 200px;
-      height: 50px;
-      line-height: 50px; /*텍스트 상하정렬*/
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.9);
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
-    }
-    @media (max-width: 700px) {
+    font-size: 20px;
+    color: rgb(250, 250, 250);
+    padding-left: 0;
+  }
+  & #hint {
+    position: relative;
+    width: 1000px;
+    color: #999;
+    bottom: 3vh;
+    display: flex;
+    justify-content: center;
+  }
+  & .success {
+    position: absolute;
+    left: 660px;
+    bottom: 5px;
+    font-size: 30px;
+  }
+  & .error {
+    position: absolute;
+    width: auto;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+  }
+  & .caution {
+    font-size: 15px;
+    position: relative;
+  }
+  & .finalCheck {
+    width: 200px;
+    height: 50px;
+    line-height: 50px; /*텍스트 상하정렬*/
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+  }
+  @media (max-width: 700px) {
     width: 300px;
     height: 470px;
-    
+
     .title {
       font-size: 25px;
     }
@@ -109,14 +110,13 @@ const Box = styled.div`
       font-size: 15px;
     }
     #hint {
-      right: 90px;
+      margin-top: 4px;
     }
-    .error{
+    .error {
       margin-top: 15px;
-      font-size: 5px;
+      font-size: 8px;
     }
     .success {
-
       left: 880px;
       bottom: 15px;
       font-size: 30px;
@@ -361,9 +361,9 @@ const SignupPage = () => {
           value={password}
           onChange={onChangePassword}
         />
-        <span id='hint'>
+        <span id="hint">
           {password.length > 0 && (
-            <span className={isPassword ? 'success' : 'error'}>
+            <span className={isPassword ? "success" : "error"}>
               {passwordError}
             </span>
           )}
@@ -381,11 +381,9 @@ const SignupPage = () => {
           value={jumin}
           onChange={onChangeJumin}
         />
-        <span id='hint'>
+        <span id="hint">
           {jumin.length > 0 && (
-            <span className={isJumin ? 'success' : 'error'}>
-              {juminError}
-            </span>
+            <span className={isJumin ? "success" : "error"}>{juminError}</span>
           )}
         </span>
         <input
@@ -402,11 +400,9 @@ const SignupPage = () => {
           value={phone}
           onChange={onChangePhone}
         />
-        <span id='hint'>
+        <span id="hint">
           {phone.length > 0 && (
-            <span className={isPhone ? 'success' : 'error'}>
-              {phoneError}
-            </span>
+            <span className={isPhone ? "success" : "error"}>{phoneError}</span>
           )}
         </span>
         <input
@@ -416,15 +412,15 @@ const SignupPage = () => {
           value={address}
           onChange={onChangeAddress}
         />
-        <span id='hint'>
+        <span id="hint">
           {address.length > 0 && (
-            <span className={isAddress ? 'success' : 'error'}>
+            <span className={isAddress ? "success" : "error"}>
               {addressError}
             </span>
           )}
         </span>
         <div
-          className='finalCheck'
+          className="finalCheck"
           style={{
             disable: isFormValid ? "false" : "true",
             backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",

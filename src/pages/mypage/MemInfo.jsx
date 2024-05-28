@@ -155,6 +155,7 @@ const MemInfo = () => {
             name="user_id"
             placeholder={member.user_id}
             disabled
+            className={styles.idInput}
           />
 
           <input
@@ -168,8 +169,9 @@ const MemInfo = () => {
             <p
               style={{
                 color: "red",
-                marginTop: "-23px",
-                fontSize: "13px",
+                marginTop: "-28px",
+                fontSize: "12px",
+                fontWeight: "bold",
               }}
             >
               {passwordError}
@@ -187,6 +189,7 @@ const MemInfo = () => {
             name="user_jumin"
             placeholder={member.user_jumin}
             disabled
+            className={styles.juminInput}
           />
           <input
             type="text"
@@ -206,8 +209,9 @@ const MemInfo = () => {
             <p
               style={{
                 color: "red",
-                marginTop: "-23px",
-                fontSize: "13px",
+                marginTop: "-28px",
+                fontSize: "12px",
+                fontWeight: "bold",
               }}
             >
               {phoneError}
@@ -220,7 +224,7 @@ const MemInfo = () => {
             placeholder={member.user_address}
             defaultValue={member.user_address}
           />
-          <p className={styles.caution}></p>
+          {/* <p className={styles.caution}></p> */}
           <div
             className={styles.finalCheck}
             style={{
