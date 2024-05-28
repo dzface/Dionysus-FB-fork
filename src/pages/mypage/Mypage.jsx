@@ -50,26 +50,26 @@ const JjimMoreItem = styled.div`
   position: absolute;
   border-radius: 10px;
   background-color: rgba(95, 95, 95);
-  width: 48%;
-  height: 500px; /* 원하는 높이로 설정하세요 */
+  width: 54%;
+  height: 520px; /* 원하는 높이로 설정하세요 */
   overflow-y: scroll;
   margin-left: -24px;
   margin-top: -8px;
   padding: 0;
-  z-index: 1;
+  z-index: 3;
   display: ${(props) => (props.jjimVisible ? "block" : "none")};
 `;
 const ReviewMoreItem = styled.div`
   position: absolute;
   border-radius: 10px;
   background-color: rgba(95, 95, 95);
-  width: 48%;
-  height: 500px; /* 원하는 높이로 설정하세요 */
+  width: 54%;
+  height: 520px; /* 원하는 높이로 설정하세요 */
   overflow-y: scroll;
   margin-left: -24px;
   margin-top: -8px;
   padding: 0;
-  z-index: 1;
+  z-index: 3;
   display: ${(props) => (props.reviewVisible ? "block" : "none")};
 `;
 const ReviewMore = styled.div`
