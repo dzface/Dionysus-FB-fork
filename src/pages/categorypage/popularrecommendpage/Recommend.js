@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Common from "../Common/Common";
 import Recommend2 from "./Recommend2";
 import Menu from "./Menu";
+import DisplayWeather from "./Weather"
 
 const Container = styled.div`
   width: 100%;
@@ -62,12 +63,11 @@ const ItemTitle = styled.div`
 `;
 
 const ItemTitleText = styled.p`
-  margin-top: 20px;
+  padding-top: 30px;
   font-size: 26px;
 `;
 
 const ThemeItemImage = styled.img`
-  margin-top: 5px;
   width: 100%;
   height: 266px;;
   object-fit: fill;
@@ -108,6 +108,7 @@ const IconImg = styled.img`
   height: 150px;
   border-radius: 50%;
   transition: transform 0.2s ease;
+  z-index: 1;
 
   &:hover {
     transform: scale(0.9);
@@ -180,93 +181,97 @@ const Recommend = () => {
 
   return (
     <Container>
-      <h1>다양한 주류 추천</h1>
-      <ThemeContainer>
-        {showMenu && (
-          <CommonBox>
-            <Menu selectedMenu={selectedMenu} setShowMenu={setShowMenu} />
-          </CommonBox>
-        )}
-        {showRecommend2 ? (
-          <CommonBox>
-            <ButtonItem onClick={handleCloseRecommend2}>Close</ButtonItem>
-            <Recommend2 selectedIcon={selectedIcon} />
-          </CommonBox>
-        ) : (
-          <>
-            {[0, 1, 2].map((index) => (
-              <ThemeItem
-                showMenu={showMenu}
-                key={index}
-                onClick={() => toggleSize(index)}
-                isBig={isBig === index}
-                bgColor={
-                  [
-                    "rgba(112, 101, 19, 1)",
-                    "rgba(182, 113, 20, 1)",
-                    "rgba(82, 1, 33, 1)",
-                  ][index]
-                }
-              >
-                <Wrapper>
-                  <ItemTitle>
-                    <ItemTitleText
-                    isBig={index}>
-                      {
-                        [
-                          "기분에 따른 추천",
-                          "날씨에 따른 추천",
-                          "음식에 따른 추천",
-                        ][index]
-                      }
-                    </ItemTitleText>
-                  </ItemTitle>
-                  {isBig === index ? (
-                    <RecommendIconDiv>
-                      {index === 0
-                        ? ["기쁨", "슬픔", "화남", "사랑"].map((iconName) => (
-                            <IconBox key={iconName}>
-                              <IconImg
-                                src={getIconImagePath(iconName)}
-                                onClick={() => handleIconClick(iconName)}
-                              />
-                            </IconBox>
-                          ))
-                        : index === 1
-                        ? ["맑음", "흐림", "비", "눈"].map((iconName) => (
-                            <IconBox key={iconName}>
-                              <IconImg
-                                src={getIconImagePath(iconName)}
-                                onClick={() => handleIconClick(iconName)}
-                              />
-                            </IconBox>
-                          ))
-                        : ["한식", "일식", "양식", "중식"].map((iconName) => (
+    <h1>다양한 주류 추천</h1>
+    <ThemeContainer>
+      {showMenu && (
+        <CommonBox>
+          <Menu selectedMenu={selectedMenu} setShowMenu={setShowMenu} />
+        </CommonBox>
+      )}
+      {showRecommend2 ? (
+        <CommonBox>
+          <ButtonItem onClick={handleCloseRecommend2}>Close</ButtonItem>
+          <Recommend2 selectedIcon={selectedIcon} />
+        </CommonBox>
+      ) : (
+        <>
+          {[0, 1, 2].map((index) => (
+            <ThemeItem
+              showMenu={showMenu}
+              key={index}
+              onClick={() => toggleSize(index)}
+              isBig={isBig === index}
+              bgColor={
+                [
+                  "rgba(112, 101, 19, 1)",
+                  "rgba(182, 113, 20, 1)",
+                  "rgba(82, 1, 33, 1)",
+                ][index]
+              }
+            >
+              <Wrapper>
+                <ItemTitle>
+                  <ItemTitleText isBig={index}>
+                    {
+                      [
+                        "기분에 따른 추천",
+                        "날씨에 따른 추천",
+                        "음식에 따른 추천",
+                      ][index]
+                    }
+                  </ItemTitleText>
+                </ItemTitle>
+                {isBig === index ? (
+                  <RecommendIconDiv>
+                    {index === 0
+                      ? ["기쁨", "슬픔", "화남", "사랑"].map((iconName) => (
+                          <IconBox key={iconName}>
+                            <IconImg
+                              src={getIconImagePath(iconName)}
+                              onClick={() => handleIconClick(iconName)}
+                            />
+                          </IconBox>
+                        ))
+                      : index === 1 ? ( // 이 부분에 DisplayWeather 추가
+                          <>
+                            <DisplayWeather /> {/* DisplayWeather 컴포넌트 추가 */}
+                            {["맑음", "흐림", "비", "눈"].map((iconName) => (
+                              <IconBox key={iconName}>
+                                <IconImg
+                                  src={getIconImagePath(iconName)}
+                                  onClick={() => handleIconClick(iconName)}
+                                />
+                              </IconBox>
+                            ))}
+                          </>
+                        ) : (
+                          ["한식", "일식", "양식", "중식"].map((iconName) => (
                             <IconBox key={iconName}>
                               <IconImg
                                 src={getIconImagePath(iconName)}
                                 onClick={() => handleMenuIconClick(iconName)}
                               />
                             </IconBox>
-                          ))}
-                    </RecommendIconDiv>
-                  ) : (
-                    <ThemeItemImage
+                          ))
+                        )}
+                  </RecommendIconDiv>
+                ) : (
+                  <ThemeItemImage
                     src={getBackgroundImagePath(index)}
                     alt="배경 이미지"
                   />
-                  )}
-                </Wrapper>
-              </ThemeItem>
-            ))}
-          </>
-        )}
-      </ThemeContainer>
-      <TitleDiv>
-        <p>인기주류 Top 10!</p>
-      </TitleDiv>
-      <Common />
-    </Container>
+                )}
+              </Wrapper>
+            </ThemeItem>
+          ))}
+        </>
+      )}
+    </ThemeContainer>
+    <TitleDiv>
+      <p>인기주류 Top 10!</p>
+    </TitleDiv>
+    <Common />
+  </Container>
   );
 };
 
