@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AxiosApi from "../../../api/AxiosApi";
 import ListItem from "../../categorypage/Common/ListItem";
 
-const ReviewItem = ({ isOne = false }) => {
+const ReviewItem = ({ isOne = false, isReview = true }) => {
   const [alcohol1, setAlcohol1] = useState([]);
 
   const reviewAlcoholInfo = async () => {
@@ -24,7 +24,10 @@ const ReviewItem = ({ isOne = false }) => {
       <ListItem
         alcohols={alcohol1}
         alcoholList={reviewAlcoholInfo}
+        reviewinput={false}
         isOne={isOne}
+        isReview={isReview}
+        firstreview={true}
       />
     </>
   );

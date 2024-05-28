@@ -100,7 +100,13 @@ const Common = () => {
         <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
       </SelectListDiv>
       <List>
-        <ListItem alcohols={alcohols} alcoholList={alcoholList} isOne={false} />
+        <ListItem
+          alcohols={alcohols}
+          alcoholList={alcoholList}
+          isOne={false}
+          isReview={true}
+          reviewinput={true}
+        />
       </List>
       {/* <HorizontalLine /> */}
     </Container>

@@ -86,6 +86,7 @@ const ItemReview = styled.div`
   .reviewdiv {
     display: flex;
     align-items: center;
+    margin-top: 7px;
   }
   .more {
     font-size: 15px;
@@ -97,7 +98,6 @@ const ItemReview = styled.div`
   }
 `;
 const ReviewValue = styled.textarea`
-  margin: 0;
   width: 370px;
   height: 60px;
   border-radius: 0;
@@ -105,13 +105,15 @@ const ReviewValue = styled.textarea`
   background-color: transparent;
   color: #fff;
   font-size: 15px;
-  display: ${({ isOne }) => (isOne ? "none" : "block")};
+  display: ${({ reviewinput }) => (reviewinput ? "block" : "none")};
 `;
 const ReviewView = styled.div`
   margin: 0;
   width: 370px;
   border-radius: 0;
   border: none;
+  display: ${({ isReview, firstreview }) =>
+    isReview || firstreview ? "block" : "none"};
 `;
 const ReviewBtn = styled.div`
   width: 70px;
@@ -122,7 +124,7 @@ const ReviewBtn = styled.div`
   color: #fff;
   font-size: 14px;
   margin-left: 250px;
-  display: ${({ isOne }) => (isOne ? "none" : "flex")};
+  display: ${({ reviewinput }) => (reviewinput ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -258,7 +260,14 @@ const AnimatedScore = styled.div`
       animation: ${flipInX} 0.6s forwards;
     `}
 `;
-const ListItem = ({ alcohols, alcoholList, isOne }) => {
+const ListItem = ({
+  alcohols,
+  alcoholList,
+  isOne,
+  isReview,
+  reviewinput,
+  firstreview,
+}) => {
   //해당 컴포넌트의 별점을 선택시 상태를 저장하는 변수
   const [scoreChoices, setScoreChoices] = useState(
     new Array(alcohols.length).fill(null)
@@ -391,7 +400,6 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
     updatedMoreBtnClicks[index] = !updatedMoreBtnClicks[index];
     setMorebtnonclick(updatedMoreBtnClicks);
     setMorerestreview(true);
-
     otherUserReview(index);
   };
   const closeOnclickEvent = (index) => {
@@ -454,6 +462,7 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
       // bouncing 상태 업데이트
       setBouncingHeart(index);
       setTimeout(() => setBouncingHeart(null), 1000); // 1초 후 bouncing 상태 초기화
+      alcoholList();
     } catch (error) {
       console.error("Error toggling jjim:", error);
       alert("즐겨찾기 변경 중 오류가 발생했습니다.");
@@ -522,14 +531,14 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
             >
               <div className="review">Review</div>
               <ReviewValue
-                isOne={isOne}
+                reviewinput={reviewinput}
                 value={reviewInputs[index]}
                 onChange={(e) => handleReviewInputChange(index, e.target.value)}
               />
-              <ReviewView isOne={isOne}>{item.review}</ReviewView>
+              <ReviewView firstreview={firstreview}>{item.review}</ReviewView>
               <div className="reviewdiv">
                 <ReviewBtn
-                  isOne={isOne}
+                  reviewinput={reviewinput}
                   onClick={() => handleReviewSaveClick(index)}
                 >
                   입력
@@ -544,17 +553,24 @@ const ListItem = ({ alcohols, alcoholList, isOne }) => {
             </ItemReview>
             <Morebtnreview buttonon={morebtnonclick[index]}>
               <div className="review">Review</div>
-              {otherreviewsave &&
+              {otherreviewsave && otherreviewsave.length > 0 ? (
                 otherreviewsave.map((reviewitem) => (
-                  <>
-                    <div className="reviewlist">
-                      <div className="reviewuser">
-                        <span>{reviewitem.user_nick}</span>
-                      </div>
-                      <ReviewView isOne={isOne}>{reviewitem.review}</ReviewView>
+                  <div className="reviewlist">
+                    <div className="reviewuser">
+                      <span>{reviewitem.user_nick}</span>
                     </div>
-                  </>
-                ))}
+                    <ReviewView isReview={isReview}>
+                      {reviewitem.review}
+                    </ReviewView>
+                  </div>
+                ))
+              ) : (
+                <div className="reviewlist">
+                  <ReviewView isReview={isReview}>
+                    <p>리뷰가 없습니다.</p>
+                  </ReviewView>
+                </div>
+              )}
               <div className="reviewdiv">
                 <div
                   className="close"
