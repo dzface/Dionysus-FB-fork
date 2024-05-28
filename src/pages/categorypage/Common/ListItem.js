@@ -71,6 +71,7 @@ const ItemReview = styled.div`
   width: 400px;
   height: 140px;
   background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid white;
   padding: 10px;
   color: #fff;
   visibility: ${({ buttonvisible }) => (buttonvisible ? "hidden" : "visible")};

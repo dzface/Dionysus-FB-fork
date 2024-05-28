@@ -101,7 +101,6 @@ const Mypage = () => {
   const [reviewVisible, setReviewVisible] = useState(false);
   // 모달 기본상태 입력(숨김)
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
-
   const logout = () => {
     //modal 이벤트 발생 구간 입력 코드
     setSuccessModalOpen(true); // Show success modal
