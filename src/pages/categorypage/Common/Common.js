@@ -34,8 +34,9 @@ const Input = styled.input`
 
 // List 스타일 컴포넌트를 생성합니다.
 const List = styled.div`
-  width: 900px;
-  height: 1800px;
+  width: 1050px;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const SelectListDiv = styled.div`
@@ -44,6 +45,7 @@ const SelectListDiv = styled.div`
   display: flex;
   justify-content: end;
   margin-right: 38vw;
+  margin-bottom: 20px;
 `;
 
 const Hrtag = styled.hr`

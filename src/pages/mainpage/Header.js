@@ -14,6 +14,9 @@ import { PiWineFill } from "react-icons/pi"; //와인 icon
 import { IoMdWine } from "react-icons/io"; // 위스키 icon
 import { FaWineBottle } from "react-icons/fa"; //전통주 icon
 import { VscAccount } from "react-icons/vsc"; // 계정 이미지 icon
+import { BsPersonCircle } from "react-icons/bs";
+import { GiHeartBottle } from "react-icons/gi";
+import ImageUploader from "../../firebase/profileupload/ImageUploader";
 //사이드바 높이 조절을 위한 상수 선언
 const topbarHeight = "30px";
 
@@ -170,7 +173,7 @@ const SideBarBody = styled.div`
 // 411%,512%
 const ProfileDiv = styled.div`
   width: 300px;
-  height: 150px;
+  height: 130px;
   display: flex;
   & .profileImage {
     width: 100px;
@@ -178,12 +181,12 @@ const ProfileDiv = styled.div`
   }
 
   & .divExitUser {
-    width: 200px;
+    width: 190px;
     height: 150px;
   }
   & .exit {
     width: 200px;
-    height: 75px;
+    height: 55px;
     display: flex;
     justify-content: end;
     padding: 10px;
@@ -199,6 +202,20 @@ const ProfileDiv = styled.div`
     margin: 2px 20px;
     line-height: 1.5;
   }
+  .username {
+    color: #fff;
+    font-size: 20px;
+    width: 200px;
+    height: auto;
+    margin-left: 20px;
+  }
+  .userid {
+    color: #fff;
+    font-size: 20px;
+    width: 200px;
+    height: auto;
+    margin-left: 20px;
+  }
 `;
 const PrifileDiv2 = styled.div`
   width: 300px;
@@ -207,25 +224,15 @@ const PrifileDiv2 = styled.div`
   justify-content: space-evenly;
   align-items: center;
 `;
-const ProfileImg = styled.div`
-  width: 100px;
-  height: 100px;
-  border: none;
-  border-radius: 50%;
-  background-color: white;
-  margin: 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const BtnStyle = styled.div`
-  width: 90px;
+  width: 110px;
   height: 40px;
   border-radius: 20%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 18px;
   & > p {
     color: #fff;
   }
@@ -250,11 +257,39 @@ const SideMenuDiv = styled.div`
     transform: scale(1.3);
   }
 `;
+const ProfileImg = styled.div`
+  width: 120px;
+  height: 100px;
+  position: relative;
+  margin-top: 10px;
+  margin-left: 10px;
+  .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .uploaded-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+`;
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
   const context = useContext(UserContext);
   const { setBgimgurl, setCategory } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
+  const [imageUrl, setImageUrl] = useState("");
+  const userid = sessionStorage.getItem("user_id");
+  const username = sessionStorage.getItem("user_name");
+  const proflieurl = sessionStorage.getItem("profile_url");
   //아이콘을 눌렀을 때 사이드바 오픈
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -334,11 +369,17 @@ const Header = () => {
               </Link>
             </Item>
             <SideWrapping>
-              <Link to="/login" style={{ textDecoration: "none" }}>
-                <SignUpBtn>
-                  <ItemFont>로그인</ItemFont>
-                </SignUpBtn>
-              </Link>
+              {userid ? (
+                <Link to="/mypage" style={{ textDecoration: "none" }}>
+                  <BsPersonCircle size={50} color="rgba(255,255,255,0.8)" />
+                </Link>
+              ) : (
+                <Link to="/login" style={{ textDecoration: "none" }}>
+                  <SignUpBtn>
+                    <ItemFont>로그인</ItemFont>
+                  </SignUpBtn>
+                </Link>
+              )}
               <SideBarBtn>
                 {/* 햄버거를 눌렀을 경우 사이드바 열림*/}
                 {!isMenuOpen && (
@@ -356,11 +397,17 @@ const Header = () => {
                 }}
               >
                 <ProfileDiv>
-                  <div className="profileImage">
-                    <ProfileImg>
-                      <VscAccount size={100} color="gray" />
-                    </ProfileImg>
-                  </div>
+                  <ProfileImg>
+                    {proflieurl ? (
+                      <img
+                        src={proflieurl}
+                        alt="uploaded"
+                        className="uploaded-img"
+                      />
+                    ) : (
+                      <VscAccount size={100} color="rgba(255,255,255,0.8)" />
+                    )}
+                  </ProfileImg>
                   <div className="divExitUser">
                     {/* // 사이드바를 누를 경우 닫음 */}
                     <div className="exit">
@@ -372,23 +419,32 @@ const Header = () => {
                         />
                       )}
                     </div>
-                    <div className="user">
-                      <span></span>
-                      <span></span>
+                    <div className="username">
+                      {username && <span>{username}</span>}
+                    </div>
+                    <div className="userid">
+                      {userid ? (
+                        <span>{userid}</span>
+                      ) : (
+                        <span>로그인 해주세요.</span>
+                      )}
                     </div>
                   </div>
                 </ProfileDiv>
                 <PrifileDiv2>
-                  <Link to="/login" style={{ textDecoration: "none" }}>
-                    <BtnStyle>
-                      <p>로그인</p>
-                    </BtnStyle>
-                  </Link>
-                  <Link to="/mypage" style={{ textDecoration: "none" }}>
-                    <BtnStyle>
-                      <p>마이페이지</p>
-                    </BtnStyle>
-                  </Link>
+                  {userid ? (
+                    <Link to="/mypage" style={{ textDecoration: "none" }}>
+                      <BtnStyle>
+                        <p>마이페이지</p>
+                      </BtnStyle>
+                    </Link>
+                  ) : (
+                    <Link to="/login" style={{ textDecoration: "none" }}>
+                      <BtnStyle>
+                        <p>로그인</p>
+                      </BtnStyle>
+                    </Link>
+                  )}
                 </PrifileDiv2>
                 <SideMenuDiv>
                   <Link
@@ -396,7 +452,10 @@ const Header = () => {
                     style={{ textDecoration: "none" }}
                     className="sidemenu"
                   >
-                    <p>인기주류</p>
+                    <p>
+                      <GiHeartBottle size={32} color="white" />
+                      인기주류
+                    </p>
                   </Link>
                 </SideMenuDiv>
                 <SideMenuDiv>

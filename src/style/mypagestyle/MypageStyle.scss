@@ -40,7 +40,7 @@ h2 {
   justify-content: center;
 }
 .contents {
-  width: 1300px;
+  width: 1150px;
   padding: 10px;
   border: none;
   border-radius: 30px;
@@ -76,9 +76,10 @@ h2 {
   }
 }
 .person {
+  width: 450px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
 }
 @media (max-width: 700px) {
   .person {
@@ -87,13 +88,15 @@ h2 {
   }
 }
 .img {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   background-image: url("../../img/mypageimg/person-icon.png");
   background-repeat: no-repeat;
   background-size: contain;
+  position: fixed;
 }
 .person span {
+  width: 70px;
   font-size: 20px;
   font-weight: 700;
   color: #000000;

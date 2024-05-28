@@ -3,13 +3,13 @@ import { storage } from "./ProfileImgUpload";
 import styled from "styled-components";
 
 const ImageProfileDiv = styled.div`
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  & > .classimgcircle {
+  .classimgcircle {
     width: auto;
     height: auto;
     border-radius: 50%;
@@ -25,6 +25,7 @@ const ImageProfileDiv = styled.div`
     background-color: rgba(0, 0, 0, 0.4);
     color: white;
     margin-bottom: 10px;
+    margin-left: 40px;
   }
 
   & > input[type="file"] {
@@ -34,27 +35,28 @@ const ImageProfileDiv = styled.div`
   & > button {
     cursor: pointer;
     width: 100px;
-    height: 40px;
+    height: 35px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.4);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 15px;
+    margin-left: 47px;
   }
 
   & > div > img {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     margin-top: 20px;
     object-fit: cover;
   }
 `;
 
-const ImageUploader = () => {
+const ImageUploader = ({ setImageUrl, showControls = true }) => {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
-
   const handleFileInputChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -67,7 +69,8 @@ const ImageUploader = () => {
         console.log("File uploaded successfully!");
         fileRef.getDownloadURL().then((url) => {
           console.log("저장경로 확인 : " + url);
-          setUrl(url);
+          setImageUrl(url);
+          sessionStorage.setItem("profile_url", url);
         });
       });
     }
@@ -78,9 +81,13 @@ const ImageUploader = () => {
       <div className="classimgcircle">
         {url && <img src={url} alt="uploaded" />}
       </div>
-      <label htmlFor="fileInput">Choose File</label>
-      <input id="fileInput" type="file" onChange={handleFileInputChange} />
-      <button onClick={handleUploadClick}>Upload</button>
+      {showControls && (
+        <>
+          <label htmlFor="fileInput">Choose File</label>
+          <input id="fileInput" type="file" onChange={handleFileInputChange} />
+          <button onClick={handleUploadClick}>Upload</button>
+        </>
+      )}
     </ImageProfileDiv>
   );
 };

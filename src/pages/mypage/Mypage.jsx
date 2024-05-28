@@ -2,34 +2,37 @@ import "../../style/mypagestyle/MypageStyle.scss";
 import { Link } from "react-router-dom";
 import ReviewItem from "./Common/ReviewItem";
 import JjimItem from "./Common/JjimItem";
+import ImageUploader from "../../firebase/profileupload/ImageUploader";
 import LoginCheckComponent from "../loginpage/LoginCheckComponent";
+import styled from "styled-components";
+import { useState } from "react";
 
-// import { UseContext, useState } from "react";
-// import { UserContext } from "../../global/UserStore";
-// import { storage } from "../../firebase/profileupload/ProfileImgUpload";
+const ProfileDiv = styled.div`
+  width: 130px;
+  height: 130px;
+  position: relative;
+
+  .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .uploaded-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+`;
 const Mypage = () => {
-  // const context = UseContext(UseContext);
-  // const { profileimg, setProfileimg } = context;
-  // const [file, setFile] = useState(null); // 선택된 파일에 대한 상태관리
-  // const [url, setUrl] = useState(""); // 사진 경로 (파이어베이스의 업로드된 경로)
-  // const handleUploadClick = async () => {
-  //   if (!file) {
-  //     alert("파일을 선택해 주세요.");
-  //     return;
-  //   }
-  //   try {
-  //     const storageRef = storage.ref();
-  //     const fileRef = storageRef.child(file.name);
-  //     await fileRef.put(file); // 파이어베이스에 생성한 스토리지에 파일 업로드
-  //     // 업로드 후 이미지 URL 가져오기
-  //     const uploadedUrl = await fileRef.getDownloadURL();
-  //     console.log(uploadedUrl);
-  //     setUrl(uploadedUrl);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
+  const [imageUrl, setImageUrl] = useState("");
+  const profileurl = sessionStorage.getItem("profile_url");
   const logout = () => {
     sessionStorage.clear();
   };
@@ -54,20 +57,30 @@ const Mypage = () => {
 
     return <p>전화번호: {formattedPhoneNumber}</p>;
   };
-
+  const userid = sessionStorage.getItem("user_id");
+  const username = sessionStorage.getItem("user_name");
   return (
     <div>
-      <LoginCheckComponent>
+      {/* <LoginCheckComponent> */}
       <div className="container">
         <div className="contents">
           <div className="mem">
             <div className="meminfo1">
               <div className="profile">
                 <div className="person">
-                  <div className="img"></div>
+                  <ProfileDiv>
+                    <div className="img"></div>
+                    {profileurl && (
+                      <img
+                        src={profileurl}
+                        alt="uploaded"
+                        className="uploaded-img"
+                      />
+                    )}
+                    <ImageUploader setImageUrl={setImageUrl} />
+                  </ProfileDiv>
                   <p>
-                    <span>{sessionStorage.getItem("user_name")}</span>님
-                    반갑습니다!
+                    <span>{username}</span>님 반갑습니다!
                   </p>
                 </div>
                 <div className="btn">
@@ -99,7 +112,7 @@ const Mypage = () => {
           <ReviewItem />
         </div>
       </div>
-      </LoginCheckComponent>
+      {/* </LoginCheckComponent> */}
     </div>
   );
 };
