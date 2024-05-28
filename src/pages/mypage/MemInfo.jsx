@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
 import LoginCheckComponent from "../loginpage/LoginCheckComponent";
+import ReactModal from "react-modal";
+import ModalApi from "../../api/ModalApi";
+ReactModal.setAppElement("#root");
 
 const MemInfo = () => {
   const [member, setMember] = useState("");
@@ -19,6 +22,12 @@ const MemInfo = () => {
   // 유효성 검사
   const [isPassword, setIsPassword] = useState(true);
   const [isPhone, setIsPhone] = useState(true);
+  // 기본상태 입력(숨김)
+  const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const handleSuccessCloseModal = () => {
+    setSuccessModalOpen(false);
+    navigate("/mypage"); // Navigate to the home page or any other page
+  };
 
   const navigate = useNavigate();
 
@@ -57,7 +66,7 @@ const MemInfo = () => {
       sessionStorage.setItem("user_nick", user_nick);
       sessionStorage.setItem("user_phone", user_phone);
       sessionStorage.setItem("user_address", user_address);
-      navigate("/mypage");
+      setSuccessModalOpen(true); // Show success modal
     } catch (e) {
       console.log(e);
     }
@@ -135,95 +144,102 @@ const MemInfo = () => {
   const isFormValid = isPassword && isPhone;
 
   return (
-    
-    <div className={styles.container}>
-      <LoginCheckComponent></LoginCheckComponent>
-      <BackButton />
-      <div className={styles.box}>
-        <p className={styles.title}>정보수정</p>
-        <input
-          type="text"
-          name="user_id"
-          placeholder={member.user_id}
-          disabled
-        />
+    <>
+      <div className={styles.container}>
+        <LoginCheckComponent></LoginCheckComponent>
+        <BackButton />
+        <div className={styles.box}>
+          <p className={styles.title}>정보수정</p>
+          <input
+            type="text"
+            name="user_id"
+            placeholder={member.user_id}
+            disabled
+          />
 
-        <input
-          type="text"
-          name="user_pw"
-          onChange={onChangePw}
-          placeholder={member.user_pw}
-          defaultValue={member.user_pw}
-        />
-        {passwordError && (
-          <p
+          <input
+            type="text"
+            name="user_pw"
+            onChange={onChangePw}
+            placeholder={member.user_pw}
+            defaultValue={member.user_pw}
+          />
+          {passwordError && (
+            <p
+              style={{
+                color: "red",
+                marginTop: "-23px",
+                fontSize: "13px",
+              }}
+            >
+              {passwordError}
+            </p>
+          )}
+          <input
+            type="text"
+            name="user_name"
+            onChange={onChangeName}
+            placeholder={member.user_name}
+            defaultValue={member.user_name}
+          />
+          <input
+            type="text"
+            name="user_jumin"
+            placeholder={member.user_jumin}
+            disabled
+          />
+          <input
+            type="text"
+            name="user_nick"
+            onChange={onChangeNick}
+            placeholder={member.user_nick}
+            defaultValue={member.user_nick}
+          />
+          <input
+            type="text"
+            name="user_phone"
+            onChange={onChangePhone}
+            placeholder={member.user_phone}
+            defaultValue={member.user_phone}
+          />
+          {phoneError && (
+            <p
+              style={{
+                color: "red",
+                marginTop: "-23px",
+                fontSize: "13px",
+              }}
+            >
+              {phoneError}
+            </p>
+          )}
+          <input
+            type="text"
+            name="user_address"
+            onChange={onChangeAddress}
+            placeholder={member.user_address}
+            defaultValue={member.user_address}
+          />
+          <p className={styles.caution}></p>
+          <div
+            className={styles.finalCheck}
             style={{
-              color: "red",
-              marginTop: "-23px",
-              fontSize: "13px",
+              cursor: isFormValid ? "pointer" : "not-allowed",
+              backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",
             }}
+            onClick={isFormValid ? handleSubmit : null}
           >
-            {passwordError}
-          </p>
-        )}
-        <input
-          type="text"
-          name="user_name"
-          onChange={onChangeName}
-          placeholder={member.user_name}
-          defaultValue={member.user_name}
-        />
-        <input
-          type="text"
-          name="user_jumin"
-          placeholder={member.user_jumin}
-          disabled
-        />
-        <input
-          type="text"
-          name="user_nick"
-          onChange={onChangeNick}
-          placeholder={member.user_nick}
-          defaultValue={member.user_nick}
-        />
-        <input
-          type="text"
-          name="user_phone"
-          onChange={onChangePhone}
-          placeholder={member.user_phone}
-          defaultValue={member.user_phone}
-        />
-        {phoneError && (
-          <p
-            style={{
-              color: "red",
-              marginTop: "-23px",
-              fontSize: "13px",
-            }}
-          >
-            {phoneError}
-          </p>
-        )}
-        <input
-          type="text"
-          name="user_address"
-          onChange={onChangeAddress}
-          placeholder={member.user_address}
-          defaultValue={member.user_address}
-        />
-        <p className={styles.caution}></p>
-        <div
-          className={styles.finalCheck}
-          style={{
-            cursor: isFormValid ? "pointer" : "not-allowed",
-            backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",
-          }}
-          onClick={isFormValid ? handleSubmit : null}
-        >
-          수정
+            수정
+          </div>
         </div>
       </div>
-    </div>
+      <ModalApi.SuccessModal
+        isOpen={SuccessModalOpen}
+        onClose={handleSuccessCloseModal}
+        modalTitle={"회원 정보 수정"}
+        modalText={"수정되었습니다."}
+      />
+    </>
   );
 };
 export default MemInfo;

@@ -3,6 +3,9 @@ import BackButton from "../loginpage/BackButton";
 import AxiosApi from "../../api/AxiosApi";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactModal from "react-modal";
+import ModalApi from "../../api/ModalApi";
+ReactModal.setAppElement("#root");
 
 const SignOut = () => {
   const navigate = useNavigate();
@@ -11,6 +14,22 @@ const SignOut = () => {
   const [member, setMember] = useState([]);
   const [isMatching, setIsMatching] = useState(false);
 
+  const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [NullFailModalOpen, setNullFailModalOpen] = useState(false);
+  const [MatchFailModalOpen, setMatchFailModalOpen] = useState(false);
+
+  const handleSuccessCloseModal = () => {
+    setSuccessModalOpen(false);
+    navigate("/"); // Navigate to the home page or any other page
+    sessionStorage.clear();
+  };
+  const handleNullFailCloseModal = () => {
+    setNullFailModalOpen(false);
+  };
+  const handleMatchFailCloseModal = () => {
+    setMatchFailModalOpen(false);
+  };
+
   useEffect(() => {
     const membersInfo = async () => {
       // 로컬스토리지에서 로그인한 사용자 정보 가져오기
@@ -18,8 +37,6 @@ const SignOut = () => {
       try {
         const rsp = await AxiosApi.memberSelect(loginUserEmail); // 회원 정보 가져오기
         setMember(rsp.data);
-        setUser_name(rsp.data.user_name);
-        setUser_jumin(rsp.data.user_jumin);
       } catch (e) {
         console.log(e);
       }
@@ -42,19 +59,21 @@ const SignOut = () => {
     try {
       const sessionUserName = sessionStorage.getItem("user_name");
       const sessionUserJumin = sessionStorage.getItem("user_jumin");
+      if (!user_name || !user_jumin) {
+        setNullFailModalOpen(true);
+        return; // 입력 값이 없으면 함수 종료
+      }
 
       if (user_name === sessionUserName && user_jumin === sessionUserJumin) {
         const isMemberValid = await AxiosApi.memberCheck(user_name, user_jumin);
         if (isMemberValid) {
           await AxiosApi.memberDelete(user_name, user_jumin);
-          sessionStorage.clear();
-          alert("회원 탈퇴 되었습니다.");
-          navigate(`/`);
+          setSuccessModalOpen(true); // Show success modal
         } else {
           alert("회원 정보를 확인하는 데 실패했습니다.");
         }
       } else {
-        alert("이름과 주민등록번호가 일치하지 않습니다.");
+        setMatchFailModalOpen(true);
         setIsMatching(false);
       }
     } catch (e) {
@@ -63,33 +82,46 @@ const SignOut = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <BackButton />
-      <div className={styles.box}>
-        <p className={styles.title}>회원탈퇴</p>
-        <div className={styles.imageItem}></div>
-        <input
-          type="text"
-          placeholder="이름"
-          // value={user_name}
-          onChange={(e) => setUser_name(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="주민등록번호"
-          // value={user_jumin}
-          onChange={(e) => setUser_jumin(e.target.value)}
-        />
-        <p></p>
-        <div
-          className={styles.finalCheck}
-          onClick={memberDelete}
-          // style={{ cursor: isMatching ? "pointer" : "not-allowed" }}
-        >
-          탈퇴
+    <>
+      <div className={styles.container}>
+        <BackButton />
+        <div className={styles.box}>
+          <p className={styles.title}>회원탈퇴</p>
+          <div className={styles.imageItem}></div>
+          <input
+            type="text"
+            placeholder="이름"
+            onChange={(e) => setUser_name(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="주민등록번호"
+            onChange={(e) => setUser_jumin(e.target.value)}
+          />
+          <p></p>
+          <div className={styles.finalCheck} onClick={memberDelete}>
+            탈퇴
+          </div>
         </div>
       </div>
-    </div>
+      <ModalApi.SuccessModal
+        isOpen={SuccessModalOpen}
+        onClose={handleSuccessCloseModal}
+        modalTitle={"회원 탈퇴 되었습니다."}
+      />
+      <ModalApi.FailModal
+        isOpen={NullFailModalOpen}
+        onClose={handleNullFailCloseModal}
+        modalTitle={"회원 탈퇴 실패"}
+        modalText={"이름과 주민번호를 입력해주세요."}
+      />
+      <ModalApi.FailModal
+        isOpen={MatchFailModalOpen}
+        onClose={handleMatchFailCloseModal}
+        modalTitle={"회원 탈퇴 실패"}
+        modalText={"이름과 주민번호가 일치하지 않습니다."}
+      />
+    </>
   );
 };
 

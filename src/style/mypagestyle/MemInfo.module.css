@@ -37,7 +37,7 @@ input {
   border: none;
   border-radius: 20px;
   text-align: center;
-  padding-left: 10px;
+  padding-left: 0px;
   font-size: 16px;
   margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
   box-sizing: border-box;
@@ -48,6 +48,7 @@ input::placeholder {
   font-style: inherit;
   padding-left: 0;
 }
+
 .caution {
   font-size: 15px;
   position: relative;
