@@ -4,8 +4,12 @@ import AxiosApi from "../../../api/AxiosApi";
 import ListItem from "../Common/ListItem";
 import SortOptions from "../Common/SortOptions";
 const ThemeItem = styled.div`
-  width: 1000px;
+  width: 80vw;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   position: relative;
   z-index: 1;
 `;
@@ -30,13 +34,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   animation: ${fadeInTopLeft} 1s; /* 애니메이션 적용 */
+
+  @media screen and (max-width: 768px) {
+      width: 90vw;
+  }
 `;
 
 const ItemTitle = styled.div`
   width: 100%;
   height: 148px;
-  background-color: rgba(112, 101, 19, 1);
-  border-radius: 10% 10% 0 0;
+  background-color: ${({ bgColor }) => bgColor};
+  border-radius: 20px 20px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,8 +67,9 @@ const IconImg = styled.img`
 const RecommendIconDiv = styled.div`
   width: 100%;
   min-height: 480px; /* 최소 높이를 설정합니다. */
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0 0 3% 3%;
+  
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,10 +77,12 @@ const RecommendIconDiv = styled.div`
 `;
 const SelectListDiv = styled.div`
   width: 100vw;
-  height: 25px;
   display: flex;
-  justify-content: end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 20px;
+
 `;
 
 const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
@@ -120,11 +131,23 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
     }
     return null;
   };
+  const bgColor = (selectedIcon, selectmenu) => {
+    if (["기쁨", "화남", "슬픔", "사랑"].includes(selectedIcon))
+      return "rgba(112, 101, 19, 0.8)"; // 감정 아이콘
+    if (["맑음", "흐림", "비", "눈"].includes(selectedIcon))
+      return "rgba(182, 113, 20, 0.8)"; // 날씨 아이콘
+    if (selectmenu)
+      return "rgba(82, 1, 33, 0.8)"; // 메뉴 아이콘
+    return null; // 기본 배경색
+  };
+  console.log(selectedIcon)
+  console.log(selectmenu)
+
 
   return (
     <ThemeItem>
       <Wrapper>
-        <ItemTitle>
+        <ItemTitle bgColor={bgColor(selectedIcon, selectmenu)}>
           <IconBox>
             <IconImg src={getImagePath()} alt="추천 아이콘" />
           </IconBox>
@@ -132,10 +155,12 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
         <RecommendIconDiv style={{ minHeight: `${listItemCount * 170}px` }}>
           {/* ListItem 컴포넌트의 개수에 따라서 높이를 설정합니다. */}
           <SelectListDiv>
+            <div>
             <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
-          </SelectListDiv>
+            </div>
           <ListItem alcohols={sortedDrinks} alcoholList={fetchPopularDrinks} />{" "}
           {/* 정렬된 아이템 전달 */}
+          </SelectListDiv>
         </RecommendIconDiv>
       </Wrapper>
     </ThemeItem>

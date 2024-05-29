@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import Recommend2 from "./Recommend2";
+import Recommend2 from "./CategoryList";
 import { useState } from "react";
 
 // flipInY 애니메이션을 styled-components로 변환
@@ -81,8 +81,8 @@ const Wrapper = styled.div`
 const ItemTitle = styled.div`
   width: 100%;
   height: 148px;
-  background-color: rgba(82, 1, 33, 1);
-  border-radius: 10% 10% 0 0;
+  background-color: rgba(82, 1, 33, 0.8);
+  border-radius: 20px 20px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,8 +90,8 @@ const ItemTitle = styled.div`
 const RecommendIconDiv = styled.div`
   width: 100%;
   height: 1000px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0 0 5% 5%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
