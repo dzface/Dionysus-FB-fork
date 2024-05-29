@@ -35,7 +35,7 @@
   height: 150px;
   background-image: url("../../img/mypageimg/delete.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   margin: 20px 0;
 }
 input {
@@ -70,33 +70,40 @@ input::placeholder {
   border-radius: 20px;
   cursor: pointer;
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .box {
-    width: 300px;
-    height: 400px;
+    width: 400px;
+    height: 480px;
+    transition: 0.5s;
   }
   .title {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 25px;
+    margin: 20px 0 20px 0;
+    transition: 0.5s;
   }
   .imageItem {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    margin: 10px 0 50px 0;
+    transition: 0.5s;
   }
   input {
-    width: 180px;
-    height: 20px;
-    margin-bottom: 10px;
+    width: 60%;
+    height: 30px;
+    font-size: 16px;
+    margin-bottom: 22px;
+    transition: 0.5s;
   }
-  .caution,
-  .loginsub a {
-    font-size: 10px;
+  input::placeholder {
+    font-size: 16px;
+    transition: 0.5s;
   }
   .finalCheck {
     width: 150px;
     height: 40px;
-    line-height: 40px;
-    font-size: 15px;
-    text-align: center;
+    line-height: 36px;
+    font-size: 16px;
+    margin-top: 6px;
+    transition: 0.5s;
   }
 }

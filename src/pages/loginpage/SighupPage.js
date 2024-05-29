@@ -36,7 +36,7 @@ const Box = styled.div`
   border-radius: 10px;
 
   & .title {
-    font-size: 30px;
+    font-size: 25px;
     color: white;
     margin: 50px 0 20px 0;
   }
@@ -79,10 +79,6 @@ const Box = styled.div`
     font-weight: bold;
     color: rgb(255, 255, 255);
   }
-  & .caution {
-    font-size: 15px;
-    position: relative;
-  }
   & .finalCheck {
     width: 200px;
     height: 50px;
@@ -93,22 +89,25 @@ const Box = styled.div`
     border-radius: 20px;
     cursor: pointer;
   }
-  @media (max-width: 700px) {
-    width: 300px;
-    height: 470px;
-
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 480px;
+    transition: 0.5s;
     .title {
       font-size: 25px;
+      transition: 0.5s;
     }
     input {
-      width: 200px;
+      width: 60%;
       height: 30px;
-      font-size: 20px;
+      font-size: 16px;
       margin-bottom: 10px;
+      transition: 0.5s;
     }
 
     input::placeholder {
-      font-size: 15px;
+      font-size: 16px;
+      transition: 0.5s;
     }
     #hint {
       margin-top: 4px;
@@ -118,17 +117,18 @@ const Box = styled.div`
       font-size: 8px;
     }
     .success {
-      left: 880px;
-      bottom: 15px;
-      font-size: 30px;
+      left: 608px;
+      bottom: -12px;
+      font-size: 22px;
     }
 
     .finalCheck {
-      width: 120px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 15px;
-      margin: 5px 0 20px 0;
+      width: 150px;
+      height: 40px;
+      line-height: 36px;
+      font-size: 16px;
+      margin-top: 5px;
+      transition: 0.5s;
     }
   }
 `;

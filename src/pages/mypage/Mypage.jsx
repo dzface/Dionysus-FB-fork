@@ -47,9 +47,29 @@ const JjimMore = styled.div`
   }
 `;
 const JjimMoreItem = styled.div`
+  @keyframes gradientBackground {
+    0% {
+      background: rgba(82, 1, 32, 0.9);
+    }
+    20% {
+      background: rgba(150, 43, 9, 0.9);
+    }
+    40% {
+      background: rgba(181, 113, 20, 0.9);
+    }
+    60% {
+      background: rgba(112, 101, 19, 0.9);
+    }
+    80% {
+      background: rgba(8, 64, 62, 0.9);
+    }
+    100% {
+      background: rgba(82, 1, 32, 0.9);
+    }
+  }
   position: absolute;
   border-radius: 10px;
-  background-color: rgba(95, 95, 95);
+  /* background-color: rgba(95, 95, 95); */
   width: 54%;
   height: 520px; /* 원하는 높이로 설정하세요 */
   overflow-y: scroll;
@@ -58,8 +78,30 @@ const JjimMoreItem = styled.div`
   padding: 0;
   z-index: 3;
   display: ${(props) => (props.jjimVisible ? "block" : "none")};
+  animation: gradientBackground 25s infinite; /* 5초마다 색상이 자연스럽게 변경되도록 총 25초의 애니메이션 */
+  transition: background 5s ease-in-out;
 `;
 const ReviewMoreItem = styled.div`
+  @keyframes gradientBackground {
+    0% {
+      background: rgba(82, 1, 32, 0.9);
+    }
+    20% {
+      background: rgba(150, 43, 9, 0.9);
+    }
+    40% {
+      background: rgba(181, 113, 20, 0.9);
+    }
+    60% {
+      background: rgba(112, 101, 19, 0.9);
+    }
+    80% {
+      background: rgba(8, 64, 62, 0.9);
+    }
+    100% {
+      background: rgba(82, 1, 32, 0.9);
+    }
+  }
   position: absolute;
   border-radius: 10px;
   background-color: rgba(95, 95, 95);
@@ -71,6 +113,8 @@ const ReviewMoreItem = styled.div`
   padding: 0;
   z-index: 3;
   display: ${(props) => (props.reviewVisible ? "block" : "none")};
+  animation: gradientBackground 25s infinite; /* 5초마다 색상이 자연스럽게 변경되도록 총 25초의 애니메이션 */
+  transition: background 5s ease-in-out;
 `;
 const ReviewMore = styled.div`
   margin: 0;
@@ -168,18 +212,20 @@ const Mypage = () => {
                       )}
                       <ImageUploader setImageUrl={setImageUrl} />
                     </ProfileDiv>
+                  </div>
+                  <div className="nameAndBtn">
                     <p>
                       <span>{username}</span>님 반갑습니다!
                     </p>
-                  </div>
-                  <div className="btn">
-                    <Link to="/MemInfo">
-                      <button>정보수정</button>
-                    </Link>
-                    <Link to="/SignOut">
-                      <button>회원탈퇴</button>
-                    </Link>
-                    <button onClick={logout}>로그아웃</button>
+                    <div className="btn">
+                      <Link to="/MemInfo">
+                        <button>정보수정</button>
+                      </Link>
+                      <Link to="/SignOut">
+                        <button>회원탈퇴</button>
+                      </Link>
+                      <button onClick={logout}>로그아웃</button>
+                    </div>
                   </div>
                 </div>
               </div>

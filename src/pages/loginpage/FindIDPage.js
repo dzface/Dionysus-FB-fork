@@ -45,7 +45,7 @@ const Box = styled.div`
     height: 150px;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 20px 0;
+    margin: 20px;
   }
 
   & input {
@@ -93,56 +93,59 @@ const Box = styled.div`
   }
   & .finalCheck {
     width: 200px;
-    height: 60px;
-    line-height: 60px; /*텍스트 상하정렬*/
-    text-align: center;
-    font-size: 25px;
+    height: 50px;
+    line-height: 50px; /*텍스트 상하정렬*/
+    font-size: 20px;
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     cursor: pointer;
   }
-  @media (max-width: 700px) {
-    width: 300px;
-    height: 470px;
-
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 480px;
+    transition: 0.5s;
     .title {
       font-size: 25px;
+      margin: 20px 0 20px 0;
+      transition: 0.5s;
     }
     img {
-      width: 150px;
-      height: 150px;
-      margin: 30px 0 30px 0;
+      width: 120px;
+      height: 120px;
+      margin: 10px 0 50px 0;
+      transition: 0.5s;
     }
     input {
-      width: 200px;
+      width: 60%;
       height: 30px;
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size: 16px;
+      margin-bottom: 22px;
+      transition: 0.5s;
     }
 
     input::placeholder {
-      font-size: 15px;
+      font-size: 16px;
+      transition: 0.5s;
     }
-    #hint {
-      right: 90px;
-    }
+
     .error {
       margin-top: 15px;
-      font-size: 5px;
+      font-size: 8px;
     }
     .success {
-      left: 690px;
-      bottom: -18px;
+      left: 608px;
+      bottom: -10px;
       font-size: 22px;
     }
 
     .finalCheck {
-      width: 120px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 15px;
-      margin: 20px 0 20px 0;
+      width: 150px;
+      height: 40px;
+      line-height: 36px;
+      font-size: 16px;
+      margin-top: 6px;
+      transition: 0.5s;
     }
   }
 `;

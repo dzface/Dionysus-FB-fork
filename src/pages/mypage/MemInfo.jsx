@@ -1,5 +1,5 @@
-import styles from "../../style/mypagestyle/MemInfo.module.css";
 import BackButton from "../loginpage/BackButton";
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,120 @@ import LoginCheckComponent from "../loginpage/LoginCheckComponent";
 import ReactModal from "react-modal";
 import ModalApi from "../../api/ModalApi";
 ReactModal.setAppElement("#root");
+
+const Container = styled.div`
+  width: 100%;
+  display: flex; /* 부모 요소를 flex container로 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin: 0 auto;
+`;
+const Box = styled.div`
+  width: 580px;
+  height: 100%;
+  padding: 20px;
+  display: flex; /* 자식 요소들을 flex container로 설정 */
+  flex-direction: column; /* 자식 요소들을 세로 방향으로 배열 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  text-align: center;
+  background: conic-gradient(
+    rgba(82, 1, 32, 0.6) 0%,
+    rgba(150, 43, 9, 0.6) 20%,
+    rgba(181, 113, 20, 0.6) 40%,
+    rgba(8, 64, 62, 0.6) 60%,
+    rgba(112, 101, 19, 0.6) 80%,
+    rgba(82, 1, 32, 0.6) 100%
+  );
+  border-radius: 10px;
+
+  & .title {
+    font-size: 25px;
+    color: white;
+    margin: 50px 0 20px 0;
+  }
+  & input {
+    width: 60%;
+    height: 40px;
+    font-size: 20px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 20px;
+    padding-left: 30px;
+    margin-bottom: 30px; /* 원하는 마진 값으로 설정 */
+  }
+  & input::placeholder {
+    font-size: 20px;
+    color: rgb(250, 250, 250);
+    padding-left: 0;
+  }
+  & .juminInput::placeholder {
+    color: gray;
+  }
+  & .idInput::placeholder {
+    color: gray;
+  }
+
+  & .finalCheck {
+    width: 200px;
+    height: 50px;
+    line-height: 50px; /*텍스트 상하정렬*/
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+  }
+
+  & span {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: -24px;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 480px;
+    transition: 0.5s;
+
+    .title {
+      font-size: 25px;
+      transition: 0.5s;
+    }
+    input {
+      width: 60%;
+      height: 30px;
+      font-size: 16px;
+      margin-bottom: 12px;
+      transition: 0.5s;
+    }
+    input::placeholder {
+      font-size: 16px;
+      transition: 0.5s;
+    }
+
+    .finalCheck {
+      width: 150px;
+      height: 40px;
+      line-height: 36px;
+      font-size: 16px;
+      margin-top: 5px;
+      transition: 0.5s;
+    }
+    span {
+      color: red;
+      font-weight: bold;
+      font-size: 8px;
+      margin-top: -12px;
+      padding: 0;
+      position: relative;
+      margin-bottom: 1px;
+    }
+  }
+`;
 
 const MemInfo = () => {
   const [member, setMember] = useState("");
@@ -145,17 +259,17 @@ const MemInfo = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <Container>
         <LoginCheckComponent></LoginCheckComponent>
         <BackButton />
-        <div className={styles.box}>
-          <p className={styles.title}>정보수정</p>
+        <Box>
+          <p className="title">정보수정</p>
           <input
             type="text"
             name="user_id"
             placeholder={member.user_id}
             disabled
-            className={styles.idInput}
+            className="idInput"
           />
 
           <input
@@ -165,18 +279,8 @@ const MemInfo = () => {
             placeholder={member.user_pw}
             defaultValue={member.user_pw}
           />
-          {passwordError && (
-            <p
-              style={{
-                color: "red",
-                marginTop: "-28px",
-                fontSize: "12px",
-                fontWeight: "bold",
-              }}
-            >
-              {passwordError}
-            </p>
-          )}
+
+          {passwordError && <span>{passwordError}</span>}
           <input
             type="text"
             name="user_name"
@@ -189,7 +293,7 @@ const MemInfo = () => {
             name="user_jumin"
             placeholder={member.user_jumin}
             disabled
-            className={styles.juminInput}
+            className="juminInput"
           />
           <input
             type="text"
@@ -205,18 +309,8 @@ const MemInfo = () => {
             placeholder={member.user_phone}
             defaultValue={member.user_phone}
           />
-          {phoneError && (
-            <p
-              style={{
-                color: "red",
-                marginTop: "-28px",
-                fontSize: "12px",
-                fontWeight: "bold",
-              }}
-            >
-              {phoneError}
-            </p>
-          )}
+          {phoneError && <span>{phoneError}</span>}
+
           <input
             type="text"
             name="user_address"
@@ -224,9 +318,8 @@ const MemInfo = () => {
             placeholder={member.user_address}
             defaultValue={member.user_address}
           />
-          {/* <p className={styles.caution}></p> */}
           <div
-            className={styles.finalCheck}
+            className="finalCheck"
             style={{
               cursor: isFormValid ? "pointer" : "not-allowed",
               backgroundColor: isFormValid ? "rgba(0, 0, 0, 0.6)" : "grey",
@@ -235,14 +328,14 @@ const MemInfo = () => {
           >
             수정
           </div>
-        </div>
-      </div>
-      <ModalApi.SuccessModal
-        isOpen={SuccessModalOpen}
-        onClose={handleSuccessCloseModal}
-        modalTitle={"회원 정보 수정"}
-        modalText={"수정되었습니다."}
-      />
+        </Box>
+        <ModalApi.SuccessModal
+          isOpen={SuccessModalOpen}
+          onClose={handleSuccessCloseModal}
+          modalTitle={"회원 정보 수정"}
+          modalText={"수정되었습니다."}
+        />
+      </Container>
     </>
   );
 };

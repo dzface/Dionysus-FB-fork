@@ -93,38 +93,41 @@ const Box = styled.div`
     margin-top: 40px;
     cursor: pointer;
   }
-  @media (max-width: 700px) {
-    width: 300px;
-    height: 470px;
-
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 480px;
+    transition: 0.5s;
     img {
       width: 100px;
       height: 100px;
       margin-bottom: 40px;
+      transition: 0.5s;
     }
 
     input {
-      width: 200px;
+      width: 60%;
       height: 30px;
-      font-size: 20px;
+      font-size: 16px;
       margin-bottom: 15px;
+      transition: 0.5s;
     }
 
     input::placeholder {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .caution,
     .loginsub a {
-      font-size: 12px;
+      font-size: 16 px;
     }
 
     .finalCheck {
       width: 150px;
       height: 40px;
-      line-height: 30px;
-      font-size: 15px;
+      line-height: 36px;
+      font-size: 16px;
       margin-top: 5px;
+      transition: 0.5s;
     }
   }
 `;
