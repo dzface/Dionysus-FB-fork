@@ -4,6 +4,12 @@ import { FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import AxiosApi from "../../../api/AxiosApi";
 import { FaAnglesDown } from "react-icons/fa6";
+import ReactModal from "react-modal";
+import ScoreApi from "../../../api/ScoreApi";
+import ReviewApi from "../../../api/ReviewApi";
+import JjimApi from "../../../api/JjimApi";
+ReactModal.setAppElement("#root");
+
 const ItemBox = styled.div`
   width: 1000px;
   height: 170px;
@@ -398,6 +404,37 @@ const ListItem = ({
   const [animatingStar, setAnimatingStar] = useState(null);
   // 추가된 상태 정의: 별점 점수가 flipInX 상태인지 추적
   const [animatingScore, setAnimatingScore] = useState(null);
+  // 별점에 대한 모달 3개 모음.
+  const [scoresuccessModalOpen, setScoresuccessModalOpen] = useState(false);
+  const [scoreloginfailModalOpen, setScoreloginfailModalOpen] = useState(false);
+  const [scorenullfailModalOpen, setScorenullfailModalOpen] = useState(false);
+  // 리뷰에 대한 모달 2개 모음.
+  const [reviewsuccessModalOpen, setReviewsuccessModalOpen] = useState(false);
+  const [reviewnullfailModalOpen, setReviewnullfailModalOpen] = useState(false);
+  // 찜에 대한 모달 1개 모음.
+  const [jjimnullfailModalOpen, setJjimnullfailModalOpen] = useState(false);
+
+  //Score 상태를 바꿔주는 handler
+  const handleScoreSuccessCloseModal = () => {
+    setScoresuccessModalOpen(false);
+  };
+  const handleScoreLoginFailCloseModal = () => {
+    setScoreloginfailModalOpen(false);
+  };
+  const handleScoreNullFailCloseModal = () => {
+    setScorenullfailModalOpen(false);
+  };
+  //Review 상태를 바꿔주는 handler
+  const handleReviewSuccessCloseModal = () => {
+    setReviewsuccessModalOpen(false);
+  };
+  const handleReviewFailCloseModal = () => {
+    setReviewnullfailModalOpen(false);
+  };
+  //Jjim 상태를 바꿔주는 handler
+  const handleJjimFailCloseModal = () => {
+    setJjimnullfailModalOpen(false);
+  };
   //별점 입력시 데이터를 저장하는 함수.
   const handleScoreChange = (index, value) => {
     const newScoreChoices = [...scoreChoices];
@@ -416,19 +453,19 @@ const ListItem = ({
     const alcoholName = alcohols[index].alcohol_name;
     const review = reviewInputs[index];
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
       return;
     }
 
     try {
       await AxiosApi.addReview(userId, alcoholName, review);
-      alert("리뷰가 성공적으로 등록되었습니다.");
+      setReviewsuccessModalOpen(true);
       const newReviewInputs = [...reviewInputs];
       newReviewInputs[index] = ""; // 빈 문자열로 초기화합니다.
       setReviewInputs(newReviewInputs);
     } catch (error) {
       console.error("Error submitting review:", error);
-      alert("리뷰 등록에 실패했습니다.");
+      setReviewnullfailModalOpen(true);
     }
   };
   //해당 알콜에 맞춰 리뷰들 값을 받아오는 부분
@@ -441,22 +478,24 @@ const ListItem = ({
       console.error("Error Review Upload:", error);
     }
   };
+
   //해당하는 컴포넌트의 별점을 추가하는 함수.
   const handleScoreButtonClick = async (index, alcoholName) => {
     const userId = sessionStorage.getItem("user_id");
     const score = scoreChoices[index];
 
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
+
       return;
     } else if (score === null) {
-      alert("별점을 선택해주세요.");
+      setScorenullfailModalOpen(true);
       return;
     }
 
     try {
       await AxiosApi.insertScore(userId, alcoholName, score);
-      alert("별점이 성공적으로 등록되었습니다.");
+      setScoresuccessModalOpen(true); // Show success modal 별점 성공
       //별점값을 누적해서 저장하는 부분.
       const newSelectedScores = [...selectedScores];
       newSelectedScores[index] = score;
@@ -481,7 +520,7 @@ const ListItem = ({
       setTimeout(() => setAnimatingScore(null), 1000); // 0.6초 후 애니메이션 상태 초기화
     } catch (error) {
       console.error("Error submitting score:", error);
-      alert("별점 등록에 실패했습니다.");
+      setScorenullfailModalOpen(true);
     }
   };
 
@@ -526,7 +565,7 @@ const ListItem = ({
   const handleHeartClick = async (index) => {
     const userId = sessionStorage.getItem("user_id");
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
       return;
     }
 
@@ -563,7 +602,7 @@ const ListItem = ({
       alcoholList();
     } catch (error) {
       console.error("Error toggling jjim:", error);
-      alert("즐겨찾기 변경 중 오류가 발생했습니다.");
+      setJjimnullfailModalOpen(true);
     }
   };
   // isOne이 true인 경우 첫 번째 항목만 반환
@@ -706,6 +745,41 @@ const ListItem = ({
                 handleHeartClick(index);
               }}
               bouncing={bouncingHeart === index}
+            />
+            <ScoreApi.SuccessModal
+              isOpen={scoresuccessModalOpen}
+              onClose={handleScoreSuccessCloseModal}
+              modalTitle={"별점이 등록되었습니다."}
+              modalText={item.score + "점 입력되었습니다."}
+            />
+            <ScoreApi.FailModal
+              isOpen={scoreloginfailModalOpen}
+              onClose={handleScoreLoginFailCloseModal}
+              modalTitle={"로그인이 되어 있지 않습니다."}
+              modalText={"로그인 페이지로 이동해주세요."}
+            />
+            <ScoreApi.FailModal
+              isOpen={scorenullfailModalOpen}
+              onClose={handleScoreNullFailCloseModal}
+              modalTitle={"별점 등록에 실패했습니다."}
+              modalText={"네트워크 상태를 확인하세요."}
+            />
+            <ReviewApi.SuccessModal
+              isOpen={reviewsuccessModalOpen}
+              onClose={handleReviewSuccessCloseModal}
+              modalTitle={"리뷰 등록이 완료 되었습니다."}
+            />
+            <ReviewApi.FailModal
+              isOpen={reviewnullfailModalOpen}
+              onClose={handleReviewFailCloseModal}
+              modalTitle={"리뷰 등록에 실패했습니다."}
+              modalText={"네트워크 상태를 확인하세요."}
+            />
+            <JjimApi.FailModal
+              isOpen={jjimnullfailModalOpen}
+              onClose={handleJjimFailCloseModal}
+              modalTitle={"찜 등록에 실패했습니다."}
+              modalText={"네트워크 상태를 확인하세요."}
             />
           </ItemBox>
         ))}

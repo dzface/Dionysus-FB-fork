@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
   padding: 20px;
   position: relative;
- 
+
   gap: 30px;
 
   h1 {
@@ -42,19 +42,19 @@ const ThemeContainer = styled.div`
 const ThemeItem = styled.div`
   width: ${({ isBig }) => (isBig ? "800px" : "400px")};
   height: ${({ isBig }) => (isBig ? "600px" : "300px")};
-  
+
   cursor: pointer;
   transition: width 0.5s ease, height 0.5s ease;
   position: ${({ isBig }) => (isBig ? "absolute" : "relative")};
   z-index: ${({ isBig }) => (isBig ? "1" : "0")};
-  
+
   display: ${({ showMenu }) => (showMenu ? "none" : "flex")};
   justify-content: center;
   align-items: center;
   margin: 10px;
 
-    @media screen and (max-width: 768px) {
-      width: 90vw;
+  @media screen and (max-width: 768px) {
+    width: 90vw;
     display: flex;
   }
 `;
@@ -105,14 +105,13 @@ const RecommendIconDiv = styled.div`
   align-items: center;
   flex-wrap: wrap;
   @media screen and (max-width: 768px) {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      gap: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
   }
-
 `;
 
 const IconBox = styled.div`
@@ -121,9 +120,9 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   @media screen and (max-width: 768px) {
-      height: 100px;
+    height: 100px;
   }
 `;
 
@@ -134,14 +133,13 @@ const IconImg = styled.img`
   transition: transform 0.2s ease;
   z-index: 1;
   @media screen and (max-width: 768px) {
-      width: 100px;
-      height: 100px;
+    width: 100px;
+    height: 100px;
   }
 
   &:hover {
     transform: scale(0.9);
   }
-
 `;
 
 const CommonBox = styled.div`
@@ -152,7 +150,10 @@ const CommonBox = styled.div`
 `;
 
 const ButtonItem = styled.button`
-  margin-left: auto;
+  margin-left: 50vw;
+  @media (max-width: 768px) {
+    margin-left: 56vw;
+  }
 `;
 const TitleDiv = styled.div`
   width: 100vw;
@@ -230,17 +231,18 @@ const Recommend = () => {
                 key={index}
                 onClick={() => toggleSize(index)}
                 isBig={isBig === index}
-               
               >
                 <Wrapper>
-                  <ItemTitle bgColor={
-                  [
-                    "rgba(112, 101, 19, 0.8)",
-                    "rgba(182, 113, 20, 0.8)",
-                    "rgba(82, 1, 33, 0.8)",
-                  ][index]
-                }>
-                    <ItemTitleText isBig={index} >
+                  <ItemTitle
+                    bgColor={
+                      [
+                        "rgba(112, 101, 19, 0.8)",
+                        "rgba(182, 113, 20, 0.8)",
+                        "rgba(82, 1, 33, 0.8)",
+                      ][index]
+                    }
+                  >
+                    <ItemTitleText isBig={index}>
                       {
                         [
                           "기분에 따른 추천",
