@@ -4,7 +4,7 @@ import AxiosApi from "../../../api/AxiosApi";
 import ListItem from "../Common/ListItem";
 import SortOptions from "../Common/SortOptions";
 const ThemeItem = styled.div`
-  width: 80vw;
+  width: 60vw;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   animation: ${fadeInTopLeft} 1s; /* 애니메이션 적용 */
 
   @media screen and (max-width: 768px) {
-      width: 90vw;
+    width: 90vw;
   }
 `;
 
@@ -67,7 +67,7 @@ const IconImg = styled.img`
 const RecommendIconDiv = styled.div`
   width: 100%;
   min-height: 480px; /* 최소 높이를 설정합니다. */
-  
+
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 0 0 20px 20px;
   display: flex;
@@ -82,7 +82,6 @@ const SelectListDiv = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px;
-
 `;
 
 const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
@@ -136,13 +135,11 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
       return "rgba(112, 101, 19, 0.8)"; // 감정 아이콘
     if (["맑음", "흐림", "비", "눈"].includes(selectedIcon))
       return "rgba(182, 113, 20, 0.8)"; // 날씨 아이콘
-    if (selectmenu)
-      return "rgba(82, 1, 33, 0.8)"; // 메뉴 아이콘
+    if (selectmenu) return "rgba(82, 1, 33, 0.8)"; // 메뉴 아이콘
     return null; // 기본 배경색
   };
-  console.log(selectedIcon)
-  console.log(selectmenu)
-
+  console.log(selectedIcon);
+  console.log(selectmenu);
 
   return (
     <ThemeItem>
@@ -156,10 +153,13 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
           {/* ListItem 컴포넌트의 개수에 따라서 높이를 설정합니다. */}
           <SelectListDiv>
             <div>
-            <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
+              <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
             </div>
-          <ListItem alcohols={sortedDrinks} alcoholList={fetchPopularDrinks} />{" "}
-          {/* 정렬된 아이템 전달 */}
+            <ListItem
+              alcohols={sortedDrinks}
+              alcoholList={fetchPopularDrinks}
+            />{" "}
+            {/* 정렬된 아이템 전달 */}
           </SelectListDiv>
         </RecommendIconDiv>
       </Wrapper>

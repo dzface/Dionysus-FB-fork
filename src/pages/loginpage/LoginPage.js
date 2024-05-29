@@ -143,7 +143,7 @@ const LoginPage = () => {
   const handleSuccessCloseModal = () => {
     //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
-    navigate("/"); // Navigate to the home page or any other page
+    navigate("/"); 
   };
   const handleFailCloseModal = () => {
     setFailModalOpen(false);
