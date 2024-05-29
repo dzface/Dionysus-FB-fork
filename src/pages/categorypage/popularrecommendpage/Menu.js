@@ -162,7 +162,7 @@ const Menu = ({ selectedMenu, setShowMenu }) => {
   const MenuList = {
     한식: [
       "과일안주",
-      "국밥",
+      "해물탕",
       "마른안주",
       "보쌈",
       "삼겹살",
@@ -198,7 +198,7 @@ const Menu = ({ selectedMenu, setShowMenu }) => {
       "짜장면",
       "짬뽕",
       "탕수육",
-      "훠궈",
+      "훠거",
     ],
   };
 

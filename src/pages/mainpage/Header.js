@@ -92,7 +92,7 @@ const Item = styled.div`
   @media (max-width: 822px) {
     width: 12vw;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -123,7 +123,7 @@ const SideWrapping = styled.div`
   display: flex;
   align-items: center;
   margin-left: 70px;
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     width: 90px;
     margin-left: 100px;
   }
@@ -291,7 +291,7 @@ const Header = ({ scrollexist = false }) => {
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
   const userid = sessionStorage.getItem("user_id");
   const username = sessionStorage.getItem("user_name");
-  const proflieurl = sessionStorage.getItem("profile_url");
+  const proflieurl = localStorage.getItem("profile_url");
   //아이콘을 눌렀을 때 사이드바 오픈
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -307,7 +307,7 @@ const Header = ({ scrollexist = false }) => {
       <HeaderContainer>
         <DivHeader>
           <Link to="/">
-            <Logo $logourl={logo} id="logo"/>
+            <Logo $logourl={logo} id="logo" />
           </Link>
           <Nav>
             <Item>

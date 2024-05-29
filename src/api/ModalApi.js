@@ -44,7 +44,9 @@ const ModalApi = {
             <h2 className={styles.modalText}>{modalText}</h2>
           </div>
           <div>
-            <button className={styles.closeButton} onClick={onClose}>닫기</button>
+            <button className={styles.closeButton} onClick={onClose}>
+              닫기
+            </button>
           </div>
         </div>
       </ReactModal>
@@ -89,7 +91,9 @@ const ModalApi = {
             <h2 className={styles.modalText}>{modalText}</h2>
           </div>
           <div>
-            <button className={styles.closeButton} onClick={onClose}>닫기</button>
+            <button className={styles.closeButton} onClick={onClose}>
+              닫기
+            </button>
           </div>
         </div>
       </ReactModal>

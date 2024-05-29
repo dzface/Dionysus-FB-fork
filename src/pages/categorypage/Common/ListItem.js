@@ -61,7 +61,7 @@ const ItemContext = styled.div`
   & > .name {
     width: auto;
     height: 50px;
-    font-size: 19px;
+    font-size: 17px;
   }
   & > div {
     display: flex;
@@ -101,7 +101,6 @@ const ItemReview = styled.div`
   margin-right: 10px;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 50;
   @media (max-width: 1545px) {
     display: ${({ mobliereviewmore }) => (mobliereviewmore ? "flex" : "none")};
     margin-left: 50px;
@@ -290,6 +289,7 @@ const flipInX = keyframes`
 `;
 // flipInX을 적용할 AnimatedScore 정의
 const AnimatedScore = styled.div`
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   ${(props) =>
     props.isAnimating &&
     css`
