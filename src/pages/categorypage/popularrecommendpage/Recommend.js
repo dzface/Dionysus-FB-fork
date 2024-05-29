@@ -61,7 +61,6 @@ const ThemeItem = styled.div`
 
 const ItemTitle = styled.div`
   width: 100%;
-  height: 100%;
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 20px 20px 0 0;
   font-weight: bold;
@@ -105,7 +104,14 @@ const RecommendIconDiv = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-
+  @media screen and (max-width: 768px) {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 20px;
+  }
 
 `;
 
@@ -115,6 +121,10 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  @media screen and (max-width: 768px) {
+      height: 100px;
+  }
 `;
 
 const IconImg = styled.img`
@@ -123,10 +133,15 @@ const IconImg = styled.img`
   border-radius: 50%;
   transition: transform 0.2s ease;
   z-index: 1;
+  @media screen and (max-width: 768px) {
+      width: 100px;
+      height: 100px;
+  }
 
   &:hover {
     transform: scale(0.9);
   }
+
 `;
 
 const CommonBox = styled.div`

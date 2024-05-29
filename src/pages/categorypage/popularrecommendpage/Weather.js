@@ -33,6 +33,11 @@ const TodayWeather = styled.div`
   opacity: 0.9;
   /* z-index: 1; */
   position: absolute;
+
+  @media screen and (max-width: 768px) {
+    visibility: hidden;
+      
+  }
 `;
 
 const Text = styled.p`
@@ -54,6 +59,7 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
 `;
 const IconImg = styled.img`
   width: 150px;
