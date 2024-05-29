@@ -103,6 +103,7 @@ const Box = styled.div`
       font-size: 16px;
       margin-bottom: 10px;
       transition: 0.5s;
+      padding-left: 12px;
     }
 
     input::placeholder {

@@ -78,7 +78,7 @@ const Box = styled.div`
     font-weight: bold;
     font-size: 12px;
     margin-top: -24px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 
   @media (max-width: 768px) {
@@ -96,6 +96,7 @@ const Box = styled.div`
       font-size: 16px;
       margin-bottom: 12px;
       transition: 0.5s;
+      padding-left: 12px;
     }
     input::placeholder {
       font-size: 16px;
@@ -114,10 +115,10 @@ const Box = styled.div`
       color: red;
       font-weight: bold;
       font-size: 8px;
-      margin-top: -12px;
+      margin-top: -9px;
       padding: 0;
       position: relative;
-      margin-bottom: 1px;
+      margin-bottom: -2px;
     }
   }
 `;
