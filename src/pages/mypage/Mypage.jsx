@@ -80,6 +80,10 @@ const JjimMoreItem = styled.div`
   display: ${(props) => (props.jjimVisible ? "block" : "none")};
   animation: gradientBackground 25s infinite; /* 5초마다 색상이 자연스럽게 변경되도록 총 25초의 애니메이션 */
   transition: background 5s ease-in-out;
+  @media screen and (max-width: 768px) {
+    width: 400px;
+    transition: 0.5s;
+  }
 `;
 const ReviewMoreItem = styled.div`
   @keyframes gradientBackground {
