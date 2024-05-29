@@ -10,7 +10,6 @@ const ReviewItem = ({ isOne = false, isReview = true }) => {
       const userid = sessionStorage.getItem("user_id");
       const rsp = await AxiosApi.alcoholreviewlist(userid); // 리뷰 술 정보 가져오기
       setAlcohol1(rsp.data);
-      console.log(rsp.data);
     } catch (e) {
       console.log(e);
     }

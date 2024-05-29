@@ -16,7 +16,7 @@ const ImageProfileDiv = styled.div`
   }
   & > label {
     cursor: pointer;
-    width: 100px;
+    width: 120px;
     height: 40px;
     display: flex;
     align-items: center;
@@ -34,7 +34,7 @@ const ImageProfileDiv = styled.div`
 
   & > button {
     cursor: pointer;
-    width: 100px;
+    width: 120px;
     height: 35px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.4);

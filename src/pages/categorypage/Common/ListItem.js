@@ -3,12 +3,24 @@ import { FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import AxiosApi from "../../../api/AxiosApi";
-
+import { FaAnglesDown } from "react-icons/fa6";
 const ItemBox = styled.div`
   width: 1000px;
   height: 170px;
   display: flex;
   align-items: center;
+  @media (max-width: 1040px) {
+    width: 70vw;
+    flex-wrap: wrap;
+    align-content: center;
+    margin-left: 0;
+  }
+  @media (max-width: 1545px) {
+    margin-left: 15vw;
+  }
+  @media (max-width: 963px) {
+    margin-left: 0;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -29,8 +41,18 @@ const ItemImage = styled.img`
 `;
 
 const ItemContext = styled.div`
-  width: 400px;
+  width: 20vw;
   height: 140px;
+  @media (max-width: 1800px) {
+    width: 15vw;
+  }
+  @media (max-width: 1545px) {
+    width: 30vw;
+  }
+  @media (max-width: 963px) {
+    width: 40vw;
+  }
+
   & > .com {
     width: auto;
     height: 25px;
@@ -79,6 +101,15 @@ const ItemReview = styled.div`
   margin-right: 10px;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 50;
+  @media (max-width: 1545px) {
+    display: ${({ mobliereviewmore }) => (mobliereviewmore ? "flex" : "none")};
+    margin-left: 50px;
+  }
+  @media (max-width: 1040px) {
+    display: ${({ mobliereviewmore }) => (mobliereviewmore ? "flex" : "none")};
+    margin-left: 50px;
+  }
   & > .review {
     font-size: 20px;
     margin-bottom: 5px;
@@ -142,6 +173,7 @@ const ScoreSelect = styled.select`
   font-size: 13px;
   margin-left: 5px;
   margin-top: 2px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   cursor: pointer;
   & > option {
     background-color: rgba(0, 0, 0, 0.4);
@@ -215,6 +247,9 @@ const bounce = keyframes`
 // bounce을 적용할 HeartIcon 정의
 const HeartIcon = styled(FaHeart)`
   cursor: pointer;
+  @media (max-width: 1545px) {
+    margin-left: 40px;
+  }
   ${(props) =>
     props.bouncing &&
     css`
@@ -261,6 +296,60 @@ const AnimatedScore = styled.div`
       animation: ${flipInX} 0.6s forwards;
     `}
 `;
+const slideOutDown = keyframes`
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 100%, 0);
+    visibility: hidden;
+  }
+`;
+// MoblieBtn 컴포넌트에 hover 스타일 추가
+const MoblieBtn = styled.div`
+  width: 80px;
+  height: 25px;
+  color: #fff;
+  font-size: 14px;
+  margin-left: 18vw;
+  display: none;
+  & > span {
+    margin-top: 10px;
+    width: 70px;
+    height: 25px;
+  }
+  cursor: pointer;
+  position: relative;
+  @media (max-width: 1040px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &:hover {
+    color: green;
+  }
+  &:hover + .icon {
+    animation: ${slideOutDown} 1s forwards;
+  }
+`;
+const FaAnglesDownIcon = styled(FaAnglesDown)`
+  display: none;
+  color: white;
+  @media (max-width: 1040px) {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+  }
+`;
+const HiddenBtn = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+`;
 const ListItem = ({
   alcohols,
   alcoholList,
@@ -301,7 +390,12 @@ const ListItem = ({
   );
   //더보기를 눌렀을 때 나머지 리뷰들 전부 숨김.
   const [morerestreview, setMorerestreview] = useState(false);
-
+  //리뷰 더보기를 눌렀을 때 해당하는 컴포넌트만 창이 뜸.
+  const [mobliereviewmore, setMobliereviewmore] = useState(
+    new Array(alcohols.length).fill(false)
+  );
+  //리뷰 더보기를 눌렀을 때 나머지 리뷰들 전부 숨김.
+  const [mobliemorerestreview, setMobliemorerestreview] = useState(false);
   const [jjimData, setJjimData] = useState([]);
   // 추가된 상태 정의: 하트 아이콘이 bouncing 상태인지 추적
   const [bouncingHeart, setBouncingHeart] = useState(null);
@@ -411,6 +505,14 @@ const ListItem = ({
       return updatedMoreBtnClicks;
     });
   };
+  const handleMobileBtnClick = (index) => {
+    setMobliereviewmore((prev) => {
+      const updatedState = [...prev];
+      setMobliemorerestreview(true);
+      updatedState[index] = true;
+      return updatedState;
+    });
+  };
   const defaultJjim = async (userId) => {
     try {
       const response = await AxiosApi.selectJjim(userId);
@@ -476,7 +578,7 @@ const ListItem = ({
     <>
       {displayedAlcohols &&
         displayedAlcohols.map((item, index) => (
-          <ItemBox key={index}>
+          <ItemBox key={index} buttonvisible={mobliemorerestreview}>
             <ImageContainer>
               <ImageWithFallback alcoholName={item.alcohol_name} />
             </ImageContainer>
@@ -525,10 +627,21 @@ const ListItem = ({
                   선택
                 </ScoreButton>
               </div>
+              <HiddenBtn>
+                <MoblieBtn
+                  onClick={() => {
+                    handleMobileBtnClick(index);
+                  }}
+                >
+                  <span>리뷰더보기</span>
+                </MoblieBtn>
+                <FaAnglesDownIcon className="icon" />
+              </HiddenBtn>
             </ItemContext>
             <ItemReview
               buttonvisible={morerestreview}
               buttonon={morebtnonclick[index]}
+              mobliereviewmore={mobliereviewmore[index]}
             >
               <div className="review">Review</div>
               <ReviewValue

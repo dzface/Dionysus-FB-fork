@@ -8,14 +8,17 @@ const SelectList = styled.select`
   width: 100px;
   height: 30px;
   font-size: 13px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   border: none;
   border-radius: 2px;
   text-align: center;
+  margin-bottom: 20px;
   cursor: pointer;
   & > option {
     border: none;
+    height: 60px;
   }
 `;
 const SortOptions = ({ sortBy, setSortBy }) => {

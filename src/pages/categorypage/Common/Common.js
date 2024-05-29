@@ -4,6 +4,7 @@ import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../../../global/UserStore";
 import AxiosApi from "../../../api/AxiosApi";
 import SortOptions from "./SortOptions";
+import UseAlcoholList from "../../categorypage/Common/UseAlcoholList";
 // Container 스타일 컴포넌트를 생성합니다.
 const Container = styled.div`
   width: 100%; // 너비를 100%로 설정합니다.
@@ -37,6 +38,9 @@ const List = styled.div`
   width: 1050px;
   height: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  @media (max-width: 1040px) {
+    width: 72vw;
+  }
 `;
 
 const SelectListDiv = styled.div`
@@ -56,44 +60,15 @@ const Hrtag = styled.hr`
   margin-bottom: 20px;
 `;
 const Common = () => {
+  const { alcohols, sortBy, setSortBy, setSearchTerm, fetchAlcoholList } =
+    UseAlcoholList();
   //context전역변수 불러오기
-  const context = useContext(UserContext);
-  // 받아온 알콜 리스트 저장.
-  const [alcohols, setAlcohols] = useState([]);
-  //도수,용량,가격에 따라 불러올 리스트 상태 저장 변수
-  const [sortBy, setSortBy] = useState("");
-  // 입력한 값을 저장해서 백엔드에 넘겨줄 변수
-  const [searchTerm, setSearchTerm] = useState("");
-  //useContext에서 category만 사용.
-  const { category } = context;
-  // 술 이름을 입력하면 해당하는 값을 찾아오는 비동기함수
-  const alcoholList = async () => {
-    try {
-      // 입력받은 값을 소문자로 바꾸고 띄어쓰기 제거.
-      const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, "");
-      // 양쪽 공백까지 제거하고 이게 값이 있으면 벡엔드에 search부분으로 요청, 아닌경우 리스트 sort부분으로 요청.
-      const response =
-        sanitizedSearchTerm.trim() !== ""
-          ? await AxiosApi.searchAlcohols(category, sanitizedSearchTerm)
-          : await AxiosApi.alcoholSelect(category, sortBy);
-      // 받아온 알콜 리스트를 저장.
-      setAlcohols(response.data);
-    } catch (error) {
-      console.error("Failed to fetch alcohols:", error);
-    }
-  };
-  useEffect(() => {
-    //비동기 함수 실행.
-    alcoholList();
-    //카테고리, 리스트 sort, 검색값이 바뀔 때만 해당비동기 함수 렌더링.
-  }, [category, sortBy, searchTerm]);
   return (
     <Container>
       <Hrtag />
       <Input
         type="text"
         placeholder="무엇을 찾고 계신가요?"
-        value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <SelectListDiv>
@@ -102,7 +77,7 @@ const Common = () => {
       <List>
         <ListItem
           alcohols={alcohols}
-          alcoholList={alcoholList}
+          alcoholList={fetchAlcoholList}
           isOne={false}
           isReview={true}
           reviewinput={true}

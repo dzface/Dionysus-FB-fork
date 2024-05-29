@@ -49,6 +49,13 @@ const ImgChangeBtnsDiv = styled.div`
   align-items: center;
   margin-bottom: 20px;
   z-index: 5;
+  @media (max-width: 1140px) {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    height: 5vh;
+    display: flex;
+  }
 `;
 
 // 배경바꾸는 버튼 styledComponent
