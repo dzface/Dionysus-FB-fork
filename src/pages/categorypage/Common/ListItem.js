@@ -9,18 +9,7 @@ const ItemBox = styled.div`
   height: 170px;
   display: flex;
   align-items: center;
-  @media (max-width: 1040px) {
-    width: 70vw;
-    flex-wrap: wrap;
-    align-content: center;
-    margin-left: 0;
-  }
-  @media (max-width: 1545px) {
-    margin-left: 15vw;
-  }
-  @media (max-width: 963px) {
-    margin-left: 0;
-  }
+  justify-content: ${({ itemcenter }) => itemcenter && "center"};
 `;
 
 const ImageContainer = styled.div`
@@ -49,8 +38,8 @@ const ItemContext = styled.div`
   @media (max-width: 1545px) {
     width: 30vw;
   }
-  @media (max-width: 963px) {
-    width: 40vw;
+  @media (max-width: 1070px) {
+    width: 400px;
   }
 
   & > .com {
@@ -249,6 +238,9 @@ const HeartIcon = styled(FaHeart)`
   @media (max-width: 1545px) {
     margin-left: 40px;
   }
+  @media (max-width: 1070px) {
+    display: none;
+  }
   ${(props) =>
     props.bouncing &&
     css`
@@ -313,7 +305,6 @@ const MoblieBtn = styled.div`
   height: 25px;
   color: #fff;
   font-size: 14px;
-  margin-left: 18vw;
   display: none;
   & > span {
     margin-top: 10px;
@@ -349,6 +340,8 @@ const HiddenBtn = styled.div`
   height: auto;
   display: flex;
   align-items: center;
+  justify-content: ${({ reviewmore }) => (reviewmore ? "left" : "right")};
+  margin-left: ${({ reviewmore }) => reviewmore && "15vw"};
 `;
 const ListItem = ({
   alcohols,
@@ -357,6 +350,8 @@ const ListItem = ({
   isReview,
   reviewinput,
   firstreview,
+  reviewmore,
+  itemcenter,
 }) => {
   //해당 컴포넌트의 별점을 선택시 상태를 저장하는 변수
   const [scoreChoices, setScoreChoices] = useState(
@@ -578,7 +573,11 @@ const ListItem = ({
     <>
       {displayedAlcohols &&
         displayedAlcohols.map((item, index) => (
-          <ItemBox key={index} buttonvisible={mobliemorerestreview}>
+          <ItemBox
+            key={index}
+            buttonvisible={mobliemorerestreview}
+            itemcenter={itemcenter}
+          >
             <ImageContainer>
               <ImageWithFallback alcoholName={item.alcohol_name} />
             </ImageContainer>
@@ -627,7 +626,7 @@ const ListItem = ({
                   선택
                 </ScoreButton>
               </div>
-              <HiddenBtn>
+              <HiddenBtn reviewmore={reviewmore}>
                 <MoblieBtn
                   onClick={() => {
                     handleMobileBtnClick(index);

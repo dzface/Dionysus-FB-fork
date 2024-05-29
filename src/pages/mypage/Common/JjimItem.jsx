@@ -27,6 +27,7 @@ const JjimItem = ({ isOne = false, isReview = true }) => {
         reviewinput={false}
         isReview={isReview}
         firstreview={true}
+        reviewmore={true}
       />
     </>
   );

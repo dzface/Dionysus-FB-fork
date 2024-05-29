@@ -35,11 +35,11 @@ const Input = styled.input`
 
 // List 스타일 컴포넌트를 생성합니다.
 const List = styled.div`
-  width: 1050px;
+  width: 54vw;
   height: auto;
   background-color: rgba(0, 0, 0, 0.5);
-  @media (max-width: 1040px) {
-    width: 72vw;
+  @media (max-width: 1070px) {
+    width: 600px;
   }
 `;
 

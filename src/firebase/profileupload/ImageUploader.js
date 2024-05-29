@@ -70,7 +70,7 @@ const ImageUploader = ({ setImageUrl, showControls = true }) => {
         fileRef.getDownloadURL().then((url) => {
           console.log("저장경로 확인 : " + url);
           setImageUrl(url);
-          localStorage.setItem("profile_url", url);
+          sessionStorage.setItem("profile_url", url);
         });
       });
     }

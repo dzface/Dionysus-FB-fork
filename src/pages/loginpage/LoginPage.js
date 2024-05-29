@@ -143,7 +143,7 @@ const LoginPage = () => {
   const handleSuccessCloseModal = () => {
     //모달 닫은 이후 핸들링
     setSuccessModalOpen(false);
-    navigate("/"); 
+    navigate("/");
   };
   const handleFailCloseModal = () => {
     setFailModalOpen(false);
@@ -168,10 +168,13 @@ const LoginPage = () => {
     // 로그인 버튼클릭 이후 구현부분
     if (caution === "확인되었습니다.") {
       try {
-        const response = await axios.post("http://localhost:8111/users/login", {
-          USER_ID: email,
-          USER_PW: password,
-        });
+        const response = await axios.post(
+          "http://192.168.10.26:8111/users/login",
+          {
+            USER_ID: email,
+            USER_PW: password,
+          }
+        );
         // Handle success.
         const user = response.data[0];
         if (user) {

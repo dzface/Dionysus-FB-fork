@@ -34,9 +34,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   animation: ${fadeInTopLeft} 1s; /* 애니메이션 적용 */
-
-  @media screen and (max-width: 768px) {
-    width: 90vw;
+  @media screen and (max-width: 1000px) {
+    width: 600px;
   }
 `;
 
@@ -158,6 +157,7 @@ const Recommend2 = ({ selectedIcon, selectmenu, selectedMenu }) => {
             <ListItem
               alcohols={sortedDrinks}
               alcoholList={fetchPopularDrinks}
+              itemcenter={true}
             />{" "}
             {/* 정렬된 아이템 전달 */}
           </SelectListDiv>

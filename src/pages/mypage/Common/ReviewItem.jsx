@@ -27,6 +27,7 @@ const ReviewItem = ({ isOne = false, isReview = true }) => {
         isOne={isOne}
         isReview={isReview}
         firstreview={true}
+        reviewmore={true}
       />
     </>
   );

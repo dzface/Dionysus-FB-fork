@@ -16,7 +16,6 @@ const getBackgroundColor = (weatherCategory) => {
   }
 };
 
-
 const TodayWeather = styled.div`
   width: 327px;
   height: 240px;
@@ -34,9 +33,8 @@ const TodayWeather = styled.div`
   /* z-index: 1; */
   position: absolute;
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     visibility: hidden;
-      
   }
 `;
 
@@ -59,7 +57,6 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
 `;
 const IconImg = styled.img`
   width: 150px;
@@ -73,62 +70,24 @@ const IconImg = styled.img`
   }
 `;
 
-const DisplayWeather = (props) => {
-  const cityValue = props.inptLocation;
+const DisplayWeather = () => {
   const key = "0ff7f6cfb7b7c06333e16f6974fc0453";
   const [apiValue, setApiValue] = useState("");
   const [loading, setLoading] = useState(true);
-  const [todayDate, setTodayDate] = useState("");
-  const [showRe2, setShowRe2] = useState(false);
-
-  const handleWeather = () => {
-    setShowRe2(true);
-  };
-  const handleCloseWeather = () => {
-    setShowRe2(false);
-  };
-
-  function currentLocation() {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          console.log(
-            `Current location: Latitude(${latitude}), Longitude(${longitude})`
-          );
-          resolve({ latitude, longitude });
-        },
-        (error) => {
-          reject("error");
-        }
-      );
-    });
-  }
 
   const getWeather = async () => {
     try {
-      const { latitude, longitude } = await currentLocation();
       const responseFirst = fetch(
-        `https://api.openweathermap.org/data/2.5/weather?${
-          cityValue ? "q=" + cityValue : "lat=" + latitude + "&lon=" + longitude
-        }&appid=${key}&units=metric&lang=KR`
+        `http://api.openweathermap.org/data/2.5/weather?q=Seoul,KR&APPID=${key}&units=metric&lang=KR`
       );
 
       const [data1] = await Promise.all([responseFirst]);
       const result1 = await data1.json();
       console.log("Weather API response:", result1);
-
-      const offset = 1000 * 60 * 60 * 9;
-      const today = new Date().getTime() + offset;
-      setTodayDate(new Date(today).toLocaleDateString());
-
-      console.log("Weather API response:", result1);
       setApiValue(result1);
       setLoading(false);
     } catch (error) {
       console.error("Error: ", error);
-      props.turnBack();
     }
   };
 
@@ -164,11 +123,14 @@ const DisplayWeather = (props) => {
         >
           <IconBox>
             <IconImg
-              src={`${process.env.PUBLIC_URL}/weather/${ getWeatherCategory(apiValue.weather[0].main)}.gif`}
+              src={`${process.env.PUBLIC_URL}/weather/${getWeatherCategory(
+                apiValue.weather[0].main
+              )}.gif`}
             />
           </IconBox>
-          <Text>{getWeatherCategory(apiValue.weather[0].main)}/{apiValue.main.temp}</Text>
-          
+          <Text>
+            {getWeatherCategory(apiValue.weather[0].main)}/{apiValue.main.temp}
+          </Text>
         </TodayWeather>
       )}
     </>

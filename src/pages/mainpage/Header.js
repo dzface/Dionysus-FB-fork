@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import logo from "../../img/mainpageimg/logo/logo1.jpeg";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
@@ -16,7 +16,6 @@ import { FaWineBottle } from "react-icons/fa"; //전통주 icon
 import { VscAccount } from "react-icons/vsc"; // 계정 이미지 icon
 import { BsPersonCircle } from "react-icons/bs";
 import { GiHeartBottle } from "react-icons/gi";
-import ImageUploader from "../../firebase/profileupload/ImageUploader";
 //사이드바 높이 조절을 위한 상수 선언
 const topbarHeight = "30px";
 
@@ -53,7 +52,8 @@ const DivHeader = styled.div`
   border: none;
   display: flex;
   align-items: center;
-  @media (max-width: 700px) {
+
+  @media (max-width: 768px) {
     justify-content: center;
   }
 `;
@@ -69,7 +69,7 @@ const Nav = styled.nav`
   @media (max-width: 1200px) {
     margin-left: 15vw;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     width: 0px;
     margin-left: 0px;
   }
@@ -139,6 +139,9 @@ const SignUpBtn = styled.div`
   align-items: center;
   margin-left: 1vw;
   border: none;
+  @media (max-width: 1050px) {
+    display: none;
+  }
 `;
 //사이드바 버튼 StyledComponent
 const SideBarBtn = styled.div`
@@ -291,7 +294,7 @@ const Header = ({ scrollexist = false }) => {
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
   const userid = sessionStorage.getItem("user_id");
   const username = sessionStorage.getItem("user_name");
-  const proflieurl = localStorage.getItem("profile_url");
+  const proflieurl = sessionStorage.getItem("profile_url");
   //아이콘을 눌렀을 때 사이드바 오픈
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);

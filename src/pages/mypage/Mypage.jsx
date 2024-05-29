@@ -148,7 +148,7 @@ const ExitBtn = styled.div`
 const Mypage = () => {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
-  const profileurl = localStorage.getItem("profile_url");
+  const profileurl = sessionStorage.getItem("profile_url");
   const [jjimVisible, setJjimVisible] = useState(false);
   const [reviewVisible, setReviewVisible] = useState(false);
   // 모달 기본상태 입력(숨김)
