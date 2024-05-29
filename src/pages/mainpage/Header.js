@@ -307,7 +307,7 @@ const Header = ({ scrollexist = false }) => {
       <HeaderContainer>
         <DivHeader>
           <Link to="/">
-            <Logo $logourl={logo} />
+            <Logo $logourl={logo} id="logo"/>
           </Link>
           <Nav>
             <Item>
