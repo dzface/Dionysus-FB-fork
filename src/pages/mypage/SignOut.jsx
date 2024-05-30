@@ -18,9 +18,10 @@ const SignOut = () => {
   const [NullFailModalOpen, setNullFailModalOpen] = useState(false);
   const [MatchFailModalOpen, setMatchFailModalOpen] = useState(false);
 
+  // 모달 핸들러
   const handleSuccessCloseModal = () => {
     setSuccessModalOpen(false);
-    navigate("/"); // Navigate to the home page or any other page
+    navigate("/");
     sessionStorage.clear();
   };
   const handleNullFailCloseModal = () => {
@@ -64,7 +65,7 @@ const SignOut = () => {
         return; // 입력 값이 없으면 함수 종료
       }
 
-      if (user_name === sessionUserName && user_jumin === sessionUserJumin) {
+      if (isMatching) {
         const isMemberValid = await AxiosApi.memberCheck(user_name, user_jumin);
         if (isMemberValid) {
           await AxiosApi.memberDelete(user_name, user_jumin);

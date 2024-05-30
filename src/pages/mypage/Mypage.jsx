@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ReviewItem from "./Common/ReviewItem";
 import JjimItem from "./Common/JjimItem";
 import ImageUploader from "../../firebase/profileupload/ImageUploader";
-import LoginCheckComponent from "../loginpage/LoginCheckComponent";
 import styled from "styled-components";
 import { useState } from "react";
 import ReactModal from "react-modal";
@@ -154,7 +153,7 @@ const Mypage = () => {
   // 모달 기본상태 입력(숨김)
   const [SuccessModalOpen, setSuccessModalOpen] = useState(false);
   const logout = () => {
-    //modal 이벤트 발생 구간 입력 코드
+    // 로그아웃 모달
     setSuccessModalOpen(true); // Show success modal
   };
 
@@ -163,7 +162,7 @@ const Mypage = () => {
     sessionStorage.clear();
     navigate("/"); // Navigate to the home page or any other page
   };
-  //전화번호 - 넣는 컴포넌트
+  //전화번호 하이픈 넣는 컴포넌트
   const PhoneNumberWithHyphen = ({ phoneNumber }) => {
     const formatPhoneNumber = (phoneNumber) => {
       phoneNumber = phoneNumber.replace(/\D/g, ""); // Remove all non-numeric characters
@@ -184,6 +183,7 @@ const Mypage = () => {
     return <p>전화번호: {formattedPhoneNumber}</p>;
   };
 
+  // 찜, 리뷰 더보기 창 보여지게 하는 함수
   const toggleJjimVisibility = () => {
     setJjimVisible(!jjimVisible);
   };

@@ -146,12 +146,13 @@ const MemInfo = () => {
 
   const navigate = useNavigate();
 
+  // 처음 랜더링 때 회원 정보 가져오기
   useEffect(() => {
     const memberInfo = async () => {
       try {
         const rsp = await AxiosApi.memberSelect(
           sessionStorage.getItem("user_id")
-        ); // 회원 정보 가져오기
+        );
         setMember(rsp.data);
         setUser_id(rsp.data.user_id);
         setUser_pw(rsp.data.user_pw);
@@ -166,6 +167,7 @@ const MemInfo = () => {
     memberInfo();
   }, []);
 
+  // 회원 정보 업데이트
   const handleSubmit = async () => {
     try {
       await AxiosApi.memberUpdate(
@@ -181,20 +183,25 @@ const MemInfo = () => {
       sessionStorage.setItem("user_nick", user_nick);
       sessionStorage.setItem("user_phone", user_phone);
       sessionStorage.setItem("user_address", user_address);
-      setSuccessModalOpen(true); // Show success modal
+      setSuccessModalOpen(true); // Modal 띄우기
     } catch (e) {
       console.log(e);
     }
   };
+
+  // 이름 바꾸기
   const onChangeName = (e) => {
     const newName = e.target.value;
     setUser_name(newName);
   };
+
+  // 패스워드 바꾸기
   const onChangePw = (e) => {
     const newPw = e.target.value;
     setUser_pw(newPw);
 
     if (!newPw) {
+      // 값을 입력하지 않았을 때 유효성 검사 하지 않음
       setPasswordError("");
       setUser_pw(member.newPw);
       setIsPassword(true);
@@ -209,29 +216,32 @@ const MemInfo = () => {
       setIsPassword(false);
     }
   };
-  // 비밀번호 유효성 검증 함수
+  // 비밀번호 유효성 검증 함수(영어, 숫자 포함 8글자 이상)
   const validatePassword = (password) => {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return regex.test(password);
   };
 
+  // 닉네임 변경
   const onChangeNick = (e) => {
     const newNick = e.target.value;
     setUser_nick(newNick);
   };
+
+  // 핸드폰번호 변경
   const onChangePhone = (e) => {
     const newPhone = e.target.value;
-    // 하이픈을 제거하고 숫자만 남김
+    // 하이픈을 입력 했을 때 제거하고 숫자만 남김
     const formattedPhone = newPhone.replace(/-/g, "");
     setUser_phone(member.user_phone);
-    // 입력이 없는 경우
+    // 값을 입력하지 않았을 때 유효성 검사 하지 않음
     if (!newPhone) {
       setPhoneError("");
       setUser_phone(member.user_phone);
       setIsPhone(true);
-      return; // 입력이 없으면 이후 코드 실행 안 함
+      return;
     }
-    // 유효성 검사
+    // 핸드폰 번호 유효성 검사
     if (validatePhone(formattedPhone)) {
       setPhoneError("");
       setIsPhone(true);
@@ -251,11 +261,13 @@ const MemInfo = () => {
     return regex.test(phone);
   };
 
+  // 주소 변경
   const onChangeAddress = (e) => {
     const newAdress = e.target.value;
     setUser_address(newAdress);
   };
 
+  // 유효성 검사 비밀번호와 전화번호 둘 다 true
   const isFormValid = isPassword && isPhone;
 
   return (
