@@ -55,12 +55,15 @@ const ImageProfileDiv = styled.div`
 `;
 
 const ImageUploader = ({ setImageUrl, showControls = true }) => {
+  //파일 저장 변수
   const [file, setFile] = useState(null);
+  //파이어베이스 url 저장변수
   const [url, setUrl] = useState("");
   const handleFileInputChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  // 업로드 버튼 클릭시 파이어베이스에서 이미지를 불러오는 이벤트 함수
   const handleUploadClick = () => {
     if (file) {
       const storageRef = storage.ref();
@@ -70,6 +73,7 @@ const ImageUploader = ({ setImageUrl, showControls = true }) => {
         fileRef.getDownloadURL().then((url) => {
           console.log("저장경로 확인 : " + url);
           setImageUrl(url);
+          //세션에 저장
           sessionStorage.setItem("profile_url", url);
         });
       });
@@ -79,8 +83,10 @@ const ImageUploader = ({ setImageUrl, showControls = true }) => {
   return (
     <ImageProfileDiv>
       <div className="classimgcircle">
+        {/* 이미지 띄워주는 부분 */}
         {url && <img src={url} alt="uploaded" />}
       </div>
+      {/* 파일 선택 버튼, 업로드 버튼 */}
       {showControls && (
         <>
           <label htmlFor="fileInput">Choose File</label>

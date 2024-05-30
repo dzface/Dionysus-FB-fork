@@ -372,7 +372,7 @@ const ListItem = ({
     new Array(alcohols.length).fill(null)
   );
 
-  //각 컴포넌트마다 리뷰입력 상태를 저장하는 변수
+  //각 컴포넌트마다 리뷰입력 값을 저장하는 변수
   const [reviewInputs, setReviewInputs] = useState(
     new Array(alcohols.length).fill("")
   );
@@ -404,16 +404,18 @@ const ListItem = ({
   const [animatingStar, setAnimatingStar] = useState(null);
   // 추가된 상태 정의: 별점 점수가 flipInX 상태인지 추적
   const [animatingScore, setAnimatingScore] = useState(null);
-  // 별점에 대한 모달 3개 모음.
+
+  // 별점에 대한 모달 3개 모음.(성공(별 애니메이션을 가려서 기능 빼놨습니다.),로그인안됨,별점 값이 들어있지 않음.)
   const [scoresuccessModalOpen, setScoresuccessModalOpen] = useState(false);
   const [scoreloginfailModalOpen, setScoreloginfailModalOpen] = useState(false);
   const [scorenullfailModalOpen, setScorenullfailModalOpen] = useState(false);
-  // 리뷰에 대한 모달 2개 모음.
+  // 리뷰에 대한 모달 2개 모음.(리뷰입력 성공, 리뷰 입력 실패(에러포함.))
   const [reviewsuccessModalOpen, setReviewsuccessModalOpen] = useState(false);
   const [reviewnullfailModalOpen, setReviewnullfailModalOpen] = useState(false);
-  // 찜에 대한 모달 1개 모음.
+  // 찜에 대한 모달 1개 모음.(찜을 실패했을 때(에러포함.))
   const [jjimnullfailModalOpen, setJjimnullfailModalOpen] = useState(false);
 
+  //모달 상태를 바꿔주는 함수부분
   //Score 상태를 바꿔주는 handler
   const handleScoreSuccessCloseModal = () => {
     setScoresuccessModalOpen(false);
@@ -435,6 +437,7 @@ const ListItem = ({
   const handleJjimFailCloseModal = () => {
     setJjimnullfailModalOpen(false);
   };
+
   //별점 입력시 데이터를 저장하는 함수.
   const handleScoreChange = (index, value) => {
     const newScoreChoices = [...scoreChoices];
@@ -447,33 +450,45 @@ const ListItem = ({
     newReviewInputs[index] = value;
     setReviewInputs(newReviewInputs);
   };
+
   //해당하는 컴포넌트의 리뷰를 등록하는 함수.
   const handleReviewSaveClick = async (index) => {
     const userId = sessionStorage.getItem("user_id");
+    //해당하는 컴포넌트의 알콜이름.
     const alcoholName = alcohols[index].alcohol_name;
+    // 해당하는 컴포넌트의 리뷰input
     const review = reviewInputs[index];
+    // Show fail modal 로그인 필요
     if (!userId) {
-      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
+      setScoreloginfailModalOpen(true);
       return;
     }
 
     try {
+      //입력한 리뷰를 저장하는 부분
       await AxiosApi.addReview(userId, alcoholName, review);
+      //모달로 성공 띄움.
       setReviewsuccessModalOpen(true);
+      //입력 후 빈 문자열로 초기화합니다.
       const newReviewInputs = [...reviewInputs];
-      newReviewInputs[index] = ""; // 빈 문자열로 초기화합니다.
+      newReviewInputs[index] = "";
       setReviewInputs(newReviewInputs);
+      //에러 처리 모달
     } catch (error) {
       console.error("Error submitting review:", error);
       setReviewnullfailModalOpen(true);
     }
   };
+
   //해당 알콜에 맞춰 리뷰들 값을 받아오는 부분
   const otherUserReview = async (index) => {
     const alcoholName = alcohols[index].alcohol_name;
     try {
+      // 해당 알콜에 맞춰 리뷰값을 받아옴.
       const response = await AxiosApi.selectReview(alcoholName);
+      //받아온 리뷰값들을 저장
       setOtherreviewsave(response.data);
+      //리뷰 처리 모달
     } catch (error) {
       console.error("Error Review Upload:", error);
     }
@@ -482,28 +497,33 @@ const ListItem = ({
   //해당하는 컴포넌트의 별점을 추가하는 함수.
   const handleScoreButtonClick = async (index, alcoholName) => {
     const userId = sessionStorage.getItem("user_id");
+    //해당 컴포넌트의 별점 값.
     const score = scoreChoices[index];
-
+    // Show fail modal로그인 필요
     if (!userId) {
-      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
+      setScoreloginfailModalOpen(true);
 
       return;
+
+      // 별점값이 없을 때 모달
     } else if (score === null) {
       setScorenullfailModalOpen(true);
       return;
     }
 
     try {
+      //별점값 저장.
       await AxiosApi.insertScore(userId, alcoholName, score);
-      setScoresuccessModalOpen(true); // Show success modal 별점 성공
-      //별점값을 누적해서 저장하는 부분.
+      //추가된 별점값을 배열로 저장하는 부분.
       const newSelectedScores = [...selectedScores];
       newSelectedScores[index] = score;
       setSelectedScores(newSelectedScores);
 
+      //입력한 별점의 알콜이름을 저장
       const newSelectedAlcoholNames = [...selectedAlcoholNames];
       newSelectedAlcoholNames[index] = alcoholName;
       setSelectedAlcoholNames(newSelectedAlcoholNames);
+
       // 값을 렌더링해서 별점값 계산 후 반영 ,등수를 재조정.
       alcoholList();
       setScoreSelectDisabled((prev) => {
@@ -524,22 +544,31 @@ const ListItem = ({
     }
   };
 
+  //리뷰창에서 더보기 버튼 이벤트 함수
   const morebtnOnclickEvent = (index) => {
+    //해당하는 부분 버튼 클릭 상태 저장
     const updatedMoreBtnClicks = [...morebtnonclick];
     updatedMoreBtnClicks[index] = !updatedMoreBtnClicks[index];
     setMorebtnonclick(updatedMoreBtnClicks);
+    // 해당하는 버튼 리뷰만 보여주기위한 상태값 변화
     setMorerestreview(true);
+    // 리뷰 값 받아오는 함수 실행
     otherUserReview(index);
   };
+  // 리뷰 더보기를 닫는 함수
   const closeOnclickEvent = (index) => {
+    // 해당하는 버튼 리뷰 닫기 위한 상태값 변화
     setMorerestreview(false);
+    // 리뷰 더보기 버튼 상태를 닫기 위한 상태값 변화
     setMorebtnonclick((prev) => {
       const updatedMoreBtnClicks = [...prev];
       updatedMoreBtnClicks[index] = false;
       return updatedMoreBtnClicks;
     });
   };
+  // 모바일 버젼에서 리뷰더보기 버튼 클릭시 이벤트 함수
   const handleMobileBtnClick = (index) => {
+    // 모바일 버튼 상태값을 업데이트
     setMobliereviewmore((prev) => {
       const updatedState = [...prev];
       setMobliemorerestreview(true);
@@ -547,25 +576,30 @@ const ListItem = ({
       return updatedState;
     });
   };
+  // 처음 찜 값을 반영하기 위해 찜 테이블에서 값을 받아오는 함수
   const defaultJjim = async (userId) => {
     try {
       const response = await AxiosApi.selectJjim(userId);
+      //찜 상태 저장
       setJjimData(response.data);
     } catch (error) {
       console.error("Error fetching jjim data:", error);
     }
   };
   useEffect(() => {
+    // 로그인 여부 확인
     const userId = sessionStorage.getItem("user_id");
     if (userId) {
+      // 처음에 한번 렌더링
       defaultJjim(userId);
     }
   }, []);
   //하트를 눌렀을 때 일어나는 이벤트 함수
   const handleHeartClick = async (index) => {
+    // 로그인 여부 확인
     const userId = sessionStorage.getItem("user_id");
     if (!userId) {
-      setScoreloginfailModalOpen(true); // Show fail modal 별점 실패 로그인 필요
+      setScoreloginfailModalOpen(true); // Show fail modal 로그인 필요
       return;
     }
 
@@ -577,7 +611,7 @@ const ListItem = ({
       const isAlreadyJjim = jjimData.some(
         (jjim) => jjim.alcohol_name === alcoholName
       );
-
+      // 찜이 이미 되어있지 않으면
       if (!isAlreadyJjim) {
         // 즐겨찾기에 추가
         await AxiosApi.insertJjim(userId, alcoholName);
@@ -587,6 +621,7 @@ const ListItem = ({
           ...prevJjimData,
           { alcohol_name: alcoholName },
         ]);
+        // 찜이 이미 되어있으면
       } else {
         // 즐겨찾기에서 제거
         await AxiosApi.deleteJjim(userId, alcoholName);
@@ -597,15 +632,18 @@ const ListItem = ({
         );
       }
       // bouncing 상태 업데이트
+      // 몇번째 찜 아이콘을 bouncing할지 인덱스를 저장.
       setBouncingHeart(index);
       setTimeout(() => setBouncingHeart(null), 1000); // 1초 후 bouncing 상태 초기화
+      // 알콜리스트 한번 렌더링
       alcoholList();
     } catch (error) {
       console.error("Error toggling jjim:", error);
+      //찜값이 없을때 실패 모달
       setJjimnullfailModalOpen(true);
     }
   };
-  // isOne이 true인 경우 첫 번째 항목만 반환
+  // isOne이 true인 경우 첫 번째 항목만 반환(마이페이지의 첫번째만 출력하는 부분 때문에)
   const displayedAlcohols =
     isOne && alcohols.length > 0 ? [alcohols[0]] : alcohols;
   return (
@@ -614,10 +652,13 @@ const ListItem = ({
         displayedAlcohols.map((item, index) => (
           <ItemBox
             key={index}
+            //화면에 보여줄지
             buttonvisible={mobliemorerestreview}
+            //화면에 정렬하는 부분차이(리스트랑 추천안의 리스트가 다름.)
             itemcenter={itemcenter}
           >
             <ImageContainer>
+              {/* 이미지 넣기 */}
               <ImageWithFallback alcoholName={item.alcohol_name} />
             </ImageContainer>
             <ItemContext>
@@ -635,16 +676,21 @@ const ListItem = ({
                 <AnimatedStar
                   size={20}
                   color="yellow"
+                  //애니메이션 추가
                   isAnimating={animatingStar === index}
                 />
                 <div className="wall">|</div>
-                <AnimatedScore isAnimating={animatingScore === index}>
+                <AnimatedScore
+                  //애니메이션 추가
+                  isAnimating={animatingScore === index}
+                >
                   {item.score}
                 </AnimatedScore>
 
                 <ScoreSelect
                   value={scoreChoices[index] || ""}
                   onChange={(e) => handleScoreChange(index, e.target.value)}
+                  //비 활성화 상태정의
                   disabled={
                     scoreSelectDisabled[item.alcohol_name] ||
                     !sessionStorage.getItem("user_id")
@@ -665,6 +711,7 @@ const ListItem = ({
                   선택
                 </ScoreButton>
               </div>
+              {/* 모바일 버튼 부분 */}
               <HiddenBtn reviewmore={reviewmore}>
                 <MoblieBtn
                   onClick={() => {
@@ -677,19 +724,26 @@ const ListItem = ({
               </HiddenBtn>
             </ItemContext>
             <ItemReview
+              //리뷰창 보일지 상태 변수
               buttonvisible={morerestreview}
+              // 더보기 버튼 상태 변수
               buttonon={morebtnonclick[index]}
+              // 모바일 버전 리뷰더보기 버튼 상태 변수
               mobliereviewmore={mobliereviewmore[index]}
             >
               <div className="review">Review</div>
               <ReviewValue
+                // 화면에 보여줄지 결정하는 상태 변수
                 reviewinput={reviewinput}
+                // 값 입력 부분
                 value={reviewInputs[index]}
                 onChange={(e) => handleReviewInputChange(index, e.target.value)}
               />
+              {/* 첫번째 리뷰만 보여주기 위한 태그 */}
               <ReviewView firstreview={firstreview}>{item.review}</ReviewView>
               <div className="reviewdiv">
                 <ReviewBtn
+                  //보여줄지 여부
                   reviewinput={reviewinput}
                   onClick={() => handleReviewSaveClick(index)}
                 >
@@ -705,12 +759,14 @@ const ListItem = ({
             </ItemReview>
             <Morebtnreview buttonon={morebtnonclick[index]}>
               <div className="review">Review</div>
+              {/* 다른 사람의 리뷰를 보여주는 맵 */}
               {otherreviewsave && otherreviewsave.length > 0 ? (
                 otherreviewsave.map((reviewitem) => (
                   <div className="reviewlist">
                     <div className="reviewuser">
                       <span>{reviewitem.user_nick}</span>
                     </div>
+                    {/* 리뷰가 존재하는지에 따라 */}
                     <ReviewView isReview={isReview}>
                       {reviewitem.review}
                     </ReviewView>
@@ -746,35 +802,41 @@ const ListItem = ({
               }}
               bouncing={bouncingHeart === index}
             />
+            {/* 별점등록모달(미사용) */}
             <ScoreApi.SuccessModal
               isOpen={scoresuccessModalOpen}
               onClose={handleScoreSuccessCloseModal}
               modalTitle={"별점이 등록되었습니다."}
               modalText={item.score + "점 입력되었습니다."}
             />
+            {/* 로그인필요모달 */}
             <ScoreApi.FailModal
               isOpen={scoreloginfailModalOpen}
               onClose={handleScoreLoginFailCloseModal}
               modalTitle={"로그인이 되어 있지 않습니다."}
               modalText={"로그인 페이지로 이동해주세요."}
             />
+            {/* 별점등록실패모달 */}
             <ScoreApi.FailModal
               isOpen={scorenullfailModalOpen}
               onClose={handleScoreNullFailCloseModal}
               modalTitle={"별점 등록에 실패했습니다."}
               modalText={"네트워크 상태를 확인하세요."}
             />
+            {/* 리뷰등록성공모달 */}
             <ReviewApi.SuccessModal
               isOpen={reviewsuccessModalOpen}
               onClose={handleReviewSuccessCloseModal}
               modalTitle={"리뷰 등록이 완료 되었습니다."}
             />
+            {/* 리뷰등록실패모달 */}
             <ReviewApi.FailModal
               isOpen={reviewnullfailModalOpen}
               onClose={handleReviewFailCloseModal}
               modalTitle={"리뷰 등록에 실패했습니다."}
               modalText={"네트워크 상태를 확인하세요."}
             />
+            {/* 찜등록실패모달 */}
             <JjimApi.FailModal
               isOpen={jjimnullfailModalOpen}
               onClose={handleJjimFailCloseModal}
@@ -786,7 +848,7 @@ const ListItem = ({
     </>
   );
 };
-
+// 술 이미지를 넣기위한 함수
 const ImageWithFallback = ({ alcoholName }) => {
   const src = `${process.env.PUBLIC_URL}/alcoholimg/${alcoholName}.jpg`;
   return <ItemImage src={src} />;

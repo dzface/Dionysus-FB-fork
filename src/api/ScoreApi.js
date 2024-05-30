@@ -8,6 +8,8 @@ const Image = styled.img`
   width: 150px;
   height: 150px;
 `;
+
+// 별점 모달 컴포넌트 주석은 ModalApi와 동일 이미지만 다름.
 const ScoreApi = {
   SuccessModal: ({ isOpen, onClose, modalTitle, modalText }) => {
     useEffect(() => {

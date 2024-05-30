@@ -289,13 +289,13 @@ const ProfileImg = styled.div`
 `;
 const Header = ({ scrollexist = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 사이드바 메뉴 열기/닫기
-  const context = useContext(UserContext);
+  const context = useContext(UserContext); //useContext 불러와서 변수로 선언
   const { setBgimgurl, setCategory } = context; // 컬러와 이름을 전역 상태 관리에서 가져 옴
   const [animate, setAnimate] = useState(false); // 애니메이션을 위한 useState
-  const userid = sessionStorage.getItem("user_id");
-  const username = sessionStorage.getItem("user_name");
-  const proflieurl = sessionStorage.getItem("profile_url");
-  //아이콘을 눌렀을 때 사이드바 오픈
+  const userid = sessionStorage.getItem("user_id"); // 저장된 아이디 불러옴.
+  const username = sessionStorage.getItem("user_name"); // 저장된 이름 불러옴.
+  const proflieurl = sessionStorage.getItem("profile_url"); // 저장된 파이어베이스 url 불러옴.
+  //사이드바를 열고 닫는 함수
   const onClickLeft = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -303,7 +303,7 @@ const Header = ({ scrollexist = false }) => {
   const backImgChange = (alcohol) => {
     setAnimate(true);
     setBgimgurl(alcohol);
-    setTimeout(() => setAnimate(false), 500); // 애니메이션 종료 후 상태 초기화
+    setTimeout(() => setAnimate(false), 500); // 버튼 애니메이션 종료 후 상태 초기화 0.5s
   };
   return (
     <>
@@ -397,6 +397,7 @@ const Header = ({ scrollexist = false }) => {
               </SideBarBtn>
               <SideBarBody
                 $isOpen={isMenuOpen}
+                //스크롤이 있으면 스크롤 감안해서 좀더 왼쪽으로.
                 $scrollexist={scrollexist}
                 onClick={() => {
                   setIsMenuOpen(false);

@@ -21,9 +21,13 @@ const SelectList = styled.select`
     height: 60px;
   }
 `;
-const SortOptions = ({ sortBy, setSortBy }) => {
+const Sort = styled.div`
+  display: ${({ toplist }) => (toplist ? "none" : "block")};
+`;
+//정렬버튼(정렬조건, 조건결과,화면에 보여줄지)
+const SortOptions = ({ sortBy, setSortBy, toplist }) => {
   return (
-    <div>
+    <Sort toplist={toplist}>
       <Label>Sort by: </Label>
       <SelectList value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
         <option value="">최신등록순</option>
@@ -31,7 +35,7 @@ const SortOptions = ({ sortBy, setSortBy }) => {
         <option value="abv">도수낮은순</option>
         <option value="volume">용량적은순</option>
       </SelectList>
-    </div>
+    </Sort>
   );
 };
 

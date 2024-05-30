@@ -91,10 +91,10 @@ const Background = ({ children, backbtn, scroll, opacityisTrue }) => {
       const timer = setTimeout(() => {
         setBgimgurl(bgimgurl);
         setIsFading(false);
-      }, 750); // Match this duration with the CSS animation duration
-      return () => clearTimeout(timer);
+      }, 750); // 0.75초로 간격을 줘서 애니메이션 변화
+      return () => clearTimeout(timer); //값 비워주기
     }
-  }, [isFading, bgimgurl, setBgimgurl]);
+  }, [isFading, bgimgurl]);
   return (
     <BackgroundImg
       imageurl={bgimgurl}

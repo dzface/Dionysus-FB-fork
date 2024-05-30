@@ -14,9 +14,10 @@ const IncludeFooter = () => {
   return (
     <WrapBackground>
       <Background backbtn={false} scroll={true} opacityisTrue={false}>
+        {/* 스크롤 존재할 때 사이드바 위치 감안해서 살짝 조정 */}
         <Header scrollexist={true} />
         <Outlet />
-        <TopButton/>
+        <TopButton />
       </Background>
       <Footer />
     </WrapBackground>

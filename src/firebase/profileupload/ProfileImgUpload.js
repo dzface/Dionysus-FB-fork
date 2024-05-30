@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 
+// 파이어 베이스에서 키 받아오는 부분
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const ProfileImgUpload = {

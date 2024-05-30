@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+//전역 스타일링 스타일 컴포넌트
 export const GlobalStyles = createGlobalStyle`
 @font-face {
     font-family: 'LeferiPoint-SpecialItalicA';

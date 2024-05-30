@@ -137,6 +137,7 @@ const AxiosApi = {
       throw error;
     }
   },
+  //태그 값으로 추천 리스트를 받아옴.
   selectpopular: async (tag) => {
     try {
       return await axios.get(`${DOMAIN}/popular/selectpopular?tag=${tag}`);
@@ -145,6 +146,7 @@ const AxiosApi = {
       throw error;
     }
   },
+  //다른사람의 리뷰 받아오는 리스트
   selectReview: async (alcohol_name) => {
     try {
       return await axios.get(
@@ -169,29 +171,6 @@ const AxiosApi = {
       throw error;
     }
   },
-  updateReview: async (alcoholName, review) => {
-    try {
-      const response = await axios.put(`${DOMAIN}/review/updatereview`, {
-        alcohol_name: alcoholName,
-        review,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error updating review:", error);
-      throw error;
-    }
-  },
-  deleteReview: async (alcoholName) => {
-    try {
-      const response = await axios.delete(`${DOMAIN}/review/deletereview`, {
-        params: { alcohol_name: alcoholName },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error deleting review:", error);
-      throw error;
-    }
-  },
   //별점 테이블에 값을 추가하는 부분
   insertScore: async (user_id, alcoholName, score) => {
     const scoreinfo = {
@@ -200,17 +179,6 @@ const AxiosApi = {
       score: score,
     };
     return axios.put(`${DOMAIN}/score/insertscore`, scoreinfo);
-  },
-  updateScore: async (alcoholName, score) => {
-    return axios.put(`${DOMAIN}/score/update`, { alcoholName, score });
-  },
-  fetchAverageScore: async (alcoholName) => {
-    return axios.get(`${DOMAIN}/score/average`, {
-      params: { alcoholName },
-    });
-  },
-  fetchJjim: async (userId) => {
-    return axios.get(`${DOMAIN}/jjim`, { params: { userId } });
   },
   //찜 데이터 가져오기
   selectJjim: async (user_id) => {

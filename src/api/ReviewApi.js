@@ -8,6 +8,8 @@ const Image = styled.img`
   width: 150px;
   height: 150px;
 `;
+
+// 리뷰 모달 컴포넌트 주석은 ModalApi와 동일 이미지만 다름.
 const ReviewApi = {
   SuccessModal: ({ isOpen, onClose, modalTitle, modalText }) => {
     useEffect(() => {

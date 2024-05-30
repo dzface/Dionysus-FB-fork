@@ -14,12 +14,13 @@ const Title = styled.h1`
   background-color: rgba(0, 0, 0, 0.4);
   color: #ffffff;
 `;
+//와인 페이지 컴포넌트
 const Wine = () => {
   return (
     <>
       <Title>테마별 와인 추천</Title>
       {/* 와인 목록 내용 */}
-      <Common />
+      <Common toplist={false} />
     </>
   );
 };

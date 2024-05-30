@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import ListItem from "./ListItem";
-import { useEffect, useContext, useState } from "react";
-import { UserContext } from "../../../global/UserStore";
-import AxiosApi from "../../../api/AxiosApi";
 import SortOptions from "./SortOptions";
 import UseAlcoholList from "../../categorypage/Common/UseAlcoholList";
 // Container 스타일 컴포넌트를 생성합니다.
@@ -59,22 +56,27 @@ const Hrtag = styled.hr`
   background-color: #000;
   margin-bottom: 20px;
 `;
-const Common = () => {
+//카테고리별 페이지에 들어가는 공통 컴포넌트
+const Common = ({ toplist }) => {
+  //CustomHook에서 값과 함수들 불러오기.(불러온 알콜 데이터, 정렬방법, 정렬방법입력, 검색값을 입력, 알콜 데이터를 불러오는 비동기함수)
   const { alcohols, sortBy, setSortBy, setSearchTerm, fetchAlcoholList } =
     UseAlcoholList();
   //context전역변수 불러오기
   return (
     <Container>
       <Hrtag />
+      {/* 이름으로 검색 */}
       <Input
         type="text"
         placeholder="무엇을 찾고 계신가요?"
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      {/* 기준에 따른 리스트 정렬 */}
       <SelectListDiv>
-        <SortOptions sortBy={sortBy} setSortBy={setSortBy} />
+        <SortOptions sortBy={sortBy} setSortBy={setSortBy} toplist={toplist} />
       </SelectListDiv>
       <List>
+        {/* 주류 리스트 하나에 대한 컴포넌트 컴포넌트 props에 대한 설명은 해당 컴포넌트에서.*/}
         <ListItem
           alcohols={alcohols}
           alcoholList={fetchAlcoholList}
