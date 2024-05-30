@@ -190,7 +190,7 @@ const SignupPage = () => {
         setIsEmail(false);
       }
     } catch (error) {
-      console.log("아씨팔 에러");
+      console.log("네트워크 연결 오류");
     }
   };
   // 주민등록번호 DB 등록여부 확인
@@ -276,7 +276,7 @@ const SignupPage = () => {
   const regist = () => {
     // 가입버튼 클릭시 이벤트 처리
     axios
-      .post("http://222.238.100.125/users/signup", {
+      .post("http://192.168.110.214:8111/users/signup", {
         user_id: email,
         user_pw: password,
         user_name: userName,

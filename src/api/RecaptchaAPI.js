@@ -30,7 +30,7 @@ const ReCaptchaComponenet = ({ onVerify }) => {
     <StyledreCaptcha>
       <div>
         <ReCAPTCHA
-          sitekey="6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"
+          sitekey="6LcAUewpAAAAABn4N6TTFv5ARsTyeDAhdHWdTLCG"
           onChange={onChange}
         />
       </div>

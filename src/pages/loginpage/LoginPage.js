@@ -169,7 +169,7 @@ const LoginPage = () => {
     if (caution === "확인되었습니다.") {
       try {
         const response = await axios.post(
-          "http://222.238.100.125/users/login",
+          "http://192.168.110.214:8111/users/login",
           {
             USER_ID: email,
             USER_PW: password,
