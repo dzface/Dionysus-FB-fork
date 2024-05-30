@@ -150,7 +150,7 @@ const LoginPage = () => {
   };
   const [captchaValue, setCaptchaValue] = useState(""); // recaptcha 토큰을 저장하기 위한 state
   const [captchaVerified, setCaptchaVerified] = useState(false); // reCAPTCHA 인증 상태
-  const API_KEY = "6LcK--gpAAAAACjHDaPDC1j6X8H4jbap0sYP7HVe"; // 사이트키 등록
+  const API_KEY = "6LcAUewpAAAAABn4N6TTFv5ARsTyeDAhdHWdTLCG"; // 사이트키 등록
 
   useEffect(() => {
     checkInputs(email, password);
@@ -169,7 +169,7 @@ const LoginPage = () => {
     if (caution === "확인되었습니다.") {
       try {
         const response = await axios.post(
-          "http://192.168.10.26:8111/users/login",
+          "http://222.238.100.125/users/login",
           {
             USER_ID: email,
             USER_PW: password,

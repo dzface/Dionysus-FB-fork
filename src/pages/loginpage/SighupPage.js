@@ -276,7 +276,7 @@ const SignupPage = () => {
   const regist = () => {
     // 가입버튼 클릭시 이벤트 처리
     axios
-      .post("http://192.168.10.26:8111/users/signup", {
+      .post("http://222.238.100.125/users/signup", {
         user_id: email,
         user_pw: password,
         user_name: userName,
